@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+}
+
+.column {
+  --sticky-aside-top: 16px;
+  --sticky-aside-bottom: 16px;
+  width: 280px;
+  height: 2400px;
+}
+
+.panel {
+  height: 200px;
+  background: #f4f7f8;
+}
+
+body[data-tall="1"] .panel {
+  height: 1400px;
+}
+
+.toolbar {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 8px;
+}

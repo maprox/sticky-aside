@@ -1,0 +1,39 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  active: string
+}
+
+const { title, active } = Astro.props
+const links = [
+  ['/', 'Обзор', 'home'],
+  ['/vanilla', 'Vanilla', 'vanilla'],
+  ['/vue', 'Vue', 'vue'],
+  ['/react', 'React', 'react'],
+  ['/svelte', 'Svelte', 'svelte'],
+  ['/contents', 'Сетка', 'contents']
+]
+---
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,600&family=Syne:wght@700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      {links.map(([href, label, id]) => (
+        <a href={href} aria-current={active === id ? 'page' : undefined}>{label}</a>
+      ))}
+    </nav>
+    <main class="wrap">
+      <slot />
+    </main>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "name": "@sticky-aside/vue",
+  "version": "1.0.0",
+  "description": "Vue adapter for @sticky-aside/core.",
+  "keywords": ["sticky", "sidebar", "aside", "scroll", "vue"],
+  "license": "MIT",
+  "author": "maprox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprox/sticky-aside.git",
+    "directory": "packages/vue"
+  },
+  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "bugs": "https://github.com/maprox/sticky-aside/issues",
+  "type": "module",
+  "sideEffects": false,
+  "imports": {
+    "#vue/*": "./src/*"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "pnpm --dir ../.. exec tsdown --config packages/vue/tsdown.config.mjs"
+  },
+  "dependencies": {
+    "@sticky-aside/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  }
+}

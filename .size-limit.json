@@ -1,0 +1,39 @@
+[
+  {
+    "name": "core",
+    "path": "packages/core/dist/index.js",
+    "import": "{ createStickyAside }",
+    "gzip": true,
+    "limit": "2.35 kB"
+  },
+  {
+    "name": "headless",
+    "path": "packages/core/dist/headless.js",
+    "import": "{ createStickyAsidePresenter }",
+    "gzip": true,
+    "limit": "1.4 kB"
+  },
+  {
+    "name": "react",
+    "path": "packages/react/dist/StickyAside.js",
+    "import": "{ StickyAside }",
+    "ignore": ["react", "react/jsx-runtime", "@sticky-aside/core"],
+    "gzip": true,
+    "limit": "600 B"
+  },
+  {
+    "name": "vue",
+    "path": "packages/vue/dist/index.js",
+    "import": "{ StickyAside }",
+    "ignore": ["vue", "@sticky-aside/core"],
+    "gzip": true,
+    "limit": "700 B"
+  },
+  {
+    "name": "svelte",
+    "path": "packages/svelte/dist/StickyAside.svelte",
+    "rolldown": false,
+    "gzip": true,
+    "limit": "600 B"
+  }
+]

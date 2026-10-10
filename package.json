@@ -1,0 +1,60 @@
+{
+  "name": "sticky-aside-repo",
+  "private": true,
+  "packageManager": "pnpm@10.15.1",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "build": "pnpm --filter @sticky-aside/core build && pnpm --filter @sticky-aside/vue --filter @sticky-aside/react --filter @sticky-aside/svelte build",
+    "size": "pnpm build && size-limit",
+    "check:packages": "node scripts/check-packages.mjs",
+    "test:e2e": "node scripts/e2e.mjs",
+    "prepare": "simple-git-hooks",
+    "dev": "pnpm --filter @sticky-aside/site dev"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm typecheck"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@changesets/cli": "^3.0.3",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.64.0",
+    "@size-limit/file": "^14.2.0",
+    "@size-limit/preset-small-lib": "^14.2.0",
+    "@maprox/lint-config": "^1.0.1",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/svelte": "^5.4.2",
+    "@testing-library/vue": "^8.1.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vue/server-renderer": "^3.5.43",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0",
+    "happy-dom": "^20.0.0",
+    "publint": "^0.3.25",
+    "react-dom": "^19.3.0",
+    "simple-git-hooks": "^2.14.0",
+    "size-limit": "^14.2.0",
+    "svelte": "^5.57.2",
+    "tsdown": "^0.23.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.71.1",
+    "unplugin-vue": "^8.0.0",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.43",
+    "vue-tsc": "^3.3.12"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

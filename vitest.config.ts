@@ -1,0 +1,58 @@
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import react from '@vitejs/plugin-react'
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    projects: [
+      {
+        test: {
+          name: 'core',
+          environment: 'happy-dom',
+          include: ['packages/core/src/**/*.test.ts'],
+        },
+      },
+      {
+        plugins: [vue()],
+        test: {
+          name: 'vue',
+          environment: 'happy-dom',
+          include: ['packages/vue/src/**/*.test.ts'],
+        },
+      },
+      {
+        plugins: [react()],
+        test: {
+          name: 'react',
+          environment: 'happy-dom',
+          include: ['packages/react/src/**/*.test.tsx'],
+        },
+      },
+      {
+        plugins: [svelte({
+          configFile: 'packages/svelte/svelte.config.js',
+        })],
+        resolve: {
+          conditions: ['browser'],
+        },
+        test: {
+          name: 'svelte',
+          environment: 'happy-dom',
+          include: ['packages/svelte/src/**/*.test.ts'],
+          exclude: ['packages/svelte/src/**/*.ssr.test.ts'],
+        },
+      },
+      {
+        plugins: [svelte({
+          configFile: 'packages/svelte/svelte.config.js',
+        })],
+        test: {
+          name: 'svelte-ssr',
+          environment: 'node',
+          include: ['packages/svelte/src/**/*.ssr.test.ts'],
+        },
+      },
+    ],
+  },
+})

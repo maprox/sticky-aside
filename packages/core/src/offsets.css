@@ -1,0 +1,7 @@
+.sticky-aside-top {
+  top: var(--sticky-aside-top, 0px);
+}
+
+.sticky-aside-bottom {
+  bottom: var(--sticky-aside-bottom, 0px);
+}

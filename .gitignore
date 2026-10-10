@@ -1,0 +1,14 @@
+node_modules
+dist
+e2e/.packs
+e2e/pnpm-lock.yaml
+playwright-report
+test-results
+blob-report
+.astro
+.svelte-kit
+.history
+.superpowers
+docs/superpowers
+docs/origin
+*.tsbuildinfo

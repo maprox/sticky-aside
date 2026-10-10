@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro'
+import { articleLines } from '../demo/copy'
+---
+
+<Base title="Сетка — sticky-aside" active="contents">
+  <h2 class="sandbox-title">Сетка</h2>
+  <p class="contents-note">
+    <code>contentClass</code> висит на внутреннем блоке, том, что становится <code>fixed</code>.
+    Ниже 800px и обёртка, и этот блок получают <code>display: contents</code>, карточки выходят в сетку страницы.
+  </p>
+  <div class="post-grid" id="post-grid">
+    <article class="article post-main">
+      {articleLines.map((line) => <p>{line}</p>)}
+    </article>
+    <div class="post-aside" id="post-aside">
+      <div id="post-aside-content">
+        <div class="panel">
+          <span class="clip"></span>
+          <p class="panel-kicker">Профиль</p>
+          <p>Короткая карточка в колонке. На узком окне она строка сетки, не сайдбар.</p>
+        </div>
+        <div class="panel">
+          <p class="panel-kicker">Ещё</p>
+          <p>Вторая карточка. На широком окне они стоят друг под другом внутри одной липкой колонки.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { createStickyAside } from '@sticky-aside/core'
+
+  const wrapper = document.querySelector<HTMLElement>('#post-aside')
+  const content = document.querySelector<HTMLElement>('#post-aside-content')
+  if (wrapper && content) {
+    createStickyAside({
+      wrapper,
+      content,
+      contentClass: 'post-aside-content'
+    })
+  }
+</script>

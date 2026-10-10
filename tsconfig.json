@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "types": [],
+    "paths": {
+      "#core/*": ["./packages/core/src/*"],
+      "#site/*": ["./apps/site/src/*"],
+      "#vue/*": ["./packages/vue/src/*"]
+    }
+  },
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "packages/vue/vue-shim.d.ts",
+    "packages/svelte/svelte-shim.d.ts",
+    "apps/site/src/**/*.ts",
+    "apps/site/src/**/*.tsx"
+  ]
+}

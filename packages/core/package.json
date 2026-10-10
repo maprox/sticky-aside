@@ -1,0 +1,42 @@
+{
+  "name": "@sticky-aside/core",
+  "version": "1.0.0",
+  "description": "A panel that follows page scroll and pins to the edge you are scrolling toward.",
+  "keywords": ["sticky", "sidebar", "aside", "scroll"],
+  "license": "MIT",
+  "author": "maprox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprox/sticky-aside.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "bugs": "https://github.com/maprox/sticky-aside/issues",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "imports": {
+    "#core/*": "./src/*"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./headless": "./src/headless.ts",
+    "./offsets.css": "./src/offsets.css"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      },
+      "./headless": {
+        "types": "./dist/headless.d.ts",
+        "import": "./dist/headless.js"
+      },
+      "./offsets.css": "./dist/offsets.css"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsdown --config tsdown.config.mjs"
+  }
+}

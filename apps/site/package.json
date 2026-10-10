@@ -1,0 +1,26 @@
+{
+  "name": "@sticky-aside/site",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#site/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.0",
+    "@astrojs/svelte": "^7.2.0",
+    "@astrojs/vue": "^5.1.0",
+    "@sticky-aside/react": "workspace:*",
+    "@sticky-aside/svelte": "workspace:*",
+    "@sticky-aside/vue": "workspace:*",
+    "astro": "^5.14.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@sticky-aside/core": "workspace:*",
+    "svelte": "^5.39.6",
+    "vue": "^3.5.22"
+  }
+}

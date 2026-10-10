@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro'
+import { articleLines } from '../demo/copy'
+---
+
+<Base title="sticky-aside" active="home">
+  <header class="hero">
+    <h1>Панель едет за скроллом и садится на край.</h1>
+    <p>
+      Короткая остаётся сверху. Длинная догоняет тот край окна, к которому вы скроллите.
+      Одно ядро, три адаптера.
+    </p>
+    <div class="route-row">
+      <a href="/vanilla">Vanilla</a>
+      <a href="/vue">Vue</a>
+      <a href="/react">React</a>
+      <a href="/svelte">Svelte</a>
+      <a href="/contents">Сетка</a>
+    </div>
+  </header>
+  <div class="demo">
+    <article class="article">
+      {articleLines.map((line) => <p>{line}</p>)}
+    </article>
+    <div class="rail" id="home-rail"></div>
+  </div>
+</Base>
+
+<script>
+  import { mountPanel } from '../scripts/mount-panel'
+  const rail = document.querySelector<HTMLElement>('#home-rail')
+  if (rail) mountPanel(rail, { controls: false, tall: true })
+</script>
