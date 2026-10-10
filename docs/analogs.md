@@ -60,7 +60,7 @@ The core is window scroll, both edges, lock, and an internal measure element. Of
 | react-stickynode | no | `window` | yes, a freeze callback | no | yes | React peers |
 | CSS `position: sticky` | no | nearest scrollport | no | — | — | none |
 
-Offsets in the current Vue component are CSS classes such as `top-10` and `bottom-5`. The other libraries take pixel numbers (`topSpacing`, `offsetTop`, `offsetBottom`).
+Offsets are the classes `sticky-aside-top` and `sticky-aside-bottom`. They read `--sticky-aside-top` and `--sticky-aside-bottom`. The other libraries take pixel numbers (`topSpacing`, `offsetTop`, `offsetBottom`).
 
 ## Gap
 

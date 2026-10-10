@@ -23,7 +23,13 @@ const aside = createStickyAside({
 })
 ```
 
-`wrapper` is the column. `content` is the panel. The core sets `position: relative` and `height: 100%` on the wrapper.
+```css
+.layout {
+  --sticky-aside-top: 40px;
+}
+```
+
+`wrapper` is the column. `content` is the panel. The core sets `position: relative` and `height: 100%` on the wrapper. Put the column inside `.layout`, or set the variable on the column itself. The default is `0px`.
 
 ```bash
 npm install @sticky-aside/vue
@@ -31,7 +37,84 @@ npm install @sticky-aside/react
 npm install @sticky-aside/svelte
 ```
 
-Each adapter depends on `@sticky-aside/core`. Import the offsets stylesheet once.
+Each adapter depends on `@sticky-aside/core`. The offset is a CSS length. Two ways to set it.
+
+### Your own class
+
+`top-class` replaces `sticky-aside-top`. `bottom-class` replaces `sticky-aside-bottom`. React and Svelte use `topClass` and `bottomClass`. The library measures the gap between those two rules, so both have to exist. This variant leaves out `offsets.css`.
+
+The classes land on an inner element and on a measure node created in script. In Vue a scoped selector needs `:deep`. In Svelte it needs `:global`.
+
+```vue
+<script setup lang="ts">
+import { StickyAside } from '@sticky-aside/vue'
+</script>
+
+<template>
+  <StickyAside as="aside" top-class="top-10" bottom-class="bottom-0">
+    <nav>...</nav>
+  </StickyAside>
+</template>
+
+<style scoped>
+:deep(.top-10) {
+  top: 40px;
+}
+
+:deep(.bottom-0) {
+  bottom: 0;
+}
+</style>
+```
+
+```tsx
+import { StickyAside } from '@sticky-aside/react'
+import './sidebar.css'
+
+export function Sidebar() {
+  return (
+    <StickyAside as="aside" topClass="top-10" bottomClass="bottom-0">
+      <nav>...</nav>
+    </StickyAside>
+  )
+}
+```
+
+```css
+.top-10 {
+  top: 40px;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+```
+
+```svelte
+<script lang="ts">
+  import { StickyAside } from '@sticky-aside/svelte'
+</script>
+
+<div class="layout">
+  <StickyAside as="aside" topClass="top-10" bottomClass="bottom-0">
+    <nav>...</nav>
+  </StickyAside>
+</div>
+
+<style>
+  .layout :global(.top-10) {
+    top: 40px;
+  }
+
+  .layout :global(.bottom-0) {
+    bottom: 0;
+  }
+</style>
+```
+
+### `offsets.css`
+
+Import the stylesheet once. It defines `sticky-aside-top` and `sticky-aside-bottom`. Set `--sticky-aside-top` on an ancestor.
 
 ```vue
 <script setup lang="ts">
@@ -40,22 +123,39 @@ import '@sticky-aside/core/offsets.css'
 </script>
 
 <template>
-  <StickyAside as="aside">
-    <nav>...</nav>
-  </StickyAside>
+  <div class="layout">
+    <StickyAside as="aside">
+      <nav>...</nav>
+    </StickyAside>
+  </div>
 </template>
+
+<style scoped>
+.layout {
+  --sticky-aside-top: 40px;
+}
+</style>
 ```
 
 ```tsx
 import { StickyAside } from '@sticky-aside/react'
 import '@sticky-aside/core/offsets.css'
+import './sidebar.css'
 
 export function Sidebar() {
   return (
-    <StickyAside as="aside">
-      <nav>...</nav>
-    </StickyAside>
+    <div className="layout">
+      <StickyAside as="aside">
+        <nav>...</nav>
+      </StickyAside>
+    </div>
   )
+}
+```
+
+```css
+.layout {
+  --sticky-aside-top: 40px;
 }
 ```
 
@@ -65,9 +165,17 @@ export function Sidebar() {
   import '@sticky-aside/core/offsets.css'
 </script>
 
-<StickyAside as="aside">
-  <nav>...</nav>
-</StickyAside>
+<div class="layout">
+  <StickyAside as="aside">
+    <nav>...</nav>
+  </StickyAside>
+</div>
+
+<style>
+  .layout {
+    --sticky-aside-top: 40px;
+  }
+</style>
 ```
 
 `as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte uses `class`.
@@ -95,7 +203,7 @@ The inner element gets `data-sticky-aside`. The value is `flow`, `top`, `bottom`
 aside.setLocked(true)
 aside.setDisabled(false)
 aside.setAllowLockedOverflow(true, false)
-aside.setClasses({ topClass: 'top-16', bottomClass: 'bottom-4' })
+aside.setClasses({ topClass: 'sticky-aside-top', bottomClass: 'sticky-aside-bottom' })
 aside.update('resize')
 aside.destroy()
 ```
@@ -141,19 +249,21 @@ React and Svelte take the same strings as `topClass` and `bottomClass`.
 On a narrow screen the aside cell should disappear and its children should join the page grid. `display: contents` has to sit on the wrapper and on the inner element. On the wrapper alone, the inner element is still a grid item. When that element becomes `position: fixed`, it leaves the grid and takes the panel with it.
 
 ```vue
-<StickyAside
-  class="col-span-4 max-lg:contents"
-  content-class="max-lg:contents"
-  top-class="top-16"
-  bottom-class="bottom-5"
->
-  <div class="col-span-12">
-    <Profile />
-  </div>
+<StickyAside class="aside" content-class="aside-panel">
+  <Profile />
 </StickyAside>
 ```
 
-The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage height on it is a percentage of the viewport. `h-full` in `contentClass` sizes the panel to the viewport.
+```css
+@media (max-width: 800px) {
+  .aside,
+  .aside-panel {
+    display: contents;
+  }
+}
+```
+
+The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage height on it is a percentage of the viewport. A `height: 100%` rule in `contentClass` sizes the panel to the viewport.
 
 ### Lock
 
