@@ -2,8 +2,6 @@
 
 A short panel stays pinned to the top. A tall panel scrolls with the page, pins to the bottom while you scroll down, and pins to the top while you scroll up.
 
-![A tall panel pins to the bottom, then to the top](https://raw.githubusercontent.com/maprox/sticky-aside/main/docs/behavior.svg)
-
 ```bash
 npm install @sticky-aside/core
 ```
