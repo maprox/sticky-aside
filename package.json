@@ -11,6 +11,7 @@
     "size": "pnpm build && size-limit",
     "check:packages": "node scripts/check-packages.mjs",
     "test:e2e": "node scripts/e2e.mjs",
+    "release:publish": "pnpm build && pnpm changeset publish",
     "prepare": "simple-git-hooks",
     "dev": "pnpm --filter @sticky-aside/site dev"
   },
