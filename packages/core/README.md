@@ -24,4 +24,15 @@ const aside = createStickyAside({ wrapper, content })
 
 `wrapper` is the column that stays in the layout. `content` is the panel that moves and pins. The core sets `position: relative` and `height: 100%` on the wrapper.
 
+`offsets.css` defines `sticky-aside-top` and `sticky-aside-bottom`. Set the gap with CSS variables on an ancestor (default `0px`):
+
+```css
+.column {
+  --sticky-aside-top: 40px;
+  --sticky-aside-bottom: 16px;
+}
+```
+
+Or skip that stylesheet and pass your own `topClass` / `bottomClass` to `createStickyAside` / `setClasses`.
+
 Vue, React, and Svelte adapters are `@sticky-aside/vue`, `@sticky-aside/react`, and `@sticky-aside/svelte`. The full guide is in the [repository README](https://github.com/maprox/sticky-aside#readme).
