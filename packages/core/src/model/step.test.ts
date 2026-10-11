@@ -45,17 +45,6 @@ describe('getNewStickyModel', () => {
     }))).toEqual(model)
   })
 
-  it('pins a tall panel on resize when its top covers the offset', () => {
-    const next = getNewStickyModel(getInitialStickyModel(), frame({
-      reason: 'resize',
-      content: box(18, 900),
-      measure: box(48, 360),
-      wrapper: box(18, 2400),
-    }))
-
-    expect(next.mode).toBe('fixed-top')
-  })
-
   it('leaves a tall panel in flow on resize when its top is above the window', () => {
     const model = getInitialStickyModel()
     const next = getNewStickyModel(model, frame({

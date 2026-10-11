@@ -7,7 +7,6 @@ import {
   getRelativeStickyModel,
   getStickyModelAtEdges,
   isFixed,
-  isCoveringTopOffset,
   isFullyVisible,
   isMeasureInside,
   isOutsideViewport,
@@ -51,11 +50,7 @@ export function getNewStickyModel(model: StickyModel, frame: StickyFrame): Stick
 
   if (frame.reason === REASON.resize) {
     if (isMeasureInside(frame)) {
-      if (isFullyVisible(frame) || isCoveringTopOffset(frame)) {
-        return getPinnedStickyModel(model, 'top')
-      }
-
-      return model
+      return isFullyVisible(frame) ? getPinnedStickyModel(model, 'top') : model
     }
 
     return getRelativeStickyModel({ model: getClearedLockModel(model), frame })
