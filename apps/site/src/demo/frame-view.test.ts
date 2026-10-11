@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { createFrameView } from './frame-view.ts'
+import { createFrameView } from '#site/demo/frame-view.ts'
 
 function box(element: HTMLElement, top: number, left: number, width: number, height: number) {
   vi.spyOn(element, 'getBoundingClientRect').mockReturnValue({
@@ -35,6 +35,7 @@ function mount() {
   box(viewport, 80, 10, 400, 300)
   box(wrapper, 100, 220, 160, 800)
   box(content, 100, 220, 160, 500)
+
   return { viewport, wrapper, content }
 }
 

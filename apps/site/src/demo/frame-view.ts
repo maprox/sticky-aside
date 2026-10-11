@@ -78,6 +78,7 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
   function getBox(element: HTMLElement): Box {
     const rect = element.getBoundingClientRect()
     const origin = options.viewport.getBoundingClientRect()
+
     return {
       top: rect.top - origin.top,
       bottom: rect.bottom - origin.top,
@@ -176,6 +177,7 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
     resizeObserver.observe(options.content)
     resizeObserver.observe(measure)
     options.viewport.addEventListener('scroll', onScroll, { passive: true })
+
     return unsubscribe
   }
 

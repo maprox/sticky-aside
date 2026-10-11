@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { stateReadout } from '../demo/i18n.ts'
-import { bootStage } from './boot-stage.ts'
+import { stateReadout } from '#site/demo/i18n.ts'
+import { bootStage } from '#site/scripts/boot-stage.ts'
 
 describe('bootStage', () => {
   const screenHeight = window.innerHeight
@@ -99,7 +99,12 @@ describe('bootStage', () => {
   it('leaves the window height to CSS until the edge is dragged', () => {
     const stage = document.createElement('section')
     stage.dataset.locale = 'en'
-    stage.innerHTML = '<div class="cf-stage"><div data-viewport></div><div data-resize-height role="slider" tabindex="0"></div></div>'
+    stage.innerHTML = [
+      '<div class="cf-stage">',
+      '<div data-viewport></div>',
+      '<div data-resize-height role="slider" tabindex="0"></div>',
+      '</div>',
+    ].join('')
     document.body.append(stage)
 
     bootStage(stage)
@@ -127,7 +132,12 @@ describe('bootStage', () => {
   it('resizes the window from the bottom edge', () => {
     const stage = document.createElement('section')
     stage.dataset.locale = 'en'
-    stage.innerHTML = '<div class="cf-stage"><div data-viewport></div><div data-resize-height role="slider" tabindex="0"></div></div>'
+    stage.innerHTML = [
+      '<div class="cf-stage">',
+      '<div data-viewport></div>',
+      '<div data-resize-height role="slider" tabindex="0"></div>',
+      '</div>',
+    ].join('')
     document.body.append(stage)
     const frame = stage.querySelector<HTMLElement>('.cf-stage')!
     vi.spyOn(frame, 'getBoundingClientRect').mockReturnValue(new DOMRect(0, 0, 400, 800))

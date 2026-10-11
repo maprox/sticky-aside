@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { mountMiniDemo } from './mount-demo.ts'
+import { mountMiniDemo } from '#site/demo/mount-demo.ts'
 
 describe('mountMiniDemo scroll readout', () => {
   afterEach(() => {

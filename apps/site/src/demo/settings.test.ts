@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { initialViewportHeight, VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from './settings.ts'
+import { initialViewportHeight, VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from '#site/demo/settings.ts'
 
 describe('initialViewportHeight', () => {
   it('uses 80% of the screen', () => {

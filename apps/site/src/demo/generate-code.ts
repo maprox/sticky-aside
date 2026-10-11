@@ -1,11 +1,11 @@
-import { t } from './i18n.ts'
-import type { DemoLocale, DemoSettings } from './settings.ts'
+import { t } from '#site/demo/i18n.ts'
+import type { DemoLocale, DemoSettings } from '#site/demo/settings.ts'
 
-function bool(value: boolean): string {
-  return value ? 'true' : 'false'
+function bool(isOn: boolean): string {
+  return isOn ? 'true' : 'false'
 }
 
-function styleVars(settings: DemoSettings): { top: string; bottom: string } {
+function styleVars(settings: DemoSettings): { top: string, bottom: string } {
   return {
     top: `${settings.top}px`,
     bottom: `${settings.bottom}px`,
@@ -17,6 +17,7 @@ function firstSentence(text: string): string {
   if (end === -1) {
     return text
   }
+
   return text.slice(0, end + 1)
 }
 
@@ -30,6 +31,7 @@ function vanillaMarkup(settings: DemoSettings, locale: DemoLocale): string {
       <li>…</li>
     </ol>`
     : ''
+
   return `<article>
   <p>${t(locale, 'article.p1')}</p>
   <p>…</p>
@@ -43,6 +45,7 @@ function vanillaMarkup(settings: DemoSettings, locale: DemoLocale): string {
 
 function vanilla(settings: DemoSettings, locale: DemoLocale): string {
   const vars = styleVars(settings)
+
   return `${vanillaMarkup(settings, locale)}
 
 <script type="module">
@@ -68,6 +71,7 @@ const aside = createStickyAside({
 
 function vue(settings: DemoSettings): string {
   const vars = styleVars(settings)
+
   return `<script setup lang="ts">
 import { StickyAside } from '@sticky-aside/vue'
 import '@sticky-aside/core/offsets.css'
@@ -89,6 +93,7 @@ import '@sticky-aside/core/offsets.css'
 
 function react(settings: DemoSettings): string {
   const vars = styleVars(settings)
+
   return `import { StickyAside } from '@sticky-aside/react'
 import '@sticky-aside/core/offsets.css'
 
@@ -109,6 +114,7 @@ import '@sticky-aside/core/offsets.css'
 
 function svelte(settings: DemoSettings): string {
   const vars = styleVars(settings)
+
   return `<script lang="ts">
   import { StickyAside } from '@sticky-aside/svelte'
   import '@sticky-aside/core/offsets.css'
@@ -136,5 +142,6 @@ export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'e
   if (settings.framework === 'svelte') {
     return svelte(settings)
   }
+
   return vanilla(settings, locale)
 }

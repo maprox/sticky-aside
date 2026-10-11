@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { frameworkFromPath, frameworkPath, localePath, messages, stateReadout, switchLocalePath } from './i18n.ts'
+import {
+  frameworkFromPath,
+  frameworkPath,
+  localePath,
+  messages,
+  stateReadout,
+  switchLocalePath,
+} from '#site/demo/i18n.ts'
 
 describe('i18n', () => {
   it('keeps the same keys in en and ru', () => {

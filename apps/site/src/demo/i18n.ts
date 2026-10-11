@@ -1,6 +1,6 @@
 import type { StickyAsideState } from '@sticky-aside/core'
 
-import type { DemoFramework, DemoLocale } from './settings.ts'
+import type { DemoFramework, DemoLocale } from '#site/demo/settings.ts'
 
 type MessageMap = Record<string, string>
 
@@ -86,12 +86,13 @@ export function t(locale: DemoLocale, key: string): string {
 export function stateReadout(
   locale: DemoLocale,
   state: StickyAsideState,
-  scrolling: boolean,
-  scrollingUp: boolean,
+  isScrolling: boolean,
+  isScrollingUp: boolean,
 ): string {
-  const key = state === 'flow' && scrolling
-    ? (scrollingUp ? 'state.flowUp' : 'state.flowDown')
+  const key = state === 'flow' && isScrolling
+    ? (isScrollingUp ? 'state.flowUp' : 'state.flowDown')
     : `state.${state}`
+
   return t(locale, key)
 }
 
@@ -109,6 +110,7 @@ export function frameworkFromPath(path: string): DemoFramework {
   if (segment === 'vue' || segment === 'react' || segment === 'svelte') {
     return segment
   }
+
   return 'vanilla'
 }
 
@@ -117,16 +119,19 @@ export function localePath(locale: DemoLocale, path: string): string {
   if (locale === 'ru') {
     return clean === '/' ? '/ru/' : `/ru${clean}`
   }
+
   return clean
 }
 
 export function switchLocalePath(locale: DemoLocale, path: string): string {
   if (locale === 'ru') {
     const stripped = path.replace(/^\/ru(?=\/|$)/, '')
+
     return stripped.length > 0 ? stripped : '/'
   }
   if (path === '/') {
     return '/ru/'
   }
+
   return `/ru${path}`
 }

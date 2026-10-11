@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { bindThemeToggle } from '../scripts/theme-toggle.ts'
-import { applyTheme, readStoredTheme, resolveTheme, THEME_KEY } from './theme.ts'
+import { applyTheme, readStoredTheme, resolveTheme, THEME_KEY } from '#site/demo/theme.ts'
+import { bindThemeToggle } from '#site/scripts/theme-toggle.ts'
 
 describe('theme', () => {
   afterEach(() => {

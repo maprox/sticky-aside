@@ -1,11 +1,14 @@
-import { applyTheme, readStoredTheme, THEME_KEY } from '../demo/theme.ts'
-import type { SiteTheme } from '../demo/theme.ts'
+import { applyTheme, readStoredTheme, THEME_KEY } from '#site/demo/theme.ts'
+import type { SiteTheme } from '#site/demo/theme.ts'
 
-export function bindThemeToggle(button: HTMLButtonElement, storage: Pick<Storage, 'getItem' | 'setItem'> = localStorage) {
+export function bindThemeToggle(
+  button: HTMLButtonElement,
+  storage: Pick<Storage, 'getItem' | 'setItem'> = localStorage,
+) {
   const paint = () => {
-    const dark = document.documentElement.dataset.theme === 'dark'
-    button.setAttribute('aria-pressed', dark ? 'true' : 'false')
-    const label = dark ? button.dataset.labelLight : button.dataset.labelDark
+    const isDark = document.documentElement.dataset.theme === 'dark'
+    button.setAttribute('aria-pressed', isDark ? 'true' : 'false')
+    const label = isDark ? button.dataset.labelLight : button.dataset.labelDark
     if (label) {
       button.setAttribute('aria-label', label)
     }

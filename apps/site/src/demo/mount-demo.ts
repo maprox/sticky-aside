@@ -1,11 +1,11 @@
-import { createStickyAsidePresenter } from '@sticky-aside/core/headless'
 import type { StickyAsideController, StickyAsideState } from '@sticky-aside/core'
+import { createStickyAsidePresenter } from '@sticky-aside/core/headless'
 
-import { createFrameView } from './frame-view.ts'
-import { generateDemoCode } from './generate-code.ts'
-import { articleLines, t } from './i18n.ts'
-import { clampDemoSettings, DEFAULT_DEMO_SETTINGS } from './settings.ts'
-import type { DemoLocale, DemoSettings } from './settings.ts'
+import { createFrameView } from '#site/demo/frame-view.ts'
+import { generateDemoCode } from '#site/demo/generate-code.ts'
+import { articleLines, t } from '#site/demo/i18n.ts'
+import { clampDemoSettings, DEFAULT_DEMO_SETTINGS } from '#site/demo/settings.ts'
+import type { DemoLocale, DemoSettings } from '#site/demo/settings.ts'
 
 export interface DemoReadout {
   state: StickyAsideState
@@ -51,9 +51,9 @@ export function mountMiniDemo(options: {
   const scrollIdleMs = 200
   let settings = clampDemoSettings({ ...DEFAULT_DEMO_SETTINGS, ...options.settings })
   let state: StickyAsideState = 'off'
-  let scrollingUp = false
-  let scrolling = false
-  let alive = true
+  let isScrollingUp = false
+  let isScrolling = false
+  let isAlive = true
   let scrollTimer: ReturnType<typeof setTimeout> | undefined
   let lastScroll = viewport.scrollTop
 
@@ -87,7 +87,7 @@ export function mountMiniDemo(options: {
   }
 
   function emit() {
-    options.onChange?.(settings, { state, scrollingUp, scrolling })
+    options.onChange?.(settings, { state, scrollingUp: isScrollingUp, scrolling: isScrolling })
   }
 
   function onScroll() {
@@ -95,13 +95,13 @@ export function mountMiniDemo(options: {
     if (next === lastScroll) {
       return
     }
-    scrollingUp = next < lastScroll
+    isScrollingUp = next < lastScroll
     lastScroll = next
-    scrolling = true
+    isScrolling = true
     clearTimeout(scrollTimer)
     scrollTimer = setTimeout(() => {
-      scrolling = false
-      if (alive) {
+      isScrolling = false
+      if (isAlive) {
         emit()
       }
     }, scrollIdleMs)
@@ -115,17 +115,17 @@ export function mountMiniDemo(options: {
   return {
     getSettings: () => settings,
     setSettings(patch) {
-      const prevTall = settings.tall
+      const isPreviouslyTall = settings.tall
       settings = clampDemoSettings({ ...settings, ...patch })
-      if (settings.tall !== prevTall) {
+      if (settings.tall !== isPreviouslyTall) {
         paintPanel()
       }
       apply()
     },
-    getReadout: () => ({ state, scrollingUp, scrolling }),
+    getReadout: () => ({ state, scrollingUp: isScrollingUp, scrolling: isScrolling }),
     getViewport: () => viewport,
     destroy() {
-      alive = false
+      isAlive = false
       clearTimeout(scrollTimer)
       viewport.removeEventListener('scroll', onScroll)
       aside.destroy()
@@ -149,5 +149,6 @@ export function panelBody(settings: DemoSettings, locale: DemoLocale): HTMLEleme
     }
     body.append(list)
   }
+
   return body
 }

@@ -1,11 +1,18 @@
-import { generateDemoCode } from '../demo/generate-code.ts'
-import { highlightCode } from '../demo/highlight.ts'
-import { frameworkFromPath, frameworkPath, localePath, stateReadout, switchLocalePath, t } from '../demo/i18n.ts'
-import { mountMiniDemo } from '../demo/mount-demo.ts'
-import type { DemoReadout, MiniDemoHandle } from '../demo/mount-demo.ts'
-import { VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from '../demo/settings.ts'
-import type { DemoFramework, DemoLocale, DemoSettings } from '../demo/settings.ts'
-import { THEME_EVENT } from '../demo/theme.ts'
+import { generateDemoCode } from '#site/demo/generate-code.ts'
+import { highlightCode } from '#site/demo/highlight.ts'
+import {
+  frameworkFromPath,
+  frameworkPath,
+  localePath,
+  stateReadout,
+  switchLocalePath,
+  t,
+} from '#site/demo/i18n.ts'
+import { mountMiniDemo } from '#site/demo/mount-demo.ts'
+import type { DemoReadout, MiniDemoHandle } from '#site/demo/mount-demo.ts'
+import { VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from '#site/demo/settings.ts'
+import type { DemoFramework, DemoLocale, DemoSettings } from '#site/demo/settings.ts'
+import { THEME_EVENT } from '#site/demo/theme.ts'
 
 const BOOL_KEYS = ['locked', 'disabled', 'allowLockedOverflowTop', 'allowLockedOverflowBottom'] as const
 const NUM_KEYS = ['top', 'bottom'] as const
@@ -15,6 +22,7 @@ function readTone(stage: HTMLElement): 'light' | 'dark' {
   if (root === 'dark' || root === 'light') {
     return root
   }
+
   return stage.dataset.tone === 'dark' ? 'dark' : 'light'
 }
 
@@ -97,6 +105,7 @@ function readFramework(stage: HTMLElement): DemoFramework {
   if (value === 'vanilla' || value === 'vue' || value === 'react' || value === 'svelte') {
     return value
   }
+
   return frameworkFromPath(location.pathname)
 }
 
@@ -153,8 +162,12 @@ function bindKnobs(stage: HTMLElement, demo: MiniDemoHandle) {
   tall?.addEventListener('change', () => demo.setSettings({ tall: tall.checked }))
   lock?.addEventListener('change', () => demo.setSettings({ locked: lock.checked }))
   disabled?.addEventListener('change', () => demo.setSettings({ disabled: disabled.checked }))
-  overflowTop?.addEventListener('change', () => demo.setSettings({ allowLockedOverflowTop: overflowTop.checked }))
-  overflowBottom?.addEventListener('change', () => demo.setSettings({ allowLockedOverflowBottom: overflowBottom.checked }))
+  overflowTop?.addEventListener('change', () => {
+    demo.setSettings({ allowLockedOverflowTop: overflowTop.checked })
+  })
+  overflowBottom?.addEventListener('change', () => {
+    demo.setSettings({ allowLockedOverflowBottom: overflowBottom.checked })
+  })
   top?.addEventListener('input', () => demo.setSettings({ top: Number(top.value) }))
   bottom?.addEventListener('input', () => demo.setSettings({ bottom: Number(bottom.value) }))
   syncKnobs(stage, demo.getSettings())
@@ -162,8 +175,8 @@ function bindKnobs(stage: HTMLElement, demo: MiniDemoHandle) {
 
 function bindResize(stage: HTMLElement, demo: MiniDemoHandle, locale: DemoLocale) {
   const handle = stage.querySelector<HTMLElement>('[data-resize-height]')
-  const frame = stage.querySelector<HTMLElement>('.cf-stage')
-    ?? stage.querySelector<HTMLElement>('[data-viewport]')
+  const frame = stage.querySelector<HTMLElement>('.cf-stage') ??
+    stage.querySelector<HTMLElement>('[data-viewport]')
   if (!handle || !frame) {
     return
   }
@@ -221,6 +234,7 @@ function readFrameHeight(frame: HTMLElement, demo: MiniDemoHandle): number {
   if (laidOut > 0) {
     return laidOut
   }
+
   return demo.getSettings().viewportHeight
 }
 
@@ -238,10 +252,10 @@ function syncKnobs(stage: HTMLElement, settings: DemoSettings) {
   setNumber(stage, '[data-bottom]', settings.bottom)
 }
 
-function setCheck(stage: HTMLElement, selector: string, value: boolean) {
+function setCheck(stage: HTMLElement, selector: string, isChecked: boolean) {
   const input = stage.querySelector<HTMLInputElement>(selector)
   if (input && document.activeElement !== input) {
-    input.checked = value
+    input.checked = isChecked
   }
 }
 
@@ -265,12 +279,19 @@ interface DragState {
   key: string
 }
 
-function paintScrub(host: HTMLElement, settings: DemoSettings, demo: MiniDemoHandle, drag: DragState, locale: DemoLocale) {
+function paintScrub(
+  host: HTMLElement,
+  settings: DemoSettings,
+  demo: MiniDemoHandle,
+  drag: DragState,
+  locale: DemoLocale,
+) {
   if (drag.on) {
     const live = host.querySelector<HTMLElement>(`[data-scrub="${drag.key}"]`)
     if (live && (drag.key === 'top' || drag.key === 'bottom')) {
       live.textContent = String(settings[drag.key])
     }
+
     return
   }
   host.replaceChildren()
@@ -325,6 +346,7 @@ function scrubNumber(key: 'top' | 'bottom', value: string, demo: MiniDemoHandle,
     span.addEventListener('pointermove', move)
     span.addEventListener('pointerup', up)
   })
+
   return span
 }
 
@@ -336,5 +358,6 @@ function scrubBool(key: (typeof BOOL_KEYS)[number], value: string, demo: MiniDem
   span.addEventListener('click', () => {
     demo.setSettings({ [key]: !demo.getSettings()[key] })
   })
+
   return span
 }

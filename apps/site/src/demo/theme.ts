@@ -3,11 +3,12 @@ export const THEME_EVENT = 'sticky-aside-theme'
 
 export type SiteTheme = 'light' | 'dark'
 
-export function resolveTheme(stored: string | null, prefersDark: boolean): SiteTheme {
+export function resolveTheme(stored: string | null, isDarkPreferred: boolean): SiteTheme {
   if (stored === 'dark' || stored === 'light') {
     return stored
   }
-  return prefersDark ? 'dark' : 'light'
+
+  return isDarkPreferred ? 'dark' : 'light'
 }
 
 export function readStoredTheme(storage: Pick<Storage, 'getItem'>): string | null {

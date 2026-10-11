@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { generateDemoCode } from './generate-code.ts'
-import { clampDemoSettings, DEFAULT_DEMO_SETTINGS } from './settings.ts'
+import { generateDemoCode } from '#site/demo/generate-code.ts'
+import { clampDemoSettings, DEFAULT_DEMO_SETTINGS } from '#site/demo/settings.ts'
 
 const base = DEFAULT_DEMO_SETTINGS
 
