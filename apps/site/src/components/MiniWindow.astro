@@ -1,0 +1,132 @@
+<div class="browser">
+  <div class="browser-chrome" aria-hidden="true">
+    <span class="traffic"><i></i><i></i><i></i></span>
+  </div>
+  <div class="browser-stage">
+    <div class="mini-viewport" data-viewport></div>
+  </div>
+  <div class="browser-resize" data-resize-height role="slider" tabindex="0" aria-orientation="vertical" aria-valuemin="240" aria-valuemax="1600"></div>
+</div>
+
+<style>
+  .browser-chrome {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 14px;
+    position: relative;
+    z-index: 2;
+    background: inherit;
+  }
+
+  .traffic {
+    display: flex;
+    gap: 6px;
+    flex: none;
+  }
+
+  .traffic i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .traffic i:nth-child(1) { background: #ff5f57; }
+  .traffic i:nth-child(2) { background: #febc2e; }
+  .traffic i:nth-child(3) { background: #28c840; }
+
+  .browser-stage {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mini-viewport {
+    overflow: auto;
+    flex: 1;
+    min-height: 0;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .browser-resize {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    height: 14px;
+    border-radius: 0 0 16px 16px;
+    cursor: ns-resize;
+    touch-action: none;
+  }
+
+  .browser-resize::before {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 4px;
+    margin: 6px auto 0;
+    border-radius: 999px;
+    background: rgba(29, 26, 23, 0.28);
+  }
+
+  .browser-resize:focus-visible {
+    outline: 2px solid rgba(29, 26, 23, 0.55);
+    outline-offset: -3px;
+  }
+
+  :global(html[data-theme="dark"]) .browser-resize::before {
+    background: rgba(243, 236, 227, 0.35);
+  }
+
+  :global(html[data-theme="dark"]) .browser-resize:focus-visible {
+    outline-color: rgba(243, 236, 227, 0.55);
+  }
+</style>
+
+<style is:global>
+  .browser {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+  }
+
+  html[data-theme="dark"] .browser {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+  }
+
+  .mini-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 210px;
+    gap: 18px;
+    min-height: 1600px;
+    padding: 16px;
+  }
+
+  .mini-article p { margin: 0 0 0.9em; }
+
+  .mini-rail { min-height: 100%; }
+
+  .panel ol {
+    margin: 10px 0 0;
+    padding-left: 1.1em;
+    font-size: 13px;
+  }
+
+  .panel li { margin: 0 0 0.55em; }
+
+  .panel-copy { margin: 0; }
+
+  @media (max-width: 800px) {
+    .mini-page { grid-template-columns: 1fr; }
+  }
+</style>

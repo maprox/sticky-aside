@@ -1,0 +1,102 @@
+---
+import { frameworkPath, localePath, t } from '../demo/i18n'
+import type { DemoFramework, DemoLocale } from '../demo/settings'
+
+interface Props {
+  locale: DemoLocale
+  framework: DemoFramework
+}
+
+const { locale, framework } = Astro.props
+const items = ['vanilla', 'vue', 'react', 'svelte'] as const
+const labels = { vanilla: 'Vanilla', vue: 'Vue', react: 'React', svelte: 'Svelte' }
+---
+
+<div class="glass-tabs" role="tablist" aria-label={t(locale, 'knob.framework')}>
+  {items.map((id) => (
+    <a role="tab" href={localePath(locale, frameworkPath(id))} data-framework={id} aria-selected={id === framework ? 'true' : 'false'}>
+      {labels[id]}
+    </a>
+  ))}
+</div>
+
+<style>
+  .glass-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    padding: 3px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 8px 24px rgba(20, 24, 28, 0.08);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+  }
+
+  .glass-tabs a {
+    appearance: none;
+    border: 0;
+    margin: 0;
+    background: transparent;
+    color: rgba(28, 28, 30, 0.78);
+    border-radius: 9px;
+    padding: 6px 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-weight: 560;
+    letter-spacing: -0.012em;
+    line-height: 1.15;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .glass-tabs a:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .glass-tabs a[aria-selected="true"] {
+    background: rgba(255, 255, 255, 0.42);
+    color: rgba(18, 18, 20, 0.94);
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.12),
+      inset 0 0.5px 0 rgba(255, 255, 255, 0.85),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.45);
+  }
+
+  .glass-tabs a:focus-visible {
+    outline: 2px solid rgba(10, 132, 255, 0.9);
+    outline-offset: 1px;
+  }
+
+  :global(html[data-theme="dark"]) .glass-tabs {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  :global(html[data-theme="dark"]) .glass-tabs a {
+    color: rgba(243, 236, 227, 0.72);
+  }
+
+  :global(html[data-theme="dark"]) .glass-tabs a:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  :global(html[data-theme="dark"]) .glass-tabs a[aria-selected="true"] {
+    background: rgba(255, 255, 255, 0.14);
+    color: #f6f1ea;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.35),
+      inset 0 0.5px 0 rgba(255, 255, 255, 0.2),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.12);
+  }
+</style>
