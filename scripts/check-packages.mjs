@@ -24,6 +24,18 @@ const packages = [
     dir: 'packages/svelte',
     attwArgs: [],
   },
+  {
+    name: '@sticky-aside/solid',
+    dir: 'packages/solid',
+    attwArgs: [],
+  },
+  {
+    name: '@sticky-aside/astro',
+    dir: 'packages/astro',
+    // Astro primary export is .astro — skip attw; still run publint
+    skipAttw: true,
+    attwArgs: [],
+  },
 ]
 
 const destination = mkdtempSync(join(tmpdir(), 'sticky-aside-pack-'))
@@ -38,7 +50,9 @@ try {
       throw new Error(`pnpm pack did not write a tarball for ${pkg.name}`)
     }
 
-    run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
+    if (!pkg.skipAttw) {
+      run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
+    }
   }
 } finally {
   rmSync(destination, { recursive: true, force: true })
