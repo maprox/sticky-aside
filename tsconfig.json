@@ -22,6 +22,7 @@
     "packages/vue/vue-shim.d.ts",
     "packages/svelte/svelte-shim.d.ts",
     "apps/site/src/**/*.ts",
-    "apps/site/src/**/*.tsx"
+    "apps/site/src/**/*.tsx",
+    "apps/site/src/**/*.d.ts"
   ]
 }

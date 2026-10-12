@@ -4,9 +4,11 @@ import {
   frameworkFromPath,
   frameworkPath,
   localePath,
+  sitePath,
   stateReadout,
   switchLocalePath,
   t,
+  withBase,
 } from '#site/demo/i18n.ts'
 import { mountMiniDemo } from '#site/demo/mount-demo.ts'
 import type { DemoReadout, MiniDemoHandle } from '#site/demo/mount-demo.ts'
@@ -106,7 +108,7 @@ function readFramework(stage: HTMLElement): DemoFramework {
     return value
   }
 
-  return frameworkFromPath(location.pathname)
+  return frameworkFromPath(sitePath(location.pathname))
 }
 
 function syncLangLink(locale: DemoLocale) {
@@ -114,7 +116,7 @@ function syncLangLink(locale: DemoLocale) {
   if (!link) {
     return
   }
-  link.setAttribute('href', switchLocalePath(locale, location.pathname))
+  link.setAttribute('href', withBase(switchLocalePath(locale, location.pathname)))
 }
 
 function syncFrameworks(stage: HTMLElement, framework: DemoFramework) {
@@ -135,7 +137,7 @@ function bindFrameworks(stage: HTMLElement, demo: MiniDemoHandle, locale: DemoLo
         return
       }
       event.preventDefault()
-      const url = localePath(locale, frameworkPath(framework))
+      const url = withBase(localePath(locale, frameworkPath(framework)))
       if (location.pathname !== url) {
         history.pushState(null, '', url)
       }
@@ -144,7 +146,7 @@ function bindFrameworks(stage: HTMLElement, demo: MiniDemoHandle, locale: DemoLo
     })
   })
   window.addEventListener('popstate', () => {
-    demo.setSettings({ framework: frameworkFromPath(location.pathname) })
+    demo.setSettings({ framework: frameworkFromPath(sitePath(location.pathname)) })
     syncLangLink(locale)
   })
   syncFrameworks(stage, demo.getSettings().framework)

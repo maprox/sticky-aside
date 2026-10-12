@@ -1,5 +1,5 @@
 ---
-import { frameworkPath, localePath, t } from '../demo/i18n'
+import { frameworkPath, localePath, t, withBase } from '../demo/i18n'
 import type { DemoFramework, DemoLocale } from '../demo/settings'
 
 interface Props {
@@ -14,7 +14,7 @@ const labels = { vanilla: 'Vanilla', vue: 'Vue', react: 'React', svelte: 'Svelte
 
 <div class="glass-tabs" role="tablist" aria-label={t(locale, 'knob.framework')}>
   {items.map((id) => (
-    <a role="tab" href={localePath(locale, frameworkPath(id))} data-framework={id} aria-selected={id === framework ? 'true' : 'false'}>
+    <a role="tab" href={withBase(localePath(locale, frameworkPath(id)))} data-framework={id} aria-selected={id === framework ? 'true' : 'false'}>
       {labels[id]}
     </a>
   ))}
