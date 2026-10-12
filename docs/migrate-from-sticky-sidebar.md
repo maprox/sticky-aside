@@ -4,7 +4,7 @@
 
 ## Markup
 
-sticky-sidebar expects a sidebar column and an inner wrapper:
+Keep the same shape sticky-sidebar already wants — a column and an inner panel you own (do not rely on an auto-created wrapper):
 
 ```html
 <div id="main-content">
@@ -15,16 +15,7 @@ sticky-sidebar expects a sidebar column and an inner wrapper:
 </div>
 ```
 
-Map that to sticky-aside: the column is `wrapper`, the panel is `content`. Keep an inner element you own (do not rely on an auto-created wrapper).
-
-```html
-<div id="main-content">
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar__inner">…</div>
-  </aside>
-  <div id="content">…</div>
-</div>
-```
+`#sidebar` is `wrapper`. `.sidebar__inner` is `content`. The tag on the column (`div` or `aside`) does not matter.
 
 ## Vanilla
 
