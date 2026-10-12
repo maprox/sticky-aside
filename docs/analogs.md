@@ -22,7 +22,7 @@ The repository is [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
 
 | Library | Behavior | Min / gzip | Weekly downloads | Latest npm | Last repo push | Stars |
 | --- | --- | --- | --- | --- | --- | --- |
-| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | 6.6 / 2.2 KB | 321 | 1.0.0, Oct 2026 | Oct 2026 | 0 |
+| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | 6.6 / 2.2 KB | 321 | 1.0.0, Oct 2026 | Oct 2026 | 1 |
 | [react-sticky-box](https://github.com/codecks-io/react-sticky-box) | Same | 4.0 / 3.6 KB | 128,281 | 2.0.5, Oct 2023 | Apr 2026 | 503 |
 | [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) | Same | 9.0 / 2.8 KB | 12,934 | 3.3.1, Nov 2017 | Aug 2024 | 2,223 |
 | [theia-sticky-sidebar](https://github.com/WeCodePixels/theia-sticky-sidebar) | Same | 6.7 / 2.1 KB | 9,906 | 2.0.1, Sep 2026 | Sep 2026 | 581 |
