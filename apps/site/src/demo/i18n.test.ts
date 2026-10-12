@@ -43,6 +43,7 @@ describe('i18n', () => {
     expect(frameworkFromPath('/ru/react/')).toBe('react')
     expect(frameworkFromPath('/solid')).toBe('solid')
     expect(frameworkFromPath('/ru/astro/')).toBe('astro')
+    expect(frameworkFromPath('/angular')).toBe('angular')
     expect(frameworkFromPath('/ru/')).toBe('vanilla')
   })
 

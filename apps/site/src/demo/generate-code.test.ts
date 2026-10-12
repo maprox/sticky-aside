@@ -83,6 +83,20 @@ describe('generateDemoCode', () => {
     expect(code).toContain("'--sticky-aside-top': '40px'")
   })
 
+  it('prints angular sticky-aside bindings', () => {
+    const code = generateDemoCode({
+      ...base,
+      framework: 'angular',
+      locked: true,
+      top: 40,
+    })
+    expect(code).toContain("from '@sticky-aside/angular'")
+    expect(code).toContain('StickyAside')
+    expect(code).toContain('[locked]="true"')
+    expect(code).toContain('--sticky-aside-top: 40px')
+    expect(code).toContain('as="aside"')
+  })
+
   it('prints astro createStickyAside usage', () => {
     const code = generateDemoCode({
       ...base,
