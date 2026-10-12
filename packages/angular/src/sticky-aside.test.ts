@@ -45,6 +45,15 @@ class HostBasic {}
 })
 class HostServer {}
 
+@Component({
+  standalone: true,
+  imports: [StickyAside],
+  template: `<sticky-aside [as]="tag">item</sticky-aside>`,
+})
+class HostChangeTag {
+  tag: 'div' | 'aside' = 'div'
+}
+
 describe('StickyAside', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -94,8 +103,32 @@ describe('StickyAside', () => {
     await fixture.whenStable()
 
     expect(createStickyAside).not.toHaveBeenCalled()
-    const root = fixture.nativeElement.querySelector('sticky-aside')
-    expect(root).toBeTruthy()
-    expect(root.className).toContain('sticky-aside-root')
+    const wrapper = fixture.nativeElement.querySelector('sticky-aside > div')
+    expect(wrapper).toBeTruthy()
+    expect(wrapper.className).toContain('sticky-aside-root')
+    expect(fixture.nativeElement.textContent).toContain('item')
+  })
+
+  it('recreates the controller when `as` changes after init', async () => {
+    TestBed.resetTestingModule()
+    TestBed.configureTestingModule({
+      imports: [HostChangeTag],
+    })
+
+    const fixture = TestBed.createComponent(HostChangeTag)
+    fixture.detectChanges()
+    await fixture.whenStable()
+
+    expect(createStickyAside).toHaveBeenCalledTimes(1)
+    const first = vi.mocked(createStickyAside).mock.results[0]?.value
+    expect(fixture.nativeElement.querySelector('div.sticky-aside-root')).toBeTruthy()
+
+    fixture.componentInstance.tag = 'aside'
+    fixture.detectChanges()
+    await fixture.whenStable()
+
+    expect(first.destroy).toHaveBeenCalledOnce()
+    expect(createStickyAside).toHaveBeenCalledTimes(2)
+    expect(fixture.nativeElement.querySelector('aside.sticky-aside-root')).toBeTruthy()
   })
 })
