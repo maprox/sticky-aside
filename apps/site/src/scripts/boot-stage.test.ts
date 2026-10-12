@@ -155,6 +155,28 @@ describe('bootStage', () => {
     expect(handle?.getAttribute('aria-valuenow')).toBe('860')
   })
 
+  it('moves the top dial when the snippet scrub changes the offset after the dial was focused', () => {
+    const stage = document.createElement('section')
+    stage.dataset.locale = 'en'
+    stage.innerHTML = [
+      '<div data-viewport></div>',
+      '<input data-top type="range" min="0" max="120" value="16" />',
+      '<div data-scrub-host></div>',
+    ].join('')
+    document.body.append(stage)
+
+    const demo = bootStage(stage)
+    const dial = stage.querySelector<HTMLInputElement>('[data-top]')!
+    dial.focus()
+    expect(document.activeElement).toBe(dial)
+
+    demo?.setSettings({ top: 48 })
+
+    expect(dial.value).toBe('48')
+    expect(dial.style.getPropertyValue('--fill')).toBe('40%')
+    demo?.destroy()
+  })
+
 })
 
 function setScreenHeight(height: number) {

@@ -271,9 +271,8 @@ function setNumber(stage: HTMLElement, selector: string, value: number) {
   const span = max - min || 1
   const pct = Math.min(100, Math.max(0, ((value - min) / span) * 100))
   input.style.setProperty('--fill', `${pct}%`)
-  if (document.activeElement !== input) {
-    input.value = String(value)
-  }
+  // Always write value: a focused dial after a mouse drag still needs to follow scrub edits.
+  input.value = String(value)
 }
 
 interface DragState {
