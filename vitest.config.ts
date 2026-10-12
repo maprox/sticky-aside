@@ -84,6 +84,13 @@ export default defineConfig({
       },
       {
         test: {
+          name: 'astro',
+          environment: 'happy-dom',
+          include: ['packages/astro/src/**/*.test.ts'],
+        },
+      },
+      {
+        test: {
           name: 'site',
           environment: 'happy-dom',
           include: ['apps/site/src/**/*.test.ts'],

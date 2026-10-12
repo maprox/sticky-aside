@@ -22,6 +22,14 @@
     "limit": "700 B"
   },
   {
+    "name": "astro",
+    "path": "packages/astro/dist/client.js",
+    "import": "{ initStickyAsideRoots }",
+    "ignore": ["@sticky-aside/core"],
+    "gzip": true,
+    "limit": "700 B"
+  },
+  {
     "name": "react",
     "path": "packages/react/dist/StickyAside.js",
     "import": "{ StickyAside }",

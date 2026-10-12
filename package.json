@@ -7,7 +7,7 @@
     "test": "vitest run",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "build": "pnpm --filter @sticky-aside/core build && pnpm --filter @sticky-aside/vue --filter @sticky-aside/react --filter @sticky-aside/svelte --filter @sticky-aside/solid build",
+    "build": "pnpm --filter @sticky-aside/core build && pnpm --filter @sticky-aside/vue --filter @sticky-aside/react --filter @sticky-aside/svelte --filter @sticky-aside/solid --filter @sticky-aside/astro build",
     "size": "pnpm build && size-limit",
     "check:packages": "node scripts/check-packages.mjs",
     "test:e2e": "node scripts/e2e.mjs",
