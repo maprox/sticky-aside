@@ -6,10 +6,10 @@
     "dev": "vite --host 127.0.0.1 --port 4174 --strictPort"
   },
   "dependencies": {
-    "@sticky-aside/core": "file:./.packs/sticky-aside-core-1.0.0.tgz",
-    "@sticky-aside/react": "file:./.packs/sticky-aside-react-1.0.0.tgz",
-    "@sticky-aside/svelte": "file:./.packs/sticky-aside-svelte-1.0.0.tgz",
-    "@sticky-aside/vue": "file:./.packs/sticky-aside-vue-1.0.0.tgz",
+    "@sticky-aside/core": "file:./.packs/sticky-aside-core-1.0.1.tgz",
+    "@sticky-aside/react": "file:./.packs/sticky-aside-react-1.0.1.tgz",
+    "@sticky-aside/svelte": "file:./.packs/sticky-aside-svelte-1.0.1.tgz",
+    "@sticky-aside/vue": "file:./.packs/sticky-aside-vue-1.0.1.tgz",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "svelte": "^5.39.6",
@@ -17,7 +17,7 @@
   },
   "pnpm": {
     "overrides": {
-      "@sticky-aside/core": "file:./.packs/sticky-aside-core-1.0.0.tgz"
+      "@sticky-aside/core": "file:./.packs/sticky-aside-core-1.0.1.tgz"
     }
   },
   "devDependencies": {

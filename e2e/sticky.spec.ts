@@ -12,20 +12,21 @@ test.describe('packed packages', () => {
     })
 
     test(`${runtime} pins a tall panel to the bottom, then the top`, async ({ stickyPage }) => {
-      await stickyPage.open({ runtime, tall: true })
+      // top:0 keeps the tall panel in flow at load; a non-zero offset would cover and pin.
+      await stickyPage.open({ runtime, tall: true, top: 0, bottom: 0 })
       await stickyPage.expectState('flow')
 
       await stickyPage.scrollTo(1000)
       await stickyPage.expectState('bottom')
       const bottom = await stickyPage.contentBox()
-      expect(bottom.y + bottom.height).toBeCloseTo(VIEWPORT_HEIGHT - DEFAULT_OFFSET, 0)
+      expect(bottom.y + bottom.height).toBeCloseTo(VIEWPORT_HEIGHT, 0)
 
       await stickyPage.scrollTo(900)
       await stickyPage.expectState('flow')
 
       await stickyPage.scrollTo(200)
       await stickyPage.expectState('top')
-      expect((await stickyPage.contentBox()).y).toBeCloseTo(DEFAULT_OFFSET, 0)
+      expect((await stickyPage.contentBox()).y).toBeCloseTo(0, 0)
       await expect(stickyPage.states).toHaveText('flow bottom flow top')
     })
 
@@ -35,8 +36,15 @@ test.describe('packed packages', () => {
       await expect.poll(async () => (await stickyPage.contentBox()).y).toBeCloseTo(48, 0)
     })
 
-    test(`${runtime} returns a lock into the column and keeps one that may overflow`, async ({ stickyPage }) => {
+    test(`${runtime} moves a tall panel when the top offset covers it`, async ({ stickyPage }) => {
       await stickyPage.open({ runtime, tall: true })
+      await stickyPage.expectState('top')
+      await stickyPage.setTopOffset(48)
+      await expect.poll(async () => (await stickyPage.contentBox()).y).toBeCloseTo(48, 0)
+    })
+
+    test(`${runtime} returns a lock into the column and keeps one that may overflow`, async ({ stickyPage }) => {
+      await stickyPage.open({ runtime, tall: true, top: 0, bottom: 0 })
       await stickyPage.scrollTo(1000)
       await stickyPage.expectState('bottom')
       await stickyPage.lock()
@@ -53,7 +61,7 @@ test.describe('packed packages', () => {
       await stickyPage.allowOverflowTop()
       await stickyPage.expectState('locked')
 
-      await stickyPage.open({ runtime, tall: true })
+      await stickyPage.open({ runtime, tall: true, top: 0, bottom: 0 })
       await stickyPage.scrollTo(1000)
       await stickyPage.expectState('bottom')
       await stickyPage.scrollTo(900)
