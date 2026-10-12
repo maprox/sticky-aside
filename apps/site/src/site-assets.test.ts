@@ -28,4 +28,27 @@ describe('site assets', () => {
     const variant = readFileSync(join(siteRoot, 'src/components/VariantPage.astro'), 'utf8')
     expect(variant).not.toMatch(/IBM Plex/)
   })
+
+  it('SSGs the demo viewport and framework snippet before client JS', () => {
+    const variant = readFileSync(join(siteRoot, 'src/components/VariantPage.astro'), 'utf8')
+    expect(variant).toMatch(/initialSnippetText/)
+    expect(variant).toMatch(/initialSnippetText\(locale,\s*framework\)/)
+    expect(variant).toMatch(/data-scrub-host/)
+    expect(variant).not.toMatch(/data-scrub-host><\/div>/)
+
+    const mini = readFileSync(join(siteRoot, 'src/components/MiniWindow.astro'), 'utf8')
+    expect(mini).toMatch(/initialViewportModel/)
+    expect(mini).toMatch(/mini-page/)
+    expect(mini).toMatch(/panel-copy/)
+  })
+
+  it('runs eslint in pre-commit before typecheck', () => {
+    const pkg = JSON.parse(readFileSync(join(siteRoot, '../../package.json'), 'utf8')) as {
+      'simple-git-hooks'?: { 'pre-commit'?: string }
+    }
+    const preCommit = pkg['simple-git-hooks']?.['pre-commit'] ?? ''
+    expect(preCommit).toMatch(/\blint\b/)
+    expect(preCommit).toMatch(/\btypecheck\b/)
+    expect(preCommit.indexOf('lint')).toBeLessThan(preCommit.indexOf('typecheck'))
+  })
 })
