@@ -84,6 +84,10 @@ export function isFullyVisible(frame: StickyFrame): boolean {
   return frame.measure.height >= frame.content.height
 }
 
+export function isCoveringTopOffset(frame: StickyFrame): boolean {
+  return frame.content.top >= 0 && frame.content.top < frame.measure.top
+}
+
 export function isMeasureInside(frame: StickyFrame): boolean {
   return frame.measure.top >= frame.wrapper.top && frame.measure.bottom <= frame.wrapper.bottom
 }
