@@ -5,7 +5,7 @@ const cwd = fileURLToPath(new URL('.', import.meta.url))
 
 export default defineConfig({
   cwd,
-  entry: ['src/client.ts'],
+  entry: ['src/index.ts'],
   platform: 'browser',
   target: 'es2022',
   format: 'esm',

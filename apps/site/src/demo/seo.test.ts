@@ -22,7 +22,7 @@ describe('seoCopy', () => {
       'Solid sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
     )
     expect(seoCopy('en', 'astro').description).toBe(
-      'Astro sticky sidebar component with the same API as the other adapters. Pins to the edge you scroll toward. Small ESM core for modern browsers.',
+      'Sticky sidebar for Astro with the same createStickyAside API as vanilla. Both-edge pin, lock, CSS offsets. Small ESM core for modern browsers.',
     )
   })
 

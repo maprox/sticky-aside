@@ -129,12 +129,24 @@ export function Sidebar() {
 
 ```astro
 ---
-import { StickyAside } from '@sticky-aside/astro'
 ---
 
-<StickyAside as="aside" topClass="top-10" bottomClass="bottom-0">
-  <nav>...</nav>
-</StickyAside>
+<aside id="wrapper" class="column">
+  <div id="content">
+    <nav>...</nav>
+  </div>
+</aside>
+
+<script>
+  import { createStickyAside } from '@sticky-aside/astro'
+
+  createStickyAside({
+    wrapper: document.querySelector('#wrapper'),
+    content: document.querySelector('#content'),
+    topClass: 'top-10',
+    bottomClass: 'bottom-0',
+  })
+</script>
 ```
 
 ### `offsets.css`
@@ -227,15 +239,25 @@ export function Sidebar() {
 
 ```astro
 ---
-import { StickyAside } from '@sticky-aside/astro'
 import '@sticky-aside/core/offsets.css'
 ---
 
 <div class="layout">
-  <StickyAside as="aside">
-    <nav>...</nav>
-  </StickyAside>
+  <aside id="wrapper">
+    <div id="content">
+      <nav>...</nav>
+    </div>
+  </aside>
 </div>
+
+<script>
+  import { createStickyAside } from '@sticky-aside/astro'
+
+  createStickyAside({
+    wrapper: document.querySelector('#wrapper'),
+    content: document.querySelector('#content'),
+  })
+</script>
 ```
 
 ```css
@@ -244,7 +266,7 @@ import '@sticky-aside/core/offsets.css'
 }
 ```
 
-`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte, Solid, and Astro use `class`.
+`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte and Solid use `class`. Astro uses the same `createStickyAside` API as vanilla.
 
 ## Options
 
@@ -347,7 +369,7 @@ The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage h
 
 ## Compared with other libraries
 
-`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B, Astro client 630 B.
+`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B. `@sticky-aside/astro` re-exports core (same API as vanilla).
 
 [react-sticky-box](https://github.com/codecks-io/react-sticky-box) is the same behavior at 3.6 kB gzip, React only, with no lock. [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) is 2.8 kB gzip and has not published since 2017. The numbers and the rest of the table are in [docs/analogs.md](docs/analogs.md). Coming from sticky-sidebar (including the jQuery build): [docs/migrate-from-sticky-sidebar.md](docs/migrate-from-sticky-sidebar.md).
 

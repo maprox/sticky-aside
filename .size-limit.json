@@ -23,11 +23,11 @@
   },
   {
     "name": "astro",
-    "path": "packages/astro/dist/client.js",
-    "import": "{ initStickyAsideRoots }",
+    "path": "packages/astro/dist/index.js",
+    "import": "{ createStickyAside }",
     "ignore": ["@sticky-aside/core"],
     "gzip": true,
-    "limit": "700 B"
+    "limit": "100 B"
   },
   {
     "name": "react",

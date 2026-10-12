@@ -83,7 +83,7 @@ describe('generateDemoCode', () => {
     expect(code).toContain("'--sticky-aside-top': '40px'")
   })
 
-  it('prints astro component usage', () => {
+  it('prints astro createStickyAside usage', () => {
     const code = generateDemoCode({
       ...base,
       framework: 'astro',
@@ -91,8 +91,10 @@ describe('generateDemoCode', () => {
       bottom: 24,
     })
     expect(code).toContain("from '@sticky-aside/astro'")
-    expect(code).toContain('disabled={true}')
-    expect(code).toContain('--sticky-aside-bottom: 24px')
+    expect(code).toContain('createStickyAside({')
+    expect(code).toContain('disabled: true')
+    expect(code).toContain("'--sticky-aside-bottom', '24px'")
+    expect(code).not.toContain('<StickyAside')
   })
 })
 

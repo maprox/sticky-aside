@@ -1,7 +1,7 @@
 {
   "name": "@sticky-aside/astro",
   "version": "1.0.0",
-  "description": "Astro adapter for @sticky-aside/core.",
+  "description": "Astro entry for @sticky-aside/core (same API as vanilla).",
   "keywords": ["sticky", "sidebar", "aside", "scroll", "astro"],
   "license": "MIT",
   "author": "maprox",
@@ -15,27 +15,21 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/StickyAside.astro",
-    "./client": "./src/client.ts"
+    ".": "./src/index.ts"
   },
   "publishConfig": {
     "exports": {
-      ".": "./src/StickyAside.astro",
-      "./client": {
-        "types": "./dist/client.d.ts",
-        "import": "./dist/client.js"
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
       }
-    },
-    "files": ["src/StickyAside.astro", "src/client.ts", "dist"]
+    }
   },
-  "files": ["src/StickyAside.astro", "src/client.ts", "dist"],
+  "files": ["dist"],
   "scripts": {
     "build": "pnpm --dir ../.. exec tsdown --config packages/astro/tsdown.config.mjs"
   },
   "dependencies": {
     "@sticky-aside/core": "workspace:^"
-  },
-  "peerDependencies": {
-    "astro": "^5.0.0"
   }
 }

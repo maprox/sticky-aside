@@ -32,8 +32,6 @@ const packages = [
   {
     name: '@sticky-aside/astro',
     dir: 'packages/astro',
-    // Astro primary export is .astro — skip attw; still run publint
-    skipAttw: true,
     attwArgs: [],
   },
 ]
@@ -50,9 +48,8 @@ try {
       throw new Error(`pnpm pack did not write a tarball for ${pkg.name}`)
     }
 
-    if (!pkg.skipAttw) {
-      run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
-    }
+    run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
+
   }
 } finally {
   rmSync(destination, { recursive: true, force: true })

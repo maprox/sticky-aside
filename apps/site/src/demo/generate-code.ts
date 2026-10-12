@@ -153,24 +153,34 @@ import '@sticky-aside/core/offsets.css'
 </StickyAside>`
 }
 
-function astro(settings: DemoSettings): string {
+function astro(settings: DemoSettings, locale: DemoLocale): string {
   const vars = styleVars(settings)
+  const markup = vanillaMarkup(settings, locale)
 
   return `---
-import { StickyAside } from '@sticky-aside/astro'
 import '@sticky-aside/core/offsets.css'
 ---
 
-<StickyAside
-  as="aside"
-  locked={${bool(settings.locked)}}
-  disabled={${bool(settings.disabled)}}
-  allowLockedOverflowTop={${bool(settings.allowLockedOverflowTop)}}
-  allowLockedOverflowBottom={${bool(settings.allowLockedOverflowBottom)}}
-  style={\`--sticky-aside-top: ${vars.top}; --sticky-aside-bottom: ${vars.bottom}\`}
->
-  ...
-</StickyAside>`
+${markup}
+
+<script>
+import { createStickyAside } from '@sticky-aside/astro'
+
+const wrapper = document.querySelector('#wrapper')
+const content = document.querySelector('#content')
+
+wrapper.style.setProperty('--sticky-aside-top', '${vars.top}')
+wrapper.style.setProperty('--sticky-aside-bottom', '${vars.bottom}')
+
+createStickyAside({
+  wrapper,
+  content,
+  locked: ${bool(settings.locked)},
+  disabled: ${bool(settings.disabled)},
+  allowLockedOverflowTop: ${bool(settings.allowLockedOverflowTop)},
+  allowLockedOverflowBottom: ${bool(settings.allowLockedOverflowBottom)},
+})
+</script>`
 }
 
 export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'en'): string {
@@ -187,7 +197,7 @@ export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'e
     return solid(settings)
   }
   if (settings.framework === 'astro') {
-    return astro(settings)
+    return astro(settings, locale)
   }
 
   return vanilla(settings, locale)

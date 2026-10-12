@@ -38,7 +38,7 @@ size-limit, minified and gzipped, on the 1.0.0 build:
 | `@sticky-aside/react`, core external | 505 B |
 | `@sticky-aside/svelte`, the component file | 518 B |
 | `@sticky-aside/solid`, core external | 638 B |
-| `@sticky-aside/astro`, `initStickyAsideRoots` client | 630 B |
+| `@sticky-aside/astro`, re-export of `createStickyAside` | 50 B |
 
 The core is window scroll, both edges, lock, and an internal measure element. Offsets are CSS classes, not pixel props. A scroll-root option is not in 1.0.0.
 
@@ -46,7 +46,7 @@ The core is window scroll, both edges, lock, and an internal measure element. Of
 
 | Library | Both edges | Scroll root | Lock in place | Vue 3 | React | Runtime dependencies |
 | --- | --- | --- | --- | --- | --- | --- |
-| @sticky-aside/core | yes | `window` only | yes | yes | yes | none. Adapters peer Vue 3, React, Svelte 5, Solid, or Astro |
+| @sticky-aside/core | yes | `window` only | yes | yes | yes | none. Adapters peer Vue 3, React, Svelte 5, or Solid; Astro re-exports core |
 | react-sticky-box | yes | nearest scroll parent, via `position: sticky` | no | no | yes | none, peer `react` |
 | sticky-sidebar | yes | `window` | no | no | no | none. Optional jQuery build and ResizeSensor |
 | theia-sticky-sidebar | yes | `window` | no | no | no | none in 2.0.1 |

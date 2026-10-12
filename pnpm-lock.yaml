@@ -164,9 +164,6 @@ importers:
       '@sticky-aside/core':
         specifier: workspace:^
         version: link:../core
-      astro:
-        specifier: ^5.0.0
-        version: 5.18.2(@types/node@26.6.4)(lightningcss@1.33.0)(rollup@4.64.1)(typescript@5.9.3)(yaml@2.9.1)
 
   packages/core: {}
 
