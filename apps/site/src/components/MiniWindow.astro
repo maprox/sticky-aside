@@ -1,9 +1,42 @@
+---
+import { initialViewportModel } from '../demo/initial-shell'
+import type { DemoFramework, DemoLocale } from '../demo/settings'
+
+interface Props {
+  locale: DemoLocale
+  framework?: DemoFramework
+}
+
+const { locale, framework = 'vanilla' } = Astro.props
+const viewport = initialViewportModel(locale, framework)
+---
+
 <div class="browser">
   <div class="browser-chrome" aria-hidden="true">
     <span class="traffic"><i></i><i></i><i></i></span>
   </div>
   <div class="browser-stage">
-    <div class="mini-viewport" data-viewport></div>
+    <div class="mini-viewport" data-viewport>
+      <div class="mini-page">
+        <article class="mini-article">
+          {viewport.articleLines.map((line) => <p>{line}</p>)}
+        </article>
+        <div class="mini-rail">
+          <div class="sticky-aside-root" style={viewport.style}>
+            <div>
+              <div class="panel">
+                <p class="panel-copy">{viewport.panelCopy}</p>
+                {viewport.panelItems.length > 0 && (
+                  <ol>
+                    {viewport.panelItems.map((line) => <li>{line}</li>)}
+                  </ol>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="browser-resize" data-resize-height role="slider" tabindex="0" aria-orientation="vertical" aria-valuemin="240" aria-valuemax="1600"></div>
 </div>

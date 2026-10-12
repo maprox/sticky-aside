@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro'
 import FrameworkTabs from './FrameworkTabs.astro'
 import MiniWindow from './MiniWindow.astro'
+import { initialSnippetText } from '../demo/initial-shell'
 import { t } from '../demo/i18n'
 import type { DemoFramework, DemoLocale } from '../demo/settings'
 
@@ -12,13 +13,14 @@ interface Props {
 
 const { locale, framework = 'vanilla' } = Astro.props
 const title = `${t(locale, 'variant.5.title')} — sticky-aside`
+const snippet = initialSnippetText(locale, framework)
 ---
 
 <Base title={title} locale={locale} bodyClass="cf">
   <main class="wrap" data-stage data-locale={locale} data-framework={framework} data-tone="light">
     <div class="cf-split">
       <div class="cf-stage">
-        <MiniWindow />
+        <MiniWindow locale={locale} framework={framework} />
       </div>
       <aside class="cf-aside">
         <div class="toggles-stack">
@@ -38,7 +40,7 @@ const title = `${t(locale, 'variant.5.title')} — sticky-aside`
         </div>
         <div class="code-stack">
           <div class="code-head"><FrameworkTabs locale={locale} framework={framework} /></div>
-          <div class="cf-editor" data-scrub-host></div>
+          <div class="cf-editor" data-scrub-host>{snippet}</div>
           <pre class="code-block" data-code hidden></pre>
         </div>
       </aside>

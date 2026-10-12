@@ -28,4 +28,17 @@ describe('site assets', () => {
     const variant = readFileSync(join(siteRoot, 'src/components/VariantPage.astro'), 'utf8')
     expect(variant).not.toMatch(/IBM Plex/)
   })
+
+  it('SSGs the demo viewport and framework snippet before client JS', () => {
+    const variant = readFileSync(join(siteRoot, 'src/components/VariantPage.astro'), 'utf8')
+    expect(variant).toMatch(/initialSnippetText/)
+    expect(variant).toMatch(/initialSnippetText\(locale,\s*framework\)/)
+    expect(variant).toMatch(/data-scrub-host/)
+    expect(variant).not.toMatch(/data-scrub-host><\/div>/)
+
+    const mini = readFileSync(join(siteRoot, 'src/components/MiniWindow.astro'), 'utf8')
+    expect(mini).toMatch(/initialViewportModel/)
+    expect(mini).toMatch(/mini-page/)
+    expect(mini).toMatch(/panel-copy/)
+  })
 })
