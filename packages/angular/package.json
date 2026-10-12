@@ -1,0 +1,34 @@
+{
+  "name": "@sticky-aside/angular",
+  "version": "1.0.0",
+  "description": "Angular adapter for @sticky-aside/core.",
+  "keywords": ["sticky", "sidebar", "aside", "scroll", "angular"],
+  "license": "MIT",
+  "author": "maprox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprox/sticky-aside.git",
+    "directory": "packages/angular"
+  },
+  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "bugs": "https://github.com/maprox/sticky-aside/issues",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/sticky-aside-angular.d.ts",
+      "import": "./dist/fesm2022/sticky-aside-angular.mjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json"
+  },
+  "dependencies": {
+    "@sticky-aside/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0"
+  }
+}

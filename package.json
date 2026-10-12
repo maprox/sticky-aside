@@ -7,7 +7,7 @@
     "test": "vitest run",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "build": "pnpm --filter @sticky-aside/core build && pnpm --filter @sticky-aside/vue --filter @sticky-aside/react --filter @sticky-aside/svelte --filter @sticky-aside/solid --filter @sticky-aside/astro build",
+    "build": "pnpm --filter @sticky-aside/core build && pnpm --filter @sticky-aside/vue --filter @sticky-aside/react --filter @sticky-aside/svelte --filter @sticky-aside/solid --filter @sticky-aside/astro --filter @sticky-aside/angular build",
     "size": "pnpm build && size-limit",
     "check:packages": "node scripts/check-packages.mjs",
     "test:e2e": "node scripts/e2e.mjs",
@@ -19,6 +19,14 @@
     "pre-commit": "pnpm lint && pnpm typecheck"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^2.8.0",
+    "@angular/build": "^19.2.27",
+    "@angular/common": "^19.2.25",
+    "@angular/compiler": "^19.2.25",
+    "@angular/compiler-cli": "^19.2.25",
+    "@angular/core": "^19.2.25",
+    "@angular/platform-browser": "^19.2.25",
+    "@angular/platform-browser-dynamic": "^19.2.25",
     "@arethetypeswrong/cli": "^0.18.5",
     "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
@@ -41,6 +49,7 @@
     "eslint": "^10.12.0",
     "globals": "^17.13.0",
     "happy-dom": "^20.0.0",
+    "ng-packagr": "^19.2.2",
     "publint": "^0.3.25",
     "react-dom": "^19.3.0",
     "simple-git-hooks": "^2.14.0",
@@ -54,7 +63,8 @@
     "vite-plugin-solid": "^2.11.14",
     "vitest": "^3.2.4",
     "vue": "^3.5.43",
-    "vue-tsc": "^3.3.12"
+    "vue-tsc": "^3.3.12",
+    "zone.js": "^0.15.1"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

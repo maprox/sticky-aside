@@ -16,7 +16,7 @@
       "#vue/*": ["./packages/vue/src/*"]
     }
   },
-  "exclude": ["packages/solid/**"],
+  "exclude": ["packages/solid/**", "packages/angular/**"],
   "include": [
     "packages/**/*.ts",
     "packages/**/*.tsx",
