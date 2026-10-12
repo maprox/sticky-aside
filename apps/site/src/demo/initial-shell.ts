@@ -13,6 +13,7 @@ export function initialSnippetText(locale: DemoLocale, framework: DemoFramework)
 
 export function initialViewportModel(locale: DemoLocale, framework: DemoFramework) {
   const settings = initialDemoSettings(framework)
+
   return {
     articleLines: [...articleLines(locale), ...articleLines(locale)],
     panelCopy: t(locale, settings.tall ? 'panel.tall' : 'panel.short'),
