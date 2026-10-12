@@ -35,12 +35,22 @@ export function createStickyAsidePresenter(
       return
     }
 
+    const previousState = painted
     view.paintMeasure()
     const reading = view.read()
     model = getNewStickyModel(model, getStickyFrame(session, reading, isScrollingUp, reason))
     const paint = getStickyPaint(model, session, reading.wrapper.width)
     view.paint(paint)
     report(paint.state)
+
+    const didReleaseToFlow = reason === REASON.scroll &&
+      previousState !== undefined &&
+      previousState !== 'flow' &&
+      previousState !== 'off' &&
+      paint.state === 'flow'
+    if (didReleaseToFlow) {
+      apply(REASON.scroll)
+    }
   }
 
   function onScroll() {

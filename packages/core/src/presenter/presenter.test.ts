@@ -106,6 +106,33 @@ describe('createStickyAsidePresenter', () => {
     aside.destroy()
   })
 
+  it('re-reads after releasing a fixed panel so a jump scroll can pin the other edge', () => {
+    const sample = reading(0, box(0, 1400), box(16, 500), box(0, 2400))
+    const harness = createHarness(sample)
+    const aside = createStickyAsidePresenter(harness.view, {})
+    expect(harness.paints.at(-1)?.state).toBe('top')
+
+    const originalPaint = harness.view.paint
+    harness.view.paint = (paint) => {
+      originalPaint(paint)
+      if (paint.state === 'flow') {
+        sample.metrics.scrollY = 1000
+        sample.wrapper = box(-1000, 2400)
+        sample.content = box(-900, 1400)
+        sample.measure = box(16, 500)
+      }
+    }
+
+    sample.metrics.scrollY = 1000
+    harness.scroll()
+
+    expect(harness.paints.at(-1)).toEqual({
+      state: 'bottom',
+      width: 240,
+    })
+    aside.destroy()
+  })
+
   it('forwards offset classes and paints a resize frame', () => {
     const harness = createHarness(reading(400, box(80, 120), box(16, 700)))
     const aside = createStickyAsidePresenter(harness.view, {})
