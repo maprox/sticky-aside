@@ -43,7 +43,10 @@ describe('pageHref', () => {
   it('builds absolute GitHub Pages URLs with a trailing slash', () => {
     expect(pageHref(origin, 'en', 'vanilla', base)).toBe('https://maprox.github.io/sticky-aside/')
     expect(pageHref(origin, 'en', 'react', base)).toBe('https://maprox.github.io/sticky-aside/react/')
+    expect(pageHref(origin, 'en', 'solid', base)).toBe('https://maprox.github.io/sticky-aside/solid/')
+    expect(pageHref(origin, 'en', 'astro', base)).toBe('https://maprox.github.io/sticky-aside/astro/')
     expect(pageHref(origin, 'ru', 'vue', base)).toBe('https://maprox.github.io/sticky-aside/ru/vue/')
+    expect(pageHref(origin, 'ru', 'solid', base)).toBe('https://maprox.github.io/sticky-aside/ru/solid/')
     expect(pageHref(origin, 'ru', 'vanilla', base)).toBe('https://maprox.github.io/sticky-aside/ru/')
   })
 })
@@ -54,6 +57,11 @@ describe('hreflangLinks', () => {
       { hreflang: 'en', href: 'https://maprox.github.io/sticky-aside/react/' },
       { hreflang: 'ru', href: 'https://maprox.github.io/sticky-aside/ru/react/' },
       { hreflang: 'x-default', href: 'https://maprox.github.io/sticky-aside/react/' },
+    ])
+    expect(hreflangLinks(origin, 'astro', base)).toEqual([
+      { hreflang: 'en', href: 'https://maprox.github.io/sticky-aside/astro/' },
+      { hreflang: 'ru', href: 'https://maprox.github.io/sticky-aside/ru/astro/' },
+      { hreflang: 'x-default', href: 'https://maprox.github.io/sticky-aside/astro/' },
     ])
   })
 })
