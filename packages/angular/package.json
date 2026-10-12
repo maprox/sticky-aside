@@ -22,7 +22,7 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/sticky-aside.d.ts",
       "import": "./dist/fesm2022/sticky-aside-angular.mjs",
       "default": "./dist/fesm2022/sticky-aside-angular.mjs"
     }

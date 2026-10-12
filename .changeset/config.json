@@ -8,7 +8,8 @@
     "@sticky-aside/react",
     "@sticky-aside/svelte",
     "@sticky-aside/solid",
-    "@sticky-aside/astro"
+    "@sticky-aside/astro",
+    "@sticky-aside/angular"
   ]],
   "access": "public",
   "baseBranch": "main"
