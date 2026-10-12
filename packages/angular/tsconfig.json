@@ -1,15 +1,23 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
     "inlineSources": true,
     "outDir": "./dist",
     "experimentalDecorators": true,
     "module": "ES2022",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "importHelpers": true,
-    "types": []
+    "strict": true,
+    "skipLibCheck": true,
+    "types": [],
+    "baseUrl": ".",
+    "paths": {
+      "@sticky-aside/core": ["node_modules/@sticky-aside/core/dist/index.d.ts"]
+    }
   },
   "angularCompilerOptions": {
     "compilationMode": "partial"
