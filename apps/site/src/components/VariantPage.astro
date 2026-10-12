@@ -12,11 +12,10 @@ interface Props {
 }
 
 const { locale, framework = 'vanilla' } = Astro.props
-const title = `${t(locale, 'variant.5.title')} — sticky-aside`
 const snippet = initialSnippetText(locale, framework)
 ---
 
-<Base title={title} locale={locale} bodyClass="cf">
+<Base locale={locale} framework={framework} bodyClass="cf">
   <main class="wrap" data-stage data-locale={locale} data-framework={framework} data-tone="light">
     <div class="cf-split">
       <div class="cf-stage">

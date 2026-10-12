@@ -18,6 +18,17 @@ describe('site assets', () => {
     expect(base).not.toMatch(/fonts\.gstatic\.com/)
   })
 
+  it('emits SEO description, canonical, hreflang, and Open Graph tags', () => {
+    const base = readFileSync(join(siteRoot, 'src/layouts/Base.astro'), 'utf8')
+    expect(base).toMatch(/seoCopy/)
+    expect(base).toMatch(/name="description"/)
+    expect(base).toMatch(/rel="canonical"/)
+    expect(base).toMatch(/hreflang/)
+    expect(base).toMatch(/property="og:title"/)
+    expect(base).toMatch(/property="og:description"/)
+    expect(base).toMatch(/property="og:url"/)
+  })
+
   it('uses system font stacks instead of webfonts', () => {
     const css = readFileSync(join(siteRoot, 'src/styles/site.css'), 'utf8')
     expect(css).toMatch(/--font-body:\s*system-ui/)
