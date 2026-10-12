@@ -35,4 +35,4 @@ const aside = createStickyAside({ wrapper, content })
 
 Or skip that stylesheet and pass your own `topClass` / `bottomClass` to `createStickyAside` / `setClasses`.
 
-Vue, React, and Svelte adapters are `@sticky-aside/vue`, `@sticky-aside/react`, and `@sticky-aside/svelte`. The full guide is in the [repository README](https://github.com/maprox/sticky-aside#readme).
+Vue, React, Svelte, Solid, and Astro adapters are `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`, `@sticky-aside/solid`, and `@sticky-aside/astro`. The full guide is in the [repository README](https://github.com/maprox/sticky-aside#readme).

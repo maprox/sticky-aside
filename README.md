@@ -35,6 +35,8 @@ const aside = createStickyAside({
 npm install @sticky-aside/vue
 npm install @sticky-aside/react
 npm install @sticky-aside/svelte
+npm install @sticky-aside/solid
+npm install @sticky-aside/astro
 ```
 
 Each adapter depends on `@sticky-aside/core`. The offset is a CSS length. Two ways to set it.
@@ -112,6 +114,29 @@ export function Sidebar() {
 </style>
 ```
 
+```tsx
+import { StickyAside } from '@sticky-aside/solid'
+import './sidebar.css'
+
+export function Sidebar() {
+  return (
+    <StickyAside as="aside" topClass="top-10" bottomClass="bottom-0">
+      <nav>...</nav>
+    </StickyAside>
+  )
+}
+```
+
+```astro
+---
+import { StickyAside } from '@sticky-aside/astro'
+---
+
+<StickyAside as="aside" topClass="top-10" bottomClass="bottom-0">
+  <nav>...</nav>
+</StickyAside>
+```
+
 ### `offsets.css`
 
 Import the stylesheet once. It defines `sticky-aside-top` and `sticky-aside-bottom`. Set `--sticky-aside-top` on an ancestor.
@@ -178,7 +203,48 @@ export function Sidebar() {
 </style>
 ```
 
-`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte uses `class`.
+```tsx
+import { StickyAside } from '@sticky-aside/solid'
+import '@sticky-aside/core/offsets.css'
+import './sidebar.css'
+
+export function Sidebar() {
+  return (
+    <div class="layout">
+      <StickyAside as="aside">
+        <nav>...</nav>
+      </StickyAside>
+    </div>
+  )
+}
+```
+
+```css
+.layout {
+  --sticky-aside-top: 40px;
+}
+```
+
+```astro
+---
+import { StickyAside } from '@sticky-aside/astro'
+import '@sticky-aside/core/offsets.css'
+---
+
+<div class="layout">
+  <StickyAside as="aside">
+    <nav>...</nav>
+  </StickyAside>
+</div>
+```
+
+```css
+.layout {
+  --sticky-aside-top: 40px;
+}
+```
+
+`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte, Solid, and Astro use `class`.
 
 ## Options
 
@@ -281,7 +347,7 @@ The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage h
 
 ## Compared with other libraries
 
-`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B.
+`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B, Astro client 630 B.
 
 [react-sticky-box](https://github.com/codecks-io/react-sticky-box) is the same behavior at 3.6 kB gzip, React only, with no lock. [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) is 2.8 kB gzip and has not published since 2017. The numbers and the rest of the table are in [docs/analogs.md](docs/analogs.md).
 
