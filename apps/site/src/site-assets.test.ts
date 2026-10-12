@@ -41,4 +41,14 @@ describe('site assets', () => {
     expect(mini).toMatch(/mini-page/)
     expect(mini).toMatch(/panel-copy/)
   })
+
+  it('runs eslint in pre-commit before typecheck', () => {
+    const pkg = JSON.parse(readFileSync(join(siteRoot, '../../package.json'), 'utf8')) as {
+      'simple-git-hooks'?: { 'pre-commit'?: string }
+    }
+    const preCommit = pkg['simple-git-hooks']?.['pre-commit'] ?? ''
+    expect(preCommit).toMatch(/\blint\b/)
+    expect(preCommit).toMatch(/\btypecheck\b/)
+    expect(preCommit.indexOf('lint')).toBeLessThan(preCommit.indexOf('typecheck'))
+  })
 })

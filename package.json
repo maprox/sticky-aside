@@ -16,7 +16,7 @@
     "dev": "pnpm --filter @sticky-aside/site dev"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm typecheck"
+    "pre-commit": "pnpm lint && pnpm typecheck"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
