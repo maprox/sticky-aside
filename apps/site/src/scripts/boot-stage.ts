@@ -12,7 +12,7 @@ import {
 } from '#site/demo/i18n.ts'
 import { mountMiniDemo } from '#site/demo/mount-demo.ts'
 import type { DemoReadout, MiniDemoHandle } from '#site/demo/mount-demo.ts'
-import { VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from '#site/demo/settings.ts'
+import { DEMO_FRAMEWORKS, VIEWPORT_HEIGHT_MAX, VIEWPORT_HEIGHT_MIN } from '#site/demo/settings.ts'
 import type { DemoFramework, DemoLocale, DemoSettings } from '#site/demo/settings.ts'
 import { THEME_EVENT } from '#site/demo/theme.ts'
 
@@ -102,9 +102,13 @@ function paintReadout(stage: HTMLElement, locale: DemoLocale, readout: DemoReado
   node.textContent = stateReadout(locale, readout.state, readout.scrolling, readout.scrollingUp)
 }
 
+function isDemoFramework(value: string | undefined): value is DemoFramework {
+  return value !== undefined && (DEMO_FRAMEWORKS as readonly string[]).includes(value)
+}
+
 function readFramework(stage: HTMLElement): DemoFramework {
   const value = stage.dataset.framework
-  if (value === 'vanilla' || value === 'vue' || value === 'react' || value === 'svelte') {
+  if (isDemoFramework(value)) {
     return value
   }
 
@@ -130,7 +134,7 @@ function bindFrameworks(stage: HTMLElement, demo: MiniDemoHandle, locale: DemoLo
   stage.querySelectorAll<HTMLElement>('[data-framework]').forEach((tab) => {
     tab.addEventListener('click', (event) => {
       const framework = tab.dataset.framework
-      if (framework !== 'vanilla' && framework !== 'vue' && framework !== 'react' && framework !== 'svelte') {
+      if (!isDemoFramework(framework)) {
         return
       }
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {

@@ -132,6 +132,57 @@ function svelte(settings: DemoSettings): string {
 </StickyAside>`
 }
 
+function solid(settings: DemoSettings): string {
+  const vars = styleVars(settings)
+
+  return `import { StickyAside } from '@sticky-aside/solid'
+import '@sticky-aside/core/offsets.css'
+
+<StickyAside
+  as="aside"
+  locked={${bool(settings.locked)}}
+  disabled={${bool(settings.disabled)}}
+  allowLockedOverflowTop={${bool(settings.allowLockedOverflowTop)}}
+  allowLockedOverflowBottom={${bool(settings.allowLockedOverflowBottom)}}
+  style={{
+    '--sticky-aside-top': '${vars.top}',
+    '--sticky-aside-bottom': '${vars.bottom}',
+  }}
+>
+  ...
+</StickyAside>`
+}
+
+function astro(settings: DemoSettings, locale: DemoLocale): string {
+  const vars = styleVars(settings)
+  const markup = vanillaMarkup(settings, locale)
+
+  return `---
+import '@sticky-aside/core/offsets.css'
+---
+
+${markup}
+
+<script>
+import { createStickyAside } from '@sticky-aside/astro'
+
+const wrapper = document.querySelector('#wrapper')
+const content = document.querySelector('#content')
+
+wrapper.style.setProperty('--sticky-aside-top', '${vars.top}')
+wrapper.style.setProperty('--sticky-aside-bottom', '${vars.bottom}')
+
+createStickyAside({
+  wrapper,
+  content,
+  locked: ${bool(settings.locked)},
+  disabled: ${bool(settings.disabled)},
+  allowLockedOverflowTop: ${bool(settings.allowLockedOverflowTop)},
+  allowLockedOverflowBottom: ${bool(settings.allowLockedOverflowBottom)},
+})
+</script>`
+}
+
 export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'en'): string {
   if (settings.framework === 'vue') {
     return vue(settings)
@@ -141,6 +192,12 @@ export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'e
   }
   if (settings.framework === 'svelte') {
     return svelte(settings)
+  }
+  if (settings.framework === 'solid') {
+    return solid(settings)
+  }
+  if (settings.framework === 'astro') {
+    return astro(settings, locale)
   }
 
   return vanilla(settings, locale)

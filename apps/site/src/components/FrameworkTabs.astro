@@ -8,8 +8,15 @@ interface Props {
 }
 
 const { locale, framework } = Astro.props
-const items = ['vanilla', 'vue', 'react', 'svelte'] as const
-const labels = { vanilla: 'Vanilla', vue: 'Vue', react: 'React', svelte: 'Svelte' }
+const items = ['vanilla', 'vue', 'react', 'svelte', 'solid', 'astro'] as const
+const labels = {
+  vanilla: 'Vanilla',
+  vue: 'Vue',
+  react: 'React',
+  svelte: 'Svelte',
+  solid: 'Solid',
+  astro: 'Astro',
+}
 ---
 
 <div class="glass-tabs" role="tablist" aria-label={t(locale, 'knob.framework')}>

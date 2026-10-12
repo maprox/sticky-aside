@@ -71,7 +71,7 @@ const content = wrapper.querySelector('.sidebar__inner')
 createStickyAside({ wrapper, content })
 ```
 
-Set `--sticky-aside-top` / `--sticky-aside-bottom` in CSS instead of pixel options. Framework apps can use `@sticky-aside/vue`, `@sticky-aside/react`, or `@sticky-aside/svelte` instead of a jQuery plugin.
+Set `--sticky-aside-top` / `--sticky-aside-bottom` in CSS instead of pixel options. Framework apps can use `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`, `@sticky-aside/solid`, or `@sticky-aside/astro` instead of a jQuery plugin.
 
 ## Options map
 

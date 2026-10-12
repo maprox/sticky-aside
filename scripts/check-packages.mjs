@@ -24,6 +24,16 @@ const packages = [
     dir: 'packages/svelte',
     attwArgs: [],
   },
+  {
+    name: '@sticky-aside/solid',
+    dir: 'packages/solid',
+    attwArgs: [],
+  },
+  {
+    name: '@sticky-aside/astro',
+    dir: 'packages/astro',
+    attwArgs: [],
+  },
 ]
 
 const destination = mkdtempSync(join(tmpdir(), 'sticky-aside-pack-'))
@@ -39,6 +49,7 @@ try {
     }
 
     run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
+
   }
 } finally {
   rmSync(destination, { recursive: true, force: true })

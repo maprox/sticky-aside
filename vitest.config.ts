@@ -1,6 +1,7 @@
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import react from '@vitejs/plugin-react'
 import vue from '@vitejs/plugin-vue'
+import solid from 'vite-plugin-solid'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -30,6 +31,34 @@ export default defineConfig({
         },
       },
       {
+        plugins: [solid()],
+        resolve: {
+          conditions: ['browser', 'development'],
+        },
+        test: {
+          name: 'solid',
+          environment: 'happy-dom',
+          setupFiles: ['packages/solid/jest-dom-stub.ts'],
+          include: ['packages/solid/src/**/*.test.tsx'],
+          testNamePattern: /^(?!.*renders on the server without touching the window)/,
+          server: {
+            deps: {
+              inline: ['solid-js', 'solid-js/web', '@solidjs/testing-library'],
+            },
+          },
+        },
+      },
+      {
+        plugins: [solid({ ssr: true })],
+        test: {
+          name: 'solid-ssr',
+          environment: 'node',
+          setupFiles: ['packages/solid/jest-dom-stub.ts'],
+          include: ['packages/solid/src/**/*.test.tsx'],
+          testNamePattern: /renders on the server without touching the window/,
+        },
+      },
+      {
         plugins: [svelte({
           configFile: 'packages/svelte/svelte.config.js',
         })],
@@ -51,6 +80,13 @@ export default defineConfig({
           name: 'svelte-ssr',
           environment: 'node',
           include: ['packages/svelte/src/**/*.ssr.test.ts'],
+        },
+      },
+      {
+        test: {
+          name: 'astro',
+          environment: 'happy-dom',
+          include: ['packages/astro/src/**/*.test.ts'],
         },
       },
       {

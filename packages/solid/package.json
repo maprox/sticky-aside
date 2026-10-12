@@ -1,0 +1,38 @@
+{
+  "name": "@sticky-aside/solid",
+  "version": "1.0.0",
+  "description": "Solid adapter for @sticky-aside/core.",
+  "keywords": ["sticky", "sidebar", "aside", "scroll", "solid"],
+  "license": "MIT",
+  "author": "maprox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprox/sticky-aside.git",
+    "directory": "packages/solid"
+  },
+  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "bugs": "https://github.com/maprox/sticky-aside/issues",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/StickyAside.tsx"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/StickyAside.d.ts",
+        "import": "./dist/StickyAside.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "pnpm --dir ../.. exec tsdown --config packages/solid/tsdown.config.mjs"
+  },
+  "dependencies": {
+    "@sticky-aside/core": "workspace:^"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.9.0"
+  }
+}

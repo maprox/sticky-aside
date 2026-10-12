@@ -14,6 +14,22 @@
     "limit": "1.4 kB"
   },
   {
+    "name": "solid",
+    "path": "packages/solid/dist/StickyAside.js",
+    "import": "{ StickyAside }",
+    "ignore": ["solid-js", "solid-js/web", "@sticky-aside/core"],
+    "gzip": true,
+    "limit": "700 B"
+  },
+  {
+    "name": "astro",
+    "path": "packages/astro/dist/index.js",
+    "import": "{ createStickyAside }",
+    "ignore": ["@sticky-aside/core"],
+    "gzip": true,
+    "limit": "100 B"
+  },
+  {
     "name": "react",
     "path": "packages/react/dist/StickyAside.js",
     "import": "{ StickyAside }",

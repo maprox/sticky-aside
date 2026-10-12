@@ -41,6 +41,8 @@ describe('i18n', () => {
     expect(localePath('ru', frameworkPath('svelte'))).toBe('/ru/svelte')
     expect(frameworkFromPath('/vue')).toBe('vue')
     expect(frameworkFromPath('/ru/react/')).toBe('react')
+    expect(frameworkFromPath('/solid')).toBe('solid')
+    expect(frameworkFromPath('/ru/astro/')).toBe('astro')
     expect(frameworkFromPath('/ru/')).toBe('vanilla')
   })
 

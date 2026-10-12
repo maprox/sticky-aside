@@ -8,7 +8,7 @@ Size in the Libraries table is Bundlephobia’s minified bundle and its gzip siz
 
 `@sticky-aside/core` does one specific thing. If the panel is shorter than the viewport, it stays at the top. If it is taller, it moves with the page until the edge you are scrolling toward hits the viewport, then pins there. Scroll the other way and it pins to the opposite edge. `position: sticky` alone does not do this: a tall box stays clipped.
 
-Published packages: `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`. Repository: [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
+Published packages: `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`, `@sticky-aside/solid`, `@sticky-aside/astro`. Repository: [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
 
 ## Libraries
 
@@ -37,6 +37,8 @@ size-limit, minified and gzipped, on the 1.0.0 build:
 | `@sticky-aside/vue`, core external | 630 B |
 | `@sticky-aside/react`, core external | 505 B |
 | `@sticky-aside/svelte`, the component file | 518 B |
+| `@sticky-aside/solid`, core external | 638 B |
+| `@sticky-aside/astro`, re-export of `createStickyAside` | 50 B |
 
 The core is window scroll, both edges, lock, and an internal measure element. Offsets are CSS classes, not pixel props. A scroll-root option is not in 1.0.0.
 
@@ -44,7 +46,7 @@ The core is window scroll, both edges, lock, and an internal measure element. Of
 
 | Library | Both edges | Scroll root | Lock in place | Vue 3 | React | Runtime dependencies |
 | --- | --- | --- | --- | --- | --- | --- |
-| @sticky-aside/core | yes | `window` only | yes | yes | yes | none. Adapters peer Vue 3, React, or Svelte 5 |
+| @sticky-aside/core | yes | `window` only | yes | yes | yes | none. Adapters peer Vue 3, React, Svelte 5, or Solid; Astro re-exports core |
 | react-sticky-box | yes | nearest scroll parent, via `position: sticky` | no | no | yes | none, peer `react` |
 | sticky-sidebar | yes | `window` | no | no | no | none. Optional jQuery build and ResizeSensor |
 | theia-sticky-sidebar | yes | `window` | no | no | no | none in 2.0.1 |

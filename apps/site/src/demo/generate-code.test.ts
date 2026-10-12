@@ -70,6 +70,32 @@ describe('generateDemoCode', () => {
     expect(code).toContain("from '@sticky-aside/svelte'")
     expect(code).toContain('--sticky-aside-bottom: 32px')
   })
+
+  it('prints solid camelCase options', () => {
+    const code = generateDemoCode({
+      ...base,
+      framework: 'solid',
+      locked: true,
+      top: 40,
+    })
+    expect(code).toContain("from '@sticky-aside/solid'")
+    expect(code).toContain('locked={true}')
+    expect(code).toContain("'--sticky-aside-top': '40px'")
+  })
+
+  it('prints astro createStickyAside usage', () => {
+    const code = generateDemoCode({
+      ...base,
+      framework: 'astro',
+      disabled: true,
+      bottom: 24,
+    })
+    expect(code).toContain("from '@sticky-aside/astro'")
+    expect(code).toContain('createStickyAside({')
+    expect(code).toContain('disabled: true')
+    expect(code).toContain("'--sticky-aside-bottom', '24px'")
+    expect(code).not.toContain('<StickyAside')
+  })
 })
 
 describe('clampDemoSettings', () => {

@@ -1,0 +1,35 @@
+{
+  "name": "@sticky-aside/astro",
+  "version": "1.0.0",
+  "description": "Astro entry for @sticky-aside/core (same API as vanilla).",
+  "keywords": ["sticky", "sidebar", "aside", "scroll", "astro"],
+  "license": "MIT",
+  "author": "maprox",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maprox/sticky-aside.git",
+    "directory": "packages/astro"
+  },
+  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "bugs": "https://github.com/maprox/sticky-aside/issues",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "pnpm --dir ../.. exec tsdown --config packages/astro/tsdown.config.mjs"
+  },
+  "dependencies": {
+    "@sticky-aside/core": "workspace:^"
+  }
+}

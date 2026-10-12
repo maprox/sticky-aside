@@ -96,6 +96,27 @@ describe('bootStage', () => {
     expect(stage.querySelector('[data-framework="vanilla"]')?.getAttribute('aria-selected')).toBe('true')
   })
 
+  it('selects solid and astro from data-framework on the stage', () => {
+    for (const framework of ['solid', 'astro'] as const) {
+      document.body.replaceChildren()
+      history.replaceState(null, '', '/')
+      const stage = document.createElement('section')
+      stage.dataset.locale = 'en'
+      stage.dataset.framework = framework
+      stage.innerHTML = `
+        <div data-viewport></div>
+        <a role="tab" href="/" data-framework="vanilla">Vanilla</a>
+        <a role="tab" href="/${framework}" data-framework="${framework}">${framework}</a>
+      `
+      document.body.append(stage)
+
+      bootStage(stage)
+
+      expect(stage.querySelector(`[data-framework="${framework}"]`)?.getAttribute('aria-selected')).toBe('true')
+      expect(stage.querySelector('[data-framework="vanilla"]')?.getAttribute('aria-selected')).toBe('false')
+    }
+  })
+
   it('leaves the window height to CSS until the edge is dragged', () => {
     const stage = document.createElement('section')
     stage.dataset.locale = 'en'

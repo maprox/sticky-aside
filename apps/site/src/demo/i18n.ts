@@ -15,13 +15,17 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'variant.5.title': 'Code-first',
     'variant.5.lead': 'Scrub the numbers in the snippet, or use the knobs.',
     'seo.vanilla.title': 'JavaScript sticky sidebar library — sticky-aside',
-    'seo.vanilla.description': 'Modern sticky sidebar for current browsers: pins to the edge you scroll toward. Small ESM core, no legacy path. Vanilla JS, plus Vue, React, and Svelte.',
+    'seo.vanilla.description': 'Modern sticky sidebar for current browsers: pins to the edge you scroll toward. Small ESM core, no legacy path. Vanilla JS, plus Vue, React, Svelte, Solid, and Astro.',
     'seo.vue.title': 'Vue sticky sidebar for Vue 3 — sticky-aside',
     'seo.vue.description': 'Vue 3 sticky sidebar component: both-edge pin for tall panels, lock mode, CSS offsets. Modern browsers only — small ESM, no jQuery or IE-era baggage.',
     'seo.react.title': 'React sticky sidebar — sticky-aside',
     'seo.react.description': 'React sticky sidebar with lock and both-edge pinning when the panel is taller than the viewport. Lightweight ESM for modern browsers — no legacy polyfills.',
     'seo.svelte.title': 'Svelte sticky sidebar — sticky-aside',
     'seo.svelte.description': 'Svelte 5 sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only — no legacy support tax.',
+    'seo.solid.title': 'Solid sticky sidebar — sticky-aside',
+    'seo.solid.description': 'Solid sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
+    'seo.astro.title': 'Astro sticky sidebar — sticky-aside',
+    'seo.astro.description': 'Sticky sidebar for Astro with the same createStickyAside API as vanilla. Both-edge pin, lock, CSS offsets. Small ESM core for modern browsers.',
     'knob.tall': 'Tall panel',
     'knob.top': 'Top offset',
     'knob.bottom': 'Bottom offset',
@@ -44,7 +48,7 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p2': 'Scrolling down pins the bottom of the panel to the bottom of the window. Scrolling up releases it and pins the top. Between those moments the panel just sits in its column.',
     'article.p3': 'Offsets come from CSS. Here the numbers write --sticky-aside-top and --sticky-aside-bottom. With Tailwind you pass top-16 md:top-24 instead.',
     'article.p4': 'Lock holds the panel at the window height where you turned it on. If the column leaves and the lock no longer fits, the panel returns inside the column.',
-    'article.p5': 'The core does not know Vue, React, or Svelte. An adapter hands it two elements and listens to props.',
+    'article.p5': 'The core does not know Vue, React, Svelte, Solid, or Astro. An adapter hands it two elements and listens to props.',
     'article.p6': 'Measurement is an invisible rail glued to the window between the top and bottom offsets, never taller than the panel. That is how the core knows whether the panel fits.',
     'article.p7': 'The listener hangs on window. Nested container scroll is out of scope for this version.',
     'article.p8': 'A fixed panel takes its width from the column. Otherwise it jumps the grid and stretches across the screen.',
@@ -59,13 +63,17 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'variant.5.title': 'Код',
     'variant.5.lead': 'Крутите числа в сниппете или ручки в интерфейсе.',
     'seo.vanilla.title': 'JavaScript sticky sidebar — библиотека sticky-aside',
-    'seo.vanilla.description': 'Современный sticky sidebar для актуальных браузеров: пины к краю, к которому скроллите. Компактный ESM-core без legacy. Vanilla JS, плюс Vue, React и Svelte.',
+    'seo.vanilla.description': 'Современный sticky sidebar для актуальных браузеров: пины к краю, к которому скроллите. Компактный ESM-core без legacy. Vanilla JS, плюс Vue, React, Svelte, Solid и Astro.',
     'seo.vue.title': 'Vue sticky sidebar для Vue 3 — sticky-aside',
     'seo.vue.description': 'Компонент Vue 3 sticky sidebar: пин к обоим краям для высокой панели, lock и CSS-отступы. Только современные браузеры — компактный ESM, без jQuery и legacy.',
     'seo.react.title': 'React sticky sidebar — sticky-aside',
     'seo.react.description': 'React sticky sidebar с lock и пином к обоим краям, когда панель выше окна. Лёгкий ESM для современных браузеров — без legacy-полифилов.',
     'seo.svelte.title': 'Svelte sticky sidebar — sticky-aside',
     'seo.svelte.description': 'Адаптер Svelte 5 sticky sidebar над компактным современным ядром. Пин к обоим краям, lock, CSS-отступы. Только актуальные браузеры — без цены за legacy.',
+    'seo.solid.title': 'Solid sticky sidebar — sticky-aside',
+    'seo.solid.description': 'Адаптер Solid sticky sidebar над компактным современным ядром. Пин к обоим краям, lock, CSS-отступы. Только актуальные браузеры.',
+    'seo.astro.title': 'Astro sticky sidebar — sticky-aside',
+    'seo.astro.description': 'Sticky sidebar для Astro с тем же createStickyAside API, что и vanilla. Пин к обоим краям, lock, CSS-отступы. Компактный ESM-core для современных браузеров.',
     'knob.tall': 'Длинная панель',
     'knob.top': 'Отступ сверху',
     'knob.bottom': 'Отступ снизу',
@@ -88,7 +96,7 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p2': 'Скролл вниз прижимает низ панели к низу окна. Скролл вверх отпускает её и прижимает верх. Между этими моментами панель просто стоит в колонке.',
     'article.p3': 'Отступ задаёт CSS. Здесь числа пишут переменные --sticky-aside-top и --sticky-aside-bottom. С Tailwind вместо них передают top-16 md:top-24.',
     'article.p4': 'Замок держит панель на той высоте окна, где она была в момент включения. Если колонка уехала и замок больше не попадает в неё, панель возвращается внутрь колонки.',
-    'article.p5': 'Ядро не знает про Vue, React и Svelte. Адаптер отдаёт ему два элемента и слушает пропсы.',
+    'article.p5': 'Ядро не знает про Vue, React, Svelte, Solid и Astro. Адаптер отдаёт ему два элемента и слушает пропсы.',
     'article.p6': 'Измерение делает невидимая планка. Она приклеена к окну между верхним и нижним отступом, а её высота не больше высоты панели.',
     'article.p7': 'Слушатель висит на window. Вложенный скролл контейнера эта версия не обрабатывает.',
     'article.p8': 'Ширина зафиксированной панели берётся у колонки. Иначе fixed выскочит из сетки и растянется на весь экран.',
@@ -168,7 +176,13 @@ export function withBase(path: string, base?: string): string {
 export function frameworkFromPath(path: string, base?: string): DemoFramework {
   const stripped = sitePath(path, base).replace(/^\/ru(?=\/|$)/, '') || '/'
   const segment = stripped.replace(/^\/+|\/+$/g, '')
-  if (segment === 'vue' || segment === 'react' || segment === 'svelte') {
+  if (
+    segment === 'vue' ||
+    segment === 'react' ||
+    segment === 'svelte' ||
+    segment === 'solid' ||
+    segment === 'astro'
+  ) {
     return segment
   }
 
