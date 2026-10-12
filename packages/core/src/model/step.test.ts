@@ -56,6 +56,17 @@ describe('getNewStickyModel', () => {
     expect(next).toBe(model)
   })
 
+  it('pins a tall panel on resize when its top covers the offset', () => {
+    const next = getNewStickyModel(getInitialStickyModel(), frame({
+      reason: 'resize',
+      content: box(18, 900),
+      measure: box(48, 360),
+      wrapper: box(18, 2400),
+    }))
+
+    expect(next.mode).toBe('fixed-top')
+  })
+
   it('pins a short panel to the top when the measure lane sits inside the wrapper', () => {
     const next = getNewStickyModel(getInitialStickyModel(), frame({
       reason: 'resize',

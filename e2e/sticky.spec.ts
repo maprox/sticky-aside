@@ -13,7 +13,8 @@ test.describe('packed packages', () => {
 
     test(`${runtime} pins a tall panel to the bottom, then the top`, async ({ stickyPage }) => {
       await stickyPage.open({ runtime, tall: true })
-      await stickyPage.expectState('flow')
+      await stickyPage.expectState('top')
+      expect((await stickyPage.contentBox()).y).toBeCloseTo(DEFAULT_OFFSET, 0)
 
       await stickyPage.scrollTo(1000)
       await stickyPage.expectState('bottom')
@@ -26,11 +27,18 @@ test.describe('packed packages', () => {
       await stickyPage.scrollTo(200)
       await stickyPage.expectState('top')
       expect((await stickyPage.contentBox()).y).toBeCloseTo(DEFAULT_OFFSET, 0)
-      await expect(stickyPage.states).toHaveText('flow bottom flow top')
+      await expect(stickyPage.states).toHaveText('top flow bottom flow top')
     })
 
     test(`${runtime} moves the pin when the top offset changes`, async ({ stickyPage }) => {
       await stickyPage.open({ runtime, tall: false })
+      await stickyPage.setTopOffset(48)
+      await expect.poll(async () => (await stickyPage.contentBox()).y).toBeCloseTo(48, 0)
+    })
+
+    test(`${runtime} moves a tall panel when the top offset covers it`, async ({ stickyPage }) => {
+      await stickyPage.open({ runtime, tall: true })
+      await stickyPage.expectState('top')
       await stickyPage.setTopOffset(48)
       await expect.poll(async () => (await stickyPage.contentBox()).y).toBeCloseTo(48, 0)
     })
