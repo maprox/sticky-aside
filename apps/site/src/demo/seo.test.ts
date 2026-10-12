@@ -11,11 +11,19 @@ describe('seoCopy', () => {
     expect(seoCopy('en', 'vue').title).toBe('Vue sticky sidebar for Vue 3 — sticky-aside')
     expect(seoCopy('en', 'react').title).toBe('React sticky sidebar — sticky-aside')
     expect(seoCopy('en', 'svelte').title).toBe('Svelte sticky sidebar — sticky-aside')
+    expect(seoCopy('en', 'solid').title).toBe('Solid sticky sidebar — sticky-aside')
+    expect(seoCopy('en', 'astro').title).toBe('Astro sticky sidebar — sticky-aside')
 
     expect(seoCopy('en', 'vue').description).toMatch(/Modern browsers only/)
     expect(seoCopy('en', 'vanilla').description).toMatch(/no legacy path/)
     expect(seoCopy('en', 'react').description).toMatch(/no legacy polyfills/)
     expect(seoCopy('en', 'svelte').description).toMatch(/no legacy support tax/)
+    expect(seoCopy('en', 'solid').description).toBe(
+      'Solid sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
+    )
+    expect(seoCopy('en', 'astro').description).toBe(
+      'Astro sticky sidebar component with the same API as the other adapters. Pins to the edge you scroll toward. Small ESM core for modern browsers.',
+    )
   })
 
   it('mirrors Russian titles and keeps English head terms', () => {
@@ -23,6 +31,8 @@ describe('seoCopy', () => {
     expect(seoCopy('ru', 'vue').title).toBe('Vue sticky sidebar для Vue 3 — sticky-aside')
     expect(seoCopy('ru', 'react').title).toBe('React sticky sidebar — sticky-aside')
     expect(seoCopy('ru', 'svelte').title).toBe('Svelte sticky sidebar — sticky-aside')
+    expect(seoCopy('ru', 'solid').title).toBe('Solid sticky sidebar — sticky-aside')
+    expect(seoCopy('ru', 'astro').title).toBe('Astro sticky sidebar — sticky-aside')
 
     expect(seoCopy('ru', 'vue').description).toMatch(/современные браузеры/i)
     expect(seoCopy('ru', 'vanilla').description).toMatch(/без legacy/)

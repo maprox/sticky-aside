@@ -23,6 +23,8 @@ describe('initial demo shell (SSG)', () => {
     expect(initialSnippetText('en', 'vue')).toContain("from '@sticky-aside/vue'")
     expect(initialSnippetText('en', 'react')).toContain("from '@sticky-aside/react'")
     expect(initialSnippetText('en', 'svelte')).toContain("from '@sticky-aside/svelte'")
+    expect(initialSnippetText('en', 'solid')).toContain("from '@sticky-aside/solid'")
+    expect(initialSnippetText('en', 'astro')).toContain("from '@sticky-aside/astro'")
     expect(initialSnippetText('ru', 'vue')).toBe(
       generateDemoCode(initialDemoSettings('vue'), 'ru'),
     )

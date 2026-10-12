@@ -130,7 +130,14 @@ function bindFrameworks(stage: HTMLElement, demo: MiniDemoHandle, locale: DemoLo
   stage.querySelectorAll<HTMLElement>('[data-framework]').forEach((tab) => {
     tab.addEventListener('click', (event) => {
       const framework = tab.dataset.framework
-      if (framework !== 'vanilla' && framework !== 'vue' && framework !== 'react' && framework !== 'svelte') {
+      if (
+        framework !== 'vanilla' &&
+        framework !== 'vue' &&
+        framework !== 'react' &&
+        framework !== 'svelte' &&
+        framework !== 'solid' &&
+        framework !== 'astro'
+      ) {
         return
       }
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
