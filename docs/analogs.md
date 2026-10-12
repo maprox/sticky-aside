@@ -67,3 +67,5 @@ Offsets are the classes `sticky-aside-top` and `sticky-aside-bottom`. They read 
 React already has a living library: `react-sticky-box`, used inside Codecks, with a docs site. Vanilla already has `sticky-sidebar`, widely installed and barely released. Vue 3 has no maintained package for this behavior. `vue-sticky-sidebar` is Vue 2 and the repository is archived.
 
 `@sticky-aside/core` has no runtime dependencies. The Vue 3, React, and Svelte 5 adapters are thin bindings over that core, and the lock mode is one the popular packages do not expose.
+
+For a side-by-side option map from abouolia/sticky-sidebar (vanilla and jQuery), see [migrate-from-sticky-sidebar.md](./migrate-from-sticky-sidebar.md).
