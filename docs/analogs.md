@@ -1,8 +1,10 @@
 # Analogs
 
-Snapshot from registry.npmjs.org, the GitHub API, and Bundlephobia on 5 October 2026.
+Snapshot from registry.npmjs.org, the GitHub API, and Bundlephobia on 12 October 2026.
 
-Size is the minified bundle and its gzip size. Peer dependencies such as React and Vue are not included. `theia-sticky-sidebar` is the published UMD file, 7,392 bytes minified and 2,461 bytes gzipped. Bundlephobia did not return a size for it. Its `main` field points at `dist/theia-sticky-sidebar.js`, and that file is not in the package. The ES build is 8,976 / 2,736 bytes.
+Size in the Libraries table is Bundlephobia’s minified bundle and its gzip size (peers such as React and Vue are not included). Tree-shaken size-limit numbers for our entries — the ones on the README badge — are in [Our size](#our-size).
+
+`theia-sticky-sidebar@2.0.1` publishes a UMD build at 7,393 bytes raw and about 2.5 KB gzipped; Bundlephobia reports 6.7 / 2.1 KB for the package entry it resolves. The ES build in the tarball is 8,976 / ~2.7 KB.
 
 `@sticky-aside/core` does one specific thing. If the panel is shorter than the viewport, it stays at the top. If it is taller, it moves with the page until the edge you are scrolling toward hits the viewport, then pins there. Scroll the other way and it pins to the opposite edge. `position: sticky` alone does not do this: a tall box stays clipped.
 
@@ -10,9 +12,9 @@ Size is the minified bundle and its gzip size. Peer dependencies such as React a
 
 The published names are `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/react`, and `@sticky-aside/svelte`. The unscoped name `sticky-aside` is left unpublished.
 
-`sticky-panel` is taken. npm has `sticky-panel@1.0.1` (3 January 2019, about 5 downloads a week): a React component that sticks a panel to the top of the screen. GitHub also has [donnyv/sticky-panel](https://github.com/donnyv/sticky-panel), a jQuery plugin from 2015 that does the same simple affix. The words already mean "stick to the top", not a tall panel that switches edges.
+`sticky-panel` is taken. npm has `sticky-panel@1.0.1` (3 January 2019, effectively unused): a React component that sticks a panel to the top of the screen. GitHub also has [donnyv/sticky-panel](https://github.com/donnyv/sticky-panel), a jQuery plugin from 2015 that does the same simple affix. The words already mean "stick to the top", not a tall panel that switches edges.
 
-`sticky-sidebar` is the search term, and it is the package with about 16,000 downloads a week. `sticky-box` is free, but `react-sticky-box` owns that phrase. `sticky-rail` and `sticky-column` are free. Rail is layout jargon. Column is vague.
+`sticky-sidebar` is the search term, and it is the package with about 13,000 downloads a week. `sticky-box` is free, but `react-sticky-box` owns that phrase. `sticky-rail` and `sticky-column` are free. Rail is layout jargon. Column is vague.
 
 The repository is [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
 
@@ -20,14 +22,14 @@ The repository is [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
 
 | Library | Behavior | Min / gzip | Weekly downloads | Latest npm | Last repo push | Stars |
 | --- | --- | --- | --- | --- | --- | --- |
-| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | — / 2.11 KB | — | 1.0.0 | — | — |
-| [react-sticky-box](https://github.com/codecks-io/react-sticky-box) | Same | 4.1 / 3.6 KB | 167,318 | 2.0.5, Oct 2023 | Apr 2026 | 503 |
-| [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) | Same | 9.2 / 2.8 KB | 15,755 | 3.3.1, Nov 2017 | Aug 2024 | 2,221 |
-| [theia-sticky-sidebar](https://github.com/WeCodePixels/theia-sticky-sidebar) | Same | 7.4 / 2.5 KB | 915 | 2.0.0, Apr 2025 | Sep 2026 | 581 |
-| [hc-sticky](https://github.com/somewebmedia/hc-sticky) | Same when `followScroll` is on (the default) | 8.9 / 3.5 KB | 2,349 | 2.3.0, Mar 2026 | Mar 2026 | 461 |
-| [sticky-sidebar-v2](https://github.com/blixhavn/sticky-sidebar-v2) | Same, plus a nested scroll container | 10.4 / 3.0 KB | 2,964 | 1.1.1, Oct 2021 | Apr 2025 | 56 |
-| [vue-sticky-sidebar](https://github.com/Alucard17/vue-sticky-sidebar) | Wrapper over a fork of v2. Vue 2. Repository archived | 12.0 / 3.6 KB | 303 | 1.0.5, Jul 2020 | Dec 2022 | 8 |
-| [react-stickynode](https://github.com/yahoo/react-stickynode) | Different. Pins the top until a bottom boundary | 17.2 / 6.1 KB | 115,623 | 5.0.2, Feb 2025 | Feb 2026 | 1,338 |
+| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | 6.6 / 2.2 KB | 321 | 1.0.0, Oct 2026 | Oct 2026 | 0 |
+| [react-sticky-box](https://github.com/codecks-io/react-sticky-box) | Same | 4.0 / 3.6 KB | 128,281 | 2.0.5, Oct 2023 | Apr 2026 | 503 |
+| [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) | Same | 9.0 / 2.8 KB | 12,934 | 3.3.1, Nov 2017 | Aug 2024 | 2,223 |
+| [theia-sticky-sidebar](https://github.com/WeCodePixels/theia-sticky-sidebar) | Same | 6.7 / 2.1 KB | 9,906 | 2.0.1, Sep 2026 | Sep 2026 | 581 |
+| [hc-sticky](https://github.com/somewebmedia/hc-sticky) | Same when `followScroll` is on (the default) | 8.7 / 3.4 KB | 1,446 | 2.3.0, Mar 2026 | Mar 2026 | 461 |
+| [sticky-sidebar-v2](https://github.com/blixhavn/sticky-sidebar-v2) | Same, plus a nested scroll container | 12.7 / 3.6 KB | 3,420 | 1.3.0, Oct 2026 | Oct 2026 | 56 |
+| [vue-sticky-sidebar](https://github.com/Alucard17/vue-sticky-sidebar) | Wrapper over a fork of v2. Vue 2. Repository archived | 11.8 / 3.5 KB | 302 | 1.0.5, Jul 2020 | Dec 2022 | 8 |
+| [react-stickynode](https://github.com/yahoo/react-stickynode) | Different. Pins the top until a bottom boundary | 16.8 / 6.0 KB | 81,458 | 5.0.2, Feb 2025 | Feb 2026 | 1,339 |
 | CSS `position: sticky` | Different. One edge. A tall box is clipped | 0 | — | — | — | — |
 
 Download figures move. Stars do not say a package is maintained: `sticky-sidebar` has the most stars and has not published since 2017.
@@ -53,7 +55,7 @@ The core is window scroll, both edges, lock, and an internal measure element. Of
 | @sticky-aside/core | yes | `window` only | yes | yes | yes | none. Adapters peer Vue 3, React, or Svelte 5 |
 | react-sticky-box | yes | nearest scroll parent, via `position: sticky` | no | no | yes | none, peer `react` |
 | sticky-sidebar | yes | `window` | no | no | no | none. Optional jQuery build and ResizeSensor |
-| theia-sticky-sidebar | yes | `window` | no | no | no | none in 2.0.0 |
+| theia-sticky-sidebar | yes | `window` | no | no | no | none in 2.0.1 |
 | hc-sticky | yes, `followScroll` | `window`. `stickTo` sets the height limit, not the scroller | no | no | no | none. Optional jQuery |
 | sticky-sidebar-v2 | yes | `window` or `scrollContainer` | no | no | no | none |
 | vue-sticky-sidebar | yes | inherited from v2 | no | no, Vue 2 | no | git dependency on a sticky-sidebar-v2 fork |
