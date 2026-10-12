@@ -1,17 +1,22 @@
 ---
 import '../styles/site.css'
-import type { DemoLocale } from '../demo/settings'
+import type { DemoFramework, DemoLocale } from '../demo/settings'
+import { hreflangLinks, pageHref, seoCopy } from '../demo/seo'
 import { localePath, sitePath, switchLocalePath, t, withBase } from '../demo/i18n'
 
 interface Props {
-  title: string
   locale: DemoLocale
+  framework: DemoFramework
   bodyClass?: string
 }
 
-const { title, locale, bodyClass } = Astro.props
+const { locale, framework, bodyClass } = Astro.props
 const path = sitePath(Astro.url.pathname)
 const other = withBase(switchLocalePath(locale, path))
+const { title, description } = seoCopy(locale, framework)
+const origin = Astro.site?.origin ?? 'https://maprox.github.io'
+const canonical = pageHref(origin, locale, framework)
+const alternates = hreflangLinks(origin, framework)
 ---
 
 <html lang={locale}>
@@ -19,6 +24,18 @@ const other = withBase(switchLocalePath(locale, path))
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <script is:inline>
       (function () {
