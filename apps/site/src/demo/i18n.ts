@@ -104,8 +104,53 @@ export function frameworkPath(framework: DemoFramework): string {
   return framework === 'vanilla' ? '/' : `/${framework}`
 }
 
-export function frameworkFromPath(path: string): DemoFramework {
-  const stripped = path.replace(/^\/ru(?=\/|$)/, '') || '/'
+function normalizeBase(base: string): string {
+  if (base === '/') {
+    return ''
+  }
+
+  return base.endsWith('/') ? base.slice(0, -1) : base
+}
+
+function readBase(base?: string): string {
+  if (base !== undefined) {
+    return base
+  }
+
+  const value = import.meta.env.BASE_URL
+
+  return typeof value === 'string' ? value : '/'
+}
+
+export function sitePath(path: string, base?: string): string {
+  const prefix = normalizeBase(readBase(base))
+  if (prefix.length === 0) {
+    return path
+  }
+  if (path === prefix) {
+    return '/'
+  }
+  if (path.startsWith(`${prefix}/`)) {
+    const rest = path.slice(prefix.length)
+
+    return rest.length > 0 ? rest : '/'
+  }
+
+  return path
+}
+
+export function withBase(path: string, base?: string): string {
+  const prefix = normalizeBase(readBase(base))
+  const clean = path.startsWith('/') ? path : `/${path}`
+  if (prefix.length === 0) {
+    return clean
+  }
+
+  return clean === '/' ? `${prefix}/` : `${prefix}${clean}`
+}
+
+export function frameworkFromPath(path: string, base?: string): DemoFramework {
+  const stripped = sitePath(path, base).replace(/^\/ru(?=\/|$)/, '') || '/'
   const segment = stripped.replace(/^\/+|\/+$/g, '')
   if (segment === 'vue' || segment === 'react' || segment === 'svelte') {
     return segment
@@ -123,15 +168,16 @@ export function localePath(locale: DemoLocale, path: string): string {
   return clean
 }
 
-export function switchLocalePath(locale: DemoLocale, path: string): string {
+export function switchLocalePath(locale: DemoLocale, path: string, base?: string): string {
+  const current = sitePath(path, base)
   if (locale === 'ru') {
-    const stripped = path.replace(/^\/ru(?=\/|$)/, '')
+    const stripped = current.replace(/^\/ru(?=\/|$)/, '')
 
     return stripped.length > 0 ? stripped : '/'
   }
-  if (path === '/') {
+  if (current === '/') {
     return '/ru/'
   }
 
-  return `/ru${path}`
+  return `/ru${current}`
 }

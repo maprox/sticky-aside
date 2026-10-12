@@ -1,7 +1,7 @@
 ---
 import '../styles/site.css'
 import type { DemoLocale } from '../demo/settings'
-import { localePath, switchLocalePath, t } from '../demo/i18n'
+import { localePath, sitePath, switchLocalePath, t, withBase } from '../demo/i18n'
 
 interface Props {
   title: string
@@ -10,8 +10,8 @@ interface Props {
 }
 
 const { title, locale, bodyClass } = Astro.props
-const path = Astro.url.pathname
-const other = switchLocalePath(locale, path)
+const path = sitePath(Astro.url.pathname)
+const other = withBase(switchLocalePath(locale, path))
 ---
 
 <html lang={locale}>
@@ -36,7 +36,7 @@ const other = switchLocalePath(locale, path)
   </head>
   <body class={bodyClass}>
     <nav class="site-nav">
-      <a class="brand" href={localePath(locale, '/')}>{t(locale, 'nav.home')}</a>
+      <a class="brand" href={withBase(localePath(locale, '/'))}>{t(locale, 'nav.home')}</a>
       <a href="https://github.com/maprox/sticky-aside">{t(locale, 'nav.github')}</a>
       <div class="nav-tools">
         <button

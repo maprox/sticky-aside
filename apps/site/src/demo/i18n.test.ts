@@ -5,8 +5,10 @@ import {
   frameworkPath,
   localePath,
   messages,
+  sitePath,
   stateReadout,
   switchLocalePath,
+  withBase,
 } from '#site/demo/i18n.ts'
 
 describe('i18n', () => {
@@ -40,5 +42,19 @@ describe('i18n', () => {
     expect(frameworkFromPath('/vue')).toBe('vue')
     expect(frameworkFromPath('/ru/react/')).toBe('react')
     expect(frameworkFromPath('/ru/')).toBe('vanilla')
+  })
+
+  it('prefixes links with the GitHub Pages base', () => {
+    const base = '/sticky-aside/'
+
+    expect(withBase('/', base)).toBe('/sticky-aside/')
+    expect(withBase('/vue', base)).toBe('/sticky-aside/vue')
+    expect(withBase('/ru/', base)).toBe('/sticky-aside/ru/')
+    expect(sitePath('/sticky-aside/ru/react/', base)).toBe('/ru/react/')
+    expect(sitePath('/sticky-aside', base)).toBe('/')
+    expect(frameworkFromPath('/sticky-aside/ru/react/', base)).toBe('react')
+    expect(switchLocalePath('en', '/sticky-aside/vue', base)).toBe('/ru/vue')
+    expect(switchLocalePath('ru', '/sticky-aside/ru/', base)).toBe('/')
+    expect(withBase('/vue', '/')).toBe('/vue')
   })
 })
