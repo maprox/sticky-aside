@@ -8,15 +8,7 @@ Size in the Libraries table is Bundlephobia’s minified bundle and its gzip siz
 
 `@sticky-aside/core` does one specific thing. If the panel is shorter than the viewport, it stays at the top. If it is taller, it moves with the page until the edge you are scrolling toward hits the viewport, then pins there. Scroll the other way and it pins to the opposite edge. `position: sticky` alone does not do this: a tall box stays clipped.
 
-## Name
-
-The published names are `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/react`, and `@sticky-aside/svelte`. The unscoped name `sticky-aside` is left unpublished.
-
-`sticky-panel` is taken. npm has `sticky-panel@1.0.1` (3 January 2019, effectively unused): a React component that sticks a panel to the top of the screen. GitHub also has [donnyv/sticky-panel](https://github.com/donnyv/sticky-panel), a jQuery plugin from 2015 that does the same simple affix. The words already mean "stick to the top", not a tall panel that switches edges.
-
-`sticky-sidebar` is the search term, and it is the package with about 13,000 downloads a week. `sticky-box` is free, but `react-sticky-box` owns that phrase. `sticky-rail` and `sticky-column` are free. Rail is layout jargon. Column is vague.
-
-The repository is [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
+Published packages: `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`. Repository: [maprox/sticky-aside](https://github.com/maprox/sticky-aside).
 
 ## Libraries
 
@@ -46,7 +38,7 @@ size-limit, minified and gzipped, on the 1.0.0 build:
 | `@sticky-aside/react`, core external | 505 B |
 | `@sticky-aside/svelte`, the component file | 518 B |
 
-The core is window scroll, both edges, lock, and an internal measure element. Offsets are CSS classes, not pixel props. A scroll-root option is not in 1.0.0. Adding one would not approach the 9 KB of `sticky-sidebar`.
+The core is window scroll, both edges, lock, and an internal measure element. Offsets are CSS classes, not pixel props. A scroll-root option is not in 1.0.0.
 
 ## Features
 
@@ -64,10 +56,4 @@ The core is window scroll, both edges, lock, and an internal measure element. Of
 
 Offsets are the classes `sticky-aside-top` and `sticky-aside-bottom`. They read `--sticky-aside-top` and `--sticky-aside-bottom`. The other libraries take pixel numbers (`topSpacing`, `offsetTop`, `offsetBottom`).
 
-## Gap
-
-React already has a living library: `react-sticky-box`, used inside Codecks, with a docs site. Vanilla already has `sticky-sidebar`, widely installed and barely released. Vue 3 has no maintained package for this behavior. `vue-sticky-sidebar` is Vue 2 and the repository is archived.
-
-`@sticky-aside/core` has no runtime dependencies. The Vue 3, React, and Svelte 5 adapters are thin bindings over that core, and the lock mode is one the popular packages do not expose.
-
-For a side-by-side option map from abouolia/sticky-sidebar (vanilla and jQuery), see [migrate-from-sticky-sidebar.md](./migrate-from-sticky-sidebar.md).
+Coming from sticky-sidebar (vanilla or jQuery): [migrate-from-sticky-sidebar.md](./migrate-from-sticky-sidebar.md).
