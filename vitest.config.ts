@@ -53,6 +53,13 @@ export default defineConfig({
           include: ['packages/svelte/src/**/*.ssr.test.ts'],
         },
       },
+      {
+        test: {
+          name: 'site',
+          environment: 'happy-dom',
+          include: ['apps/site/src/**/*.test.ts'],
+        },
+      },
     ],
   },
 })

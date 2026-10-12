@@ -45,6 +45,17 @@ describe('getNewStickyModel', () => {
     }))).toEqual(model)
   })
 
+  it('leaves a tall panel in flow on resize when its top is above the window', () => {
+    const model = getInitialStickyModel()
+    const next = getNewStickyModel(model, frame({
+      reason: 'resize',
+      content: box(-200, 900),
+      measure: box(48, 360),
+    }))
+
+    expect(next).toBe(model)
+  })
+
   it('pins a short panel to the top when the measure lane sits inside the wrapper', () => {
     const next = getNewStickyModel(getInitialStickyModel(), frame({
       reason: 'resize',

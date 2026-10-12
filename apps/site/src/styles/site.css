@@ -1,0 +1,33 @@
+@import "@sticky-aside/core/offsets.css";
+
+:root {
+  --paper: #d5e2e8;
+  --ink: #142229;
+  --font-display: "Syne", sans-serif;
+  --font-body: "Literata", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+a { color: inherit; }
+
+html[data-theme="light"] { color-scheme: light; }
+
+html[data-theme="dark"] {
+  --paper: #141210;
+  --ink: #f3ece3;
+  color-scheme: dark;
+  background: var(--paper);
+  color: var(--ink);
+}

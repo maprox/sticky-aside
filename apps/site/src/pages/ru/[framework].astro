@@ -1,0 +1,19 @@
+---
+import VariantPage from '../../components/VariantPage.astro'
+import type { DemoFramework } from '../../demo/settings'
+
+export function getStaticPaths() {
+  return (['vue', 'react', 'svelte'] as const).map((framework) => ({
+    params: { framework },
+    props: { framework },
+  }))
+}
+
+interface Props {
+  framework: Exclude<DemoFramework, 'vanilla'>
+}
+
+const { framework } = Astro.props
+---
+
+<VariantPage locale="ru" framework={framework} />

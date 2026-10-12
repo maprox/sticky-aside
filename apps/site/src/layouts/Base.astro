@@ -1,39 +1,171 @@
 ---
-import '../styles/global.css'
+import '../styles/site.css'
+import type { DemoLocale } from '../demo/settings'
+import { localePath, switchLocalePath, t } from '../demo/i18n'
 
 interface Props {
   title: string
-  active: string
+  locale: DemoLocale
+  bodyClass?: string
 }
 
-const { title, active } = Astro.props
-const links = [
-  ['/', 'Обзор', 'home'],
-  ['/vanilla', 'Vanilla', 'vanilla'],
-  ['/vue', 'Vue', 'vue'],
-  ['/react', 'React', 'react'],
-  ['/svelte', 'Svelte', 'svelte'],
-  ['/contents', 'Сетка', 'contents']
-]
+const { title, locale, bodyClass } = Astro.props
+const path = Astro.url.pathname
+const other = switchLocalePath(locale, path)
 ---
 
-<html lang="ru">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Literata:opsz,wght@7..72,400;7..72,600&family=Syne:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;560&family=Syne:wght@700&display=swap" rel="stylesheet" />
+    <script is:inline>
+      (function () {
+        var stored = null
+        try { stored = localStorage.getItem('sticky-aside-theme') } catch (e) {}
+        var theme = stored === 'dark' || stored === 'light'
+          ? stored
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+      })()
+    </script>
   </head>
-  <body>
+  <body class={bodyClass}>
     <nav class="site-nav">
-      {links.map(([href, label, id]) => (
-        <a href={href} aria-current={active === id ? 'page' : undefined}>{label}</a>
-      ))}
+      <a class="brand" href={localePath(locale, '/')}>{t(locale, 'nav.home')}</a>
+      <a href="https://github.com/maprox/sticky-aside">{t(locale, 'nav.github')}</a>
+      <div class="nav-tools">
+        <button
+          class="theme"
+          type="button"
+          data-theme-toggle
+          data-label-dark={t(locale, 'nav.themeDark')}
+          data-label-light={t(locale, 'nav.themeLight')}
+          aria-pressed="false"
+          aria-label={t(locale, 'nav.themeDark')}
+        >
+          <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z" />
+          </svg>
+          <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 3.2v1.8M12 19v1.8M3.2 12h1.8M19 12h1.8M5.8 5.8l1.3 1.3M16.9 16.9l1.3 1.3M18.2 5.8l-1.3 1.3M7.1 16.9l-1.3 1.3" />
+          </svg>
+        </button>
+        <a class="lang" href={other} aria-label={t(locale, 'nav.langLabel')}>{t(locale, 'nav.lang')}</a>
+      </div>
     </nav>
-    <main class="wrap">
-      <slot />
-    </main>
+    <slot />
+    <script is:inline>
+      (function () {
+        var button = document.querySelector('[data-theme-toggle]')
+        if (!button) return
+        var dark = document.documentElement.dataset.theme === 'dark'
+        button.setAttribute('aria-pressed', dark ? 'true' : 'false')
+        var label = dark ? button.getAttribute('data-label-light') : button.getAttribute('data-label-dark')
+        if (label) button.setAttribute('aria-label', label)
+      })()
+    </script>
+    <script>
+      import { bindThemeToggle } from '../scripts/theme-toggle'
+      const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')
+      if (button) bindThemeToggle(button)
+    </script>
   </body>
 </html>
+
+<style>
+  .site-nav {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 28px 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+
+  .site-nav a { text-decoration: none; }
+
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    font-size: 18px;
+    margin-right: auto;
+  }
+
+  .nav-tools {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lang,
+  .theme {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    max-width: 100%;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      0 8px 24px rgba(20, 24, 28, 0.08);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    color: inherit;
+  }
+
+  .lang { padding: 0 12px; }
+
+  .theme {
+    width: 32px;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .theme .icon {
+    width: 16px;
+    height: 16px;
+    display: none;
+  }
+
+  :global(html[data-theme="dark"]) .theme .icon-sun,
+  :global(html[data-theme="light"]) .theme .icon-moon,
+  :global(html:not([data-theme])) .theme .icon-moon {
+    display: block;
+  }
+
+  .theme:hover {
+    background: rgba(255, 255, 255, 0.32);
+  }
+
+  .theme:focus-visible {
+    outline: 2px solid rgba(10, 132, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  :global(html[data-theme="dark"]) .lang,
+  :global(html[data-theme="dark"]) .theme {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 8px 24px rgba(0, 0, 0, 0.28);
+  }
+
+  :global(html[data-theme="dark"]) .theme:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  @media (max-width: 800px) {
+    .site-nav { flex-wrap: wrap; }
+  }
+</style>

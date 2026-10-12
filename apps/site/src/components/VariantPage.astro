@@ -1,0 +1,493 @@
+---
+import Base from '../layouts/Base.astro'
+import FrameworkTabs from './FrameworkTabs.astro'
+import MiniWindow from './MiniWindow.astro'
+import { t } from '../demo/i18n'
+import type { DemoFramework, DemoLocale } from '../demo/settings'
+
+interface Props {
+  locale: DemoLocale
+  framework?: DemoFramework
+}
+
+const { locale, framework = 'vanilla' } = Astro.props
+const title = `${t(locale, 'variant.5.title')} — sticky-aside`
+---
+
+<Base title={title} locale={locale} bodyClass="cf">
+  <main class="wrap" data-stage data-locale={locale} data-framework={framework} data-tone="light">
+    <div class="cf-split">
+      <div class="cf-stage">
+        <MiniWindow />
+      </div>
+      <aside class="cf-aside">
+        <div class="toggles-stack">
+          <p>{t(locale, 'variant.5.lead')}</p>
+          <div class="cf-dials">
+            <label>{t(locale, 'knob.top')}<input data-top type="range" min="0" max="120" value="16" /></label>
+            <label>{t(locale, 'knob.bottom')}<input data-bottom type="range" min="0" max="120" value="16" /></label>
+          </div>
+          <div class="cf-toggles">
+            <label><input data-tall type="checkbox" checked />{t(locale, 'knob.tall')}</label>
+            <label><input data-lock type="checkbox" />{t(locale, 'knob.locked')}</label>
+            <label><input data-overflow-top type="checkbox" />{t(locale, 'knob.overflowTop')}</label>
+            <label><input data-overflow-bottom type="checkbox" />{t(locale, 'knob.overflowBottom')}</label>
+            <label><input data-disabled type="checkbox" />{t(locale, 'knob.disabled')}</label>
+          </div>
+          <p data-readout role="status"></p>
+        </div>
+        <div class="code-stack">
+          <div class="code-head"><FrameworkTabs locale={locale} framework={framework} /></div>
+          <div class="cf-editor" data-scrub-host></div>
+          <pre class="code-block" data-code hidden></pre>
+        </div>
+      </aside>
+    </div>
+  </main>
+</Base>
+
+<script>
+  import { bootStage } from '../scripts/boot-stage'
+  const stage = document.querySelector<HTMLElement>('[data-stage]')
+  if (stage) bootStage(stage)
+</script>
+
+<style>
+  .wrap {
+    width: min(1600px, calc(100% - 40px));
+    margin: 0 auto;
+    padding-bottom: 80px;
+  }
+
+  .cf-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .cf-stage {
+    position: relative;
+    min-height: 240px;
+  }
+
+  .cf-stage :global(.browser) {
+    position: absolute;
+    inset: 0;
+  }
+
+  .cf-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .code-stack {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .code-head {
+    display: flex;
+    margin: 0 0 8px;
+  }
+
+  .code-block {
+    margin: 0;
+    overflow: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+  }
+
+  .cf-editor {
+    background: #fbfaf7;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: inset 0 0 0 1px rgba(29, 26, 23, 0.08);
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12.5px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  .cf-editor :global(.scrub-num),
+  .cf-editor :global(.scrub-bool) {
+    background: rgba(120, 156, 188, 0.28);
+    border-radius: 4px;
+    padding: 0 2px;
+    cursor: ns-resize;
+  }
+
+  .cf-editor :global(.scrub-bool) { cursor: pointer; }
+
+  .cf-dials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 18px;
+    margin-top: 14px;
+  }
+
+  .cf-dials label {
+    display: grid;
+    gap: 4px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+  }
+
+  .cf-dials input[type="range"] {
+    --fill: 13.333%;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 140px;
+    height: 18px;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .cf-dials input[type="range"]:focus {
+    outline: none;
+  }
+
+  .cf-dials input[type="range"]:focus-visible {
+    outline: 2px solid rgba(29, 26, 23, 0.55);
+    outline-offset: 3px;
+    border-radius: 999px;
+  }
+
+  .cf-dials input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      #1d1a17 0 var(--fill),
+      rgba(29, 26, 23, 0.18) var(--fill) 100%
+    );
+  }
+
+  .cf-dials input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(29, 26, 23, 0.28);
+    background: linear-gradient(180deg, #fffcf8 0%, #f3ece3 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 1px 2px rgba(29, 26, 23, 0.22);
+  }
+
+  .cf-dials input[type="range"]::-moz-range-track {
+    height: 4px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(29, 26, 23, 0.18);
+  }
+
+  .cf-dials input[type="range"]::-moz-range-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: #1d1a17;
+  }
+
+  .cf-dials input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgba(29, 26, 23, 0.28);
+    border-radius: 50%;
+    background: linear-gradient(180deg, #fffcf8 0%, #f3ece3 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 1px 2px rgba(29, 26, 23, 0.22);
+  }
+
+  .cf-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .cf-toggles label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+    padding: 7px 12px;
+    border: 1px solid rgba(29, 26, 23, 0.14);
+    border-radius: 10px;
+    background: linear-gradient(180deg, #fffcf8 0%, #f3ece3 100%);
+    color: #1d1a17;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.011em;
+    line-height: 1.15;
+    cursor: pointer;
+    user-select: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      0 2px 0 rgba(29, 26, 23, 0.16);
+    transition:
+      transform 90ms ease,
+      box-shadow 90ms ease,
+      background 90ms ease,
+      color 90ms ease,
+      border-color 90ms ease;
+  }
+
+  .cf-toggles label:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #f7f1ea 100%);
+  }
+
+  .cf-toggles label:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 2px 3px rgba(29, 26, 23, 0.18);
+  }
+
+  .cf-toggles input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .cf-toggles label:has(input:checked) {
+    background: #1d1a17;
+    color: #f6f1ea;
+    border-color: #141210;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.45);
+    transform: translateY(2px);
+  }
+
+  .cf-toggles label:has(input:checked):hover {
+    background: #2a2622;
+  }
+
+  .cf-toggles label:has(input:focus-visible) {
+    outline: 2px solid rgba(10, 132, 255, 0.9);
+    outline-offset: 2px;
+  }
+
+  [data-readout] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 14px 0 0;
+    min-height: 18px;
+    color: #1d1a17;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.011em;
+    line-height: 1.3;
+  }
+
+  [data-readout]::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: #0a84ff;
+    transition: background-color 120ms ease, box-shadow 120ms ease;
+  }
+
+  [data-readout][data-state="top"]::before,
+  [data-readout][data-state="locked"]::before {
+    background: #1d1a17;
+  }
+
+  [data-readout][data-state="bottom"]::before {
+    background: #d07a52;
+  }
+
+  [data-readout][data-state="off"] {
+    color: rgba(29, 26, 23, 0.45);
+  }
+
+  [data-readout][data-state="off"]::before {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px rgba(29, 26, 23, 0.35);
+  }
+
+  :global(html[data-theme="dark"]) .cf-editor {
+    background: #221e1b;
+    color: #f3ece3;
+    box-shadow: inset 0 0 0 1px rgba(243, 236, 227, 0.1);
+  }
+
+  :global(html[data-theme="dark"]) .cf-editor :global(.scrub-num),
+  :global(html[data-theme="dark"]) .cf-editor :global(.scrub-bool) {
+    background: rgba(120, 156, 188, 0.38);
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]:focus-visible {
+    outline-color: rgba(243, 236, 227, 0.55);
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(
+      to right,
+      #f3ece3 0 var(--fill),
+      rgba(243, 236, 227, 0.22) var(--fill) 100%
+    );
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]::-webkit-slider-thumb {
+    border-color: rgba(243, 236, 227, 0.35);
+    background: linear-gradient(180deg, #fffaf4 0%, #e7dfd6 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 1px 2px rgba(0, 0, 0, 0.45);
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]::-moz-range-track {
+    background: rgba(243, 236, 227, 0.22);
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]::-moz-range-progress {
+    background: #f3ece3;
+  }
+
+  :global(html[data-theme="dark"]) .cf-dials input[type="range"]::-moz-range-thumb {
+    border-color: rgba(243, 236, 227, 0.35);
+    background: linear-gradient(180deg, #fffaf4 0%, #e7dfd6 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 1px 2px rgba(0, 0, 0, 0.45);
+  }
+
+  :global(html[data-theme="dark"]) .cf-toggles label {
+    border-color: rgba(243, 236, 227, 0.14);
+    background: linear-gradient(180deg, #2c2824 0%, #221e1b 100%);
+    color: #f3ece3;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 2px 0 rgba(0, 0, 0, 0.45);
+  }
+
+  :global(html[data-theme="dark"]) .cf-toggles label:hover {
+    background: linear-gradient(180deg, #342f2a 0%, #2a2622 100%);
+  }
+
+  :global(html[data-theme="dark"]) .cf-toggles label:active {
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.45);
+  }
+
+  :global(html[data-theme="dark"]) .cf-toggles label:has(input:checked) {
+    background: #f3ece3;
+    color: #1d1a17;
+    border-color: #e4ddd4;
+    box-shadow: inset 0 2px 4px rgba(29, 26, 23, 0.18);
+  }
+
+  :global(html[data-theme="dark"]) .cf-toggles label:has(input:checked):hover {
+    background: #fffaf4;
+  }
+
+  :global(html[data-theme="dark"]) [data-readout] {
+    color: #f3ece3;
+  }
+
+  :global(html[data-theme="dark"]) [data-readout][data-state="top"]::before,
+  :global(html[data-theme="dark"]) [data-readout][data-state="locked"]::before {
+    background: #f3ece3;
+  }
+
+  :global(html[data-theme="dark"]) [data-readout][data-state="off"] {
+    color: rgba(243, 236, 227, 0.45);
+  }
+
+  :global(html[data-theme="dark"]) [data-readout][data-state="off"]::before {
+    box-shadow: inset 0 0 0 1px rgba(243, 236, 227, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cf-toggles label,
+    [data-readout]::before { transition: none; }
+  }
+
+  @media (max-width: 800px) {
+    .cf-split { grid-template-columns: 1fr; }
+    .cf-stage { height: min(80vh, 1600px); }
+  }
+</style>
+
+<style is:global>
+  .cf {
+    background: #ece7df;
+    color: #1d1a17;
+    min-height: 100vh;
+    font-family: "IBM Plex Sans", sans-serif;
+  }
+
+  .cf .browser {
+    background: #fff;
+    border-radius: 16px;
+  }
+
+  .cf .panel {
+    padding: 12px 14px 10px;
+    border-radius: 16px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.36)),
+      radial-gradient(110px 80px at 0% 0%, rgba(10, 132, 255, 0.2), transparent 72%),
+      radial-gradient(130px 100px at 100% 100%, rgba(255, 186, 148, 0.34), transparent 74%);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      0 0 0 0.5px rgba(29, 26, 23, 0.1),
+      0 10px 26px rgba(29, 26, 23, 0.1);
+    backdrop-filter: blur(22px) saturate(1.7);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .cf .panel {
+      background: rgba(251, 250, 247, 0.96);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+
+  html[data-theme="dark"] .cf {
+    background: #141210;
+    color: #f3ece3;
+  }
+
+  html[data-theme="dark"] .cf .browser {
+    background: #1c1916;
+    color: #f3ece3;
+  }
+
+  html[data-theme="dark"] .cf .panel {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+      radial-gradient(110px 80px at 0% 0%, rgba(10, 132, 255, 0.28), transparent 72%),
+      radial-gradient(130px 100px at 100% 100%, rgba(208, 122, 82, 0.32), transparent 74%);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 0 0 0.5px rgba(0, 0, 0, 0.4),
+      0 10px 26px rgba(0, 0, 0, 0.28);
+    color: #f6f1ea;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    html[data-theme="dark"] .cf .panel {
+      background: rgba(36, 32, 28, 0.96);
+    }
+  }
+</style>
