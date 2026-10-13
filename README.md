@@ -36,6 +36,7 @@ npm install @sticky-aside/vue
 npm install @sticky-aside/react
 npm install @sticky-aside/svelte
 npm install @sticky-aside/solid
+npm install @sticky-aside/angular
 npm install @sticky-aside/astro
 ```
 
@@ -125,6 +126,26 @@ export function Sidebar() {
     </StickyAside>
   )
 }
+```
+
+```typescript
+import { Component } from '@angular/core'
+import { StickyAside } from '@sticky-aside/angular'
+
+@Component({
+  standalone: true,
+  imports: [StickyAside],
+  template: `
+    <sticky-aside
+      [as]="'aside'"
+      topClass="top-10"
+      bottomClass="bottom-0"
+    >
+      <nav>...</nav>
+    </sticky-aside>
+  `,
+})
+export class Sidebar {}
 ```
 
 ```astro
@@ -231,6 +252,25 @@ export function Sidebar() {
 }
 ```
 
+```typescript
+import { Component } from '@angular/core'
+import { StickyAside } from '@sticky-aside/angular'
+import '@sticky-aside/core/offsets.css'
+
+@Component({
+  standalone: true,
+  imports: [StickyAside],
+  template: `
+    <div class="layout">
+      <sticky-aside [as]="'aside'">
+        <nav>...</nav>
+      </sticky-aside>
+    </div>
+  `,
+})
+export class Sidebar {}
+```
+
 ```css
 .layout {
   --sticky-aside-top: 40px;
@@ -266,7 +306,7 @@ import '@sticky-aside/core/offsets.css'
 }
 ```
 
-`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte and Solid use `class`. Astro uses the same `createStickyAside` API as vanilla.
+`as` is `div`, `aside`, `nav`, or `section`. The default is `div`. The inner element is always a `div`. The wrapper keeps the class `sticky-aside-root`, merged with the class you pass. Vue uses fallthrough `class`. React uses `className`. Svelte and Solid use `class`. Angular merges `class` from the host onto the wrapper. Astro uses the same `createStickyAside` API as vanilla.
 
 ## Options
 
@@ -281,7 +321,7 @@ Vue templates use kebab-case. `allowLockedOverflowTop` is `allow-locked-overflow
 | `locked` | `false` | Holds the viewport offset from the moment the lock turned on. |
 | `allowLockedOverflowTop` | `false` | Keeps that pin when the lock point leaves through the top of the column. |
 | `allowLockedOverflowBottom` | `false` | Keeps that pin when the lock point leaves through the bottom of the column. |
-| `onStateChange` | | Called after paint when the painted state changes. Vue emits `state-change`. |
+| `onStateChange` | | Called after paint when the painted state changes. Vue emits `state-change`. Angular emits `stateChange`. |
 
 The inner element gets `data-sticky-aside`. The value is `flow`, `top`, `bottom`, `locked`, or `off`.
 
@@ -369,7 +409,7 @@ The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage h
 
 ## Compared with other libraries
 
-`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B. `@sticky-aside/astro` re-exports core (same API as vanilla).
+`createStickyAside` is 2.11 kB gzip. The headless presenter is 1.26 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B, Angular 1.44 kB. `@sticky-aside/astro` re-exports core (same API as vanilla).
 
 [react-sticky-box](https://github.com/codecks-io/react-sticky-box) is the same behavior at 3.6 kB gzip, React only, with no lock. [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) is 2.8 kB gzip and has not published since 2017. The numbers and the rest of the table are in [docs/analogs.md](docs/analogs.md). Coming from sticky-sidebar (including the jQuery build): [docs/migrate-from-sticky-sidebar.md](docs/migrate-from-sticky-sidebar.md).
 

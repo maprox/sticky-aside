@@ -1,6 +1,6 @@
 # Migrate from sticky-sidebar
 
-[abouolia/sticky-sidebar](https://github.com/abouolia/sticky-sidebar) and `@sticky-aside/core` implement the same both-edges behavior: a short panel pins to the top; a tall panel scrolls with the page and pins the edge you are moving toward. sticky-sidebar last published in 2017. sticky-aside is smaller (2.11 kB gzip), TypeScript-first, and has Vue 3, React, and Svelte 5 adapters.
+[abouolia/sticky-sidebar](https://github.com/abouolia/sticky-sidebar) and `@sticky-aside/core` implement the same both-edges behavior: a short panel pins to the top; a tall panel scrolls with the page and pins the edge you are moving toward. sticky-sidebar last published in 2017. sticky-aside is smaller (2.11 kB gzip), TypeScript-first, and has Vue 3, React, Svelte 5, Solid, and Angular adapters.
 
 ## Markup
 
@@ -71,7 +71,7 @@ const content = wrapper.querySelector('.sidebar__inner')
 createStickyAside({ wrapper, content })
 ```
 
-Set `--sticky-aside-top` / `--sticky-aside-bottom` in CSS instead of pixel options. Framework apps can use `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`, `@sticky-aside/solid`, or `@sticky-aside/astro` instead of a jQuery plugin.
+Set `--sticky-aside-top` / `--sticky-aside-bottom` in CSS instead of pixel options. Framework apps can use `@sticky-aside/vue`, `@sticky-aside/react`, `@sticky-aside/svelte`, `@sticky-aside/solid`, `@sticky-aside/angular`, or `@sticky-aside/astro` instead of a jQuery plugin.
 
 ## Options map
 

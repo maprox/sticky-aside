@@ -1,3 +1,4 @@
+import angular from '@analogjs/vite-plugin-angular'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import react from '@vitejs/plugin-react'
 import vue from '@vitejs/plugin-vue'
@@ -80,6 +81,18 @@ export default defineConfig({
           name: 'svelte-ssr',
           environment: 'node',
           include: ['packages/svelte/src/**/*.ssr.test.ts'],
+        },
+      },
+      {
+        root: 'packages/angular',
+        plugins: [
+          angular({ tsconfig: 'packages/angular/tsconfig.spec.json' }),
+        ],
+        test: {
+          name: 'angular',
+          environment: 'happy-dom',
+          include: ['src/**/*.test.ts'],
+          setupFiles: ['vitest-setup.ts'],
         },
       },
       {

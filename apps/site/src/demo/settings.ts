@@ -1,4 +1,4 @@
-export type DemoFramework = 'vanilla' | 'vue' | 'react' | 'svelte' | 'solid' | 'astro'
+export type DemoFramework = 'vanilla' | 'vue' | 'react' | 'svelte' | 'solid' | 'astro' | 'angular'
 export type DemoLocale = 'en' | 'ru'
 
 export interface DemoSettings {
@@ -26,7 +26,7 @@ export const DEFAULT_DEMO_SETTINGS: DemoSettings = {
 }
 
 export const DEMO_FRAMEWORKS: DemoFramework[] = [
-  'vanilla', 'vue', 'react', 'svelte', 'solid', 'astro',
+  'vanilla', 'vue', 'react', 'svelte', 'solid', 'astro', 'angular',
 ]
 
 export const VIEWPORT_HEIGHT_MIN = 240

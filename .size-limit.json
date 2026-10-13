@@ -51,5 +51,13 @@
     "rolldown": false,
     "gzip": true,
     "limit": "600 B"
+  },
+  {
+    "name": "angular",
+    "path": "packages/angular/dist/fesm2022/sticky-aside-angular.mjs",
+    "import": "{ StickyAside }",
+    "ignore": ["@angular/core", "@angular/common", "@sticky-aside/core", "tslib"],
+    "gzip": true,
+    "limit": "1.55 kB"
   }
 ]

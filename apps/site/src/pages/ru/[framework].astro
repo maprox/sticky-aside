@@ -3,7 +3,7 @@ import VariantPage from '../../components/VariantPage.astro'
 import type { DemoFramework } from '../../demo/settings'
 
 export function getStaticPaths() {
-  return (['vue', 'react', 'svelte', 'solid', 'astro'] as const).map((framework) => ({
+  return (['vue', 'react', 'svelte', 'solid', 'astro', 'angular'] as const).map((framework) => ({
     params: { framework },
     props: { framework },
   }))

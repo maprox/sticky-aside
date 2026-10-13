@@ -26,6 +26,8 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'seo.solid.description': 'Solid sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
     'seo.astro.title': 'Astro sticky sidebar — sticky-aside',
     'seo.astro.description': 'Sticky sidebar for Astro with the same createStickyAside API as vanilla. Both-edge pin, lock, CSS offsets. Small ESM core for modern browsers.',
+    'seo.angular.title': 'Angular sticky sidebar — sticky-aside',
+    'seo.angular.description': 'Angular sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
     'knob.tall': 'Tall panel',
     'knob.top': 'Top offset',
     'knob.bottom': 'Bottom offset',
@@ -48,7 +50,7 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p2': 'Scrolling down pins the bottom of the panel to the bottom of the window. Scrolling up releases it and pins the top. Between those moments the panel just sits in its column.',
     'article.p3': 'Offsets come from CSS. Here the numbers write --sticky-aside-top and --sticky-aside-bottom. With Tailwind you pass top-16 md:top-24 instead.',
     'article.p4': 'Lock holds the panel at the window height where you turned it on. If the column leaves and the lock no longer fits, the panel returns inside the column.',
-    'article.p5': 'The core does not know Vue, React, Svelte, Solid, or Astro. An adapter hands it two elements and listens to props.',
+    'article.p5': 'The core does not know Vue, React, Svelte, Solid, Astro, or Angular. An adapter hands it two elements and listens to props.',
     'article.p6': 'Measurement is an invisible rail glued to the window between the top and bottom offsets, never taller than the panel. That is how the core knows whether the panel fits.',
     'article.p7': 'The listener hangs on window. Nested container scroll is out of scope for this version.',
     'article.p8': 'A fixed panel takes its width from the column. Otherwise it jumps the grid and stretches across the screen.',
@@ -74,6 +76,8 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'seo.solid.description': 'Адаптер Solid sticky sidebar над компактным современным ядром. Пин к обоим краям, lock, CSS-отступы. Только актуальные браузеры.',
     'seo.astro.title': 'Astro sticky sidebar — sticky-aside',
     'seo.astro.description': 'Sticky sidebar для Astro с тем же createStickyAside API, что и vanilla. Пин к обоим краям, lock, CSS-отступы. Компактный ESM-core для современных браузеров.',
+    'seo.angular.title': 'Angular sticky sidebar — sticky-aside',
+    'seo.angular.description': 'Адаптер Angular sticky sidebar над компактным современным ядром. Пин к обоим краям, lock, CSS-отступы. Только актуальные браузеры.',
     'knob.tall': 'Длинная панель',
     'knob.top': 'Отступ сверху',
     'knob.bottom': 'Отступ снизу',
@@ -96,7 +100,7 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p2': 'Скролл вниз прижимает низ панели к низу окна. Скролл вверх отпускает её и прижимает верх. Между этими моментами панель просто стоит в колонке.',
     'article.p3': 'Отступ задаёт CSS. Здесь числа пишут переменные --sticky-aside-top и --sticky-aside-bottom. С Tailwind вместо них передают top-16 md:top-24.',
     'article.p4': 'Замок держит панель на той высоте окна, где она была в момент включения. Если колонка уехала и замок больше не попадает в неё, панель возвращается внутрь колонки.',
-    'article.p5': 'Ядро не знает про Vue, React, Svelte, Solid и Astro. Адаптер отдаёт ему два элемента и слушает пропсы.',
+    'article.p5': 'Ядро не знает про Vue, React, Svelte, Solid, Astro и Angular. Адаптер отдаёт ему два элемента и слушает пропсы.',
     'article.p6': 'Измерение делает невидимая планка. Она приклеена к окну между верхним и нижним отступом, а её высота не больше высоты панели.',
     'article.p7': 'Слушатель висит на window. Вложенный скролл контейнера эта версия не обрабатывает.',
     'article.p8': 'Ширина зафиксированной панели берётся у колонки. Иначе fixed выскочит из сетки и растянется на весь экран.',
@@ -181,7 +185,8 @@ export function frameworkFromPath(path: string, base?: string): DemoFramework {
     segment === 'react' ||
     segment === 'svelte' ||
     segment === 'solid' ||
-    segment === 'astro'
+    segment === 'astro' ||
+    segment === 'angular'
   ) {
     return segment
   }

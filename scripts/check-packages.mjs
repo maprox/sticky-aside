@@ -34,6 +34,11 @@ const packages = [
     dir: 'packages/astro',
     attwArgs: [],
   },
+  {
+    name: '@sticky-aside/angular',
+    dir: 'packages/angular',
+    attwArgs: [],
+  },
 ]
 
 const destination = mkdtempSync(join(tmpdir(), 'sticky-aside-pack-'))

@@ -153,6 +153,24 @@ import '@sticky-aside/core/offsets.css'
 </StickyAside>`
 }
 
+function angular(settings: DemoSettings): string {
+  const vars = styleVars(settings)
+
+  return `import { StickyAside } from '@sticky-aside/angular'
+import '@sticky-aside/core/offsets.css'
+
+<sticky-aside
+  as="aside"
+  [locked]="${bool(settings.locked)}"
+  [disabled]="${bool(settings.disabled)}"
+  [allowLockedOverflowTop]="${bool(settings.allowLockedOverflowTop)}"
+  [allowLockedOverflowBottom]="${bool(settings.allowLockedOverflowBottom)}"
+  style="--sticky-aside-top: ${vars.top}; --sticky-aside-bottom: ${vars.bottom}"
+>
+  ...
+</sticky-aside>`
+}
+
 function astro(settings: DemoSettings, locale: DemoLocale): string {
   const vars = styleVars(settings)
   const markup = vanillaMarkup(settings, locale)
@@ -198,6 +216,9 @@ export function generateDemoCode(settings: DemoSettings, locale: DemoLocale = 'e
   }
   if (settings.framework === 'astro') {
     return astro(settings, locale)
+  }
+  if (settings.framework === 'angular') {
+    return angular(settings)
   }
 
   return vanilla(settings, locale)
