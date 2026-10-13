@@ -2,7 +2,7 @@
 
 Snapshot from registry.npmjs.org, the GitHub API, and Bundlephobia on 12 October 2026.
 
-Size in the Libraries table is Bundlephobia’s minified bundle and its gzip size (peers such as React and Vue are not included). Tree-shaken size-limit numbers for our entries — the ones on the README badge — are in [Our size](#our-size).
+Size in the Libraries table is Bundlephobia’s minified bundle and its gzip size (peers such as React and Vue are not included). The `@sticky-aside/core` cell is the current build: the package entry minifies to 6.66 kB and gzips to 2.19 kB. Tree-shaken size-limit numbers for our entries — the ones on the README badge — are in [Our size](#our-size).
 
 `theia-sticky-sidebar@2.0.1` publishes a UMD build at 7,393 bytes raw and about 2.5 KB gzipped; Bundlephobia reports 6.7 / 2.1 KB for the package entry it resolves. The ES build in the tarball is 8,976 / ~2.7 KB.
 
@@ -14,7 +14,7 @@ Published packages: `@sticky-aside/core`, `@sticky-aside/vue`, `@sticky-aside/re
 
 | Library | Behavior | Min / gzip | Weekly downloads | Latest npm | Last repo push | Stars |
 | --- | --- | --- | --- | --- | --- | --- |
-| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | 6.6 / 2.2 KB | 321 | 1.0.0, Oct 2026 | Oct 2026 | 1 |
+| [@sticky-aside/core](https://github.com/maprox/sticky-aside) | Same behavior | 6.7 / 2.2 KB | 321 | 1.0.0, Oct 2026 | Oct 2026 | 1 |
 | [react-sticky-box](https://github.com/codecks-io/react-sticky-box) | Same | 4.0 / 3.6 KB | 128,281 | 2.0.5, Oct 2023 | Apr 2026 | 503 |
 | [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) | Same | 9.0 / 2.8 KB | 12,934 | 3.3.1, Nov 2017 | Aug 2024 | 2,223 |
 | [theia-sticky-sidebar](https://github.com/WeCodePixels/theia-sticky-sidebar) | Same | 6.7 / 2.1 KB | 9,906 | 2.0.1, Sep 2026 | Sep 2026 | 581 |
@@ -28,12 +28,12 @@ Download figures move. Stars do not say a package is maintained: `sticky-sidebar
 
 ## Our size
 
-size-limit, minified and gzipped, on the 1.0.0 build:
+size-limit, minified and gzipped, on the current build:
 
 | Entry | Gzip |
 | --- | --- |
-| `@sticky-aside/core`, `createStickyAside` | 2.11 KB |
-| `@sticky-aside/core/headless`, `createStickyAsidePresenter` | 1.26 KB |
+| `@sticky-aside/core`, `createStickyAside` | 2.14 KB |
+| `@sticky-aside/core/headless`, `createStickyAsidePresenter` | 1.31 KB |
 | `@sticky-aside/vue`, core external | 630 B |
 | `@sticky-aside/react`, core external | 505 B |
 | `@sticky-aside/svelte`, the component file | 518 B |

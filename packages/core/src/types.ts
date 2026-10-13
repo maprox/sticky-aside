@@ -28,8 +28,6 @@ export interface StickyAsideOptions extends StickyAsidePresenterOptions {
   topClass?: string
   bottomClass?: string
   contentClass?: string
-  getScrollMetrics?: () => ScrollMetrics
-  readRect?: (element: HTMLElement) => Box
 }
 
 export interface StickyReading {

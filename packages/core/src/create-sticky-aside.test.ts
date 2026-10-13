@@ -1,24 +1,30 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { createStickyAside } from '#core/index.ts'
-import type { Box } from '#core/index.ts'
-
-function box(top: number, height: number, width = 240): Box {
-  return {
-    top,
-    bottom: top + height,
-    width,
-    height,
-  }
-}
+import { domRect, mockBoundingClientRect } from '#core/test/mocks/bounding-client-rect.ts'
 
 describe('createStickyAside', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('pins a short panel and removes its measure element on destroy', () => {
     const wrapper = document.createElement('div')
     const content = document.createElement('div')
     content.className = 'h-full'
     wrapper.append(content)
     document.body.append(wrapper)
+    mockBoundingClientRect((element) => {
+      if (element === content) {
+        return domRect(40, 100)
+      }
+
+      if (element === wrapper) {
+        return domRect(0, 2000, 320)
+      }
+
+      return domRect(12, 600)
+    })
 
     const aside = createStickyAside({
       wrapper,
@@ -26,17 +32,6 @@ describe('createStickyAside', () => {
       topClass: 'pin-top',
       bottomClass: 'pin-bottom',
       contentClass: 'fill',
-      readRect: (element) => {
-        if (element === content) {
-          return box(40, 100)
-        }
-
-        if (element === wrapper) {
-          return box(0, 2000, 320)
-        }
-
-        return box(12, 600)
-      },
     })
 
     expect(content.dataset.stickyAside).toBe('top')
