@@ -1,8 +1,14 @@
 {
   "name": "@sticky-aside/svelte",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Svelte adapter for @sticky-aside/core.",
-  "keywords": ["sticky", "sidebar", "aside", "scroll", "svelte"],
+  "keywords": [
+    "sticky",
+    "sidebar",
+    "aside",
+    "scroll",
+    "svelte"
+  ],
   "license": "MIT",
   "author": "maprox",
   "repository": {
@@ -30,7 +36,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "svelte-package -i src -o dist --tsconfig ./tsconfig.json && node ./clean-dist.mjs"
   },

@@ -1,8 +1,14 @@
 {
   "name": "@sticky-aside/astro",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Astro entry for @sticky-aside/core (same API as vanilla).",
-  "keywords": ["sticky", "sidebar", "aside", "scroll", "astro"],
+  "keywords": [
+    "sticky",
+    "sidebar",
+    "aside",
+    "scroll",
+    "astro"
+  ],
   "license": "MIT",
   "author": "maprox",
   "repository": {
@@ -25,7 +31,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm --dir ../.. exec tsdown --config packages/astro/tsdown.config.mjs"
   },
