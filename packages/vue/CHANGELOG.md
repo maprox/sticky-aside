@@ -1,5 +1,12 @@
 # @sticky-aside/vue
 
+## 1.1.1
+
+### Patch Changes
+
+- Republish after a broken 1.1.0 registry staging/tarball state.
+
+
 ## 1.1.0
 
 ### Minor Changes

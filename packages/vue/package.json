@@ -1,8 +1,14 @@
 {
   "name": "@sticky-aside/vue",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Vue adapter for @sticky-aside/core.",
-  "keywords": ["sticky", "sidebar", "aside", "scroll", "vue"],
+  "keywords": [
+    "sticky",
+    "sidebar",
+    "aside",
+    "scroll",
+    "vue"
+  ],
   "license": "MIT",
   "author": "maprox",
   "repository": {
@@ -28,7 +34,9 @@
       }
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm --dir ../.. exec tsdown --config packages/vue/tsdown.config.mjs"
   },
