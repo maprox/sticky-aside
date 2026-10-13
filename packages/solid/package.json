@@ -1,6 +1,6 @@
 {
   "name": "@sticky-aside/solid",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Solid adapter for @sticky-aside/core.",
   "keywords": ["sticky", "sidebar", "aside", "scroll", "solid"],
   "license": "MIT",
