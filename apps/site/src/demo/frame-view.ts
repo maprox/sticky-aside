@@ -8,8 +8,8 @@ import type {
   StickyReading,
 } from '@sticky-aside/core/headless'
 
-const OFFSET_TOP = 'sticky-aside-top'
-const OFFSET_BOTTOM = 'sticky-aside-bottom'
+import { ASIDE_STATE, DATASET, MEASURE_STYLE, OFFSET_CLASS, WRAPPER_STYLE } from '#core/view/constants.ts'
+import { getClassTokens, syncClassTokens } from '#core/view/utils.ts'
 
 export interface FrameViewOptions {
   viewport: HTMLElement
@@ -22,19 +22,10 @@ export interface FrameViewOptions {
 
 export function createFrameView(options: FrameViewOptions): StickyAsideView {
   const measure = document.createElement('div')
-  measure.dataset.stickyMeasure = ''
-  Object.assign(measure.style, {
-    position: 'fixed',
-    visibility: 'hidden',
-    pointerEvents: 'none',
-    left: '0',
-    width: '0',
-  } as const)
+  measure.dataset[DATASET.measure] = ''
+  Object.assign(measure.style, MEASURE_STYLE)
   options.wrapper.append(measure)
-  Object.assign(options.wrapper.style, {
-    position: 'relative',
-    height: '100%',
-  })
+  Object.assign(options.wrapper.style, WRAPPER_STYLE)
   const frame = options.viewport.parentElement
   if (frame && frame !== document.body) {
     frame.style.transform = 'translateZ(0)'
@@ -42,30 +33,11 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
 
   let resizeObserver: ResizeObserver | undefined
   let onScroll: (() => void) | undefined
-  let onResize: (() => void) | undefined
-  let topClass = options.topClass ?? OFFSET_TOP
-  let bottomClass = options.bottomClass ?? OFFSET_BOTTOM
+  let topClass = options.topClass ?? OFFSET_CLASS.top
+  let bottomClass = options.bottomClass ?? OFFSET_CLASS.bottom
   let contentClass = options.contentClass ?? ''
-  let appliedMeasure: string[] = []
-  let appliedContent: string[] = []
-
-  function getClassTokens(value: string): string[] {
-    return value.split(/\s+/).filter((token) => token.length > 0)
-  }
-
-  function syncClassTokens(element: HTMLElement, previous: string[], next: string[]): string[] {
-    for (const token of previous) {
-      if (!next.includes(token)) {
-        element.classList.remove(token)
-      }
-    }
-
-    for (const token of next) {
-      element.classList.add(token)
-    }
-
-    return next
-  }
+  let appliedMeasureClasses: string[] = []
+  let appliedContentClasses: string[] = []
 
   function clearContentStyle() {
     options.content.style.position = ''
@@ -108,9 +80,11 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
     if (next.topClass !== undefined) {
       topClass = next.topClass
     }
+
     if (next.bottomClass !== undefined) {
       bottomClass = next.bottomClass
     }
+
     if (next.contentClass !== undefined) {
       contentClass = next.contentClass
     }
@@ -121,7 +95,7 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
     measure.style.top = ''
     measure.style.bottom = ''
     measure.style.maxHeight = `${contentBox.height}px`
-    appliedMeasure = syncClassTokens(measure, appliedMeasure, [
+    appliedMeasureClasses = syncClassTokens(measure, appliedMeasureClasses, [
       ...getClassTokens(topClass),
       ...getClassTokens(bottomClass),
     ])
@@ -129,7 +103,7 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
 
   function paint(next: StickyPaint) {
     clearContentStyle()
-    options.content.dataset.stickyAside = next.state
+    options.content.dataset[DATASET.aside] = ASIDE_STATE[next.state]
     const nextTokens = getClassTokens(contentClass)
     if (next.state === 'off') {
       options.content.style.position = 'relative'
@@ -153,7 +127,7 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
       nextTokens.push(...getClassTokens(topClass))
     }
 
-    appliedContent = syncClassTokens(options.content, appliedContent, nextTokens)
+    appliedContentClasses = syncClassTokens(options.content, appliedContentClasses, nextTokens)
   }
 
   function unsubscribe() {
@@ -162,32 +136,30 @@ export function createFrameView(options: FrameViewOptions): StickyAsideView {
     if (onScroll) {
       options.viewport.removeEventListener('scroll', onScroll)
     }
-    if (onResize) {
-      options.viewport.removeEventListener('resize', onResize)
-    }
+
     onScroll = undefined
-    onResize = undefined
   }
 
   function subscribe(handlers: StickyAsideHandlers) {
     onScroll = () => handlers.scroll()
-    onResize = () => handlers.resize()
     resizeObserver = new ResizeObserver(() => handlers.resize())
     resizeObserver.observe(options.viewport)
     resizeObserver.observe(options.content)
     resizeObserver.observe(measure)
-    options.viewport.addEventListener('scroll', onScroll, { passive: true })
+    options.viewport.addEventListener('scroll', onScroll, {
+      passive: true,
+    })
 
     return unsubscribe
   }
 
   function destroy() {
-    appliedContent = syncClassTokens(options.content, appliedContent, [])
-    appliedMeasure = syncClassTokens(measure, appliedMeasure, [])
+    appliedContentClasses = syncClassTokens(options.content, appliedContentClasses, [])
+    appliedMeasureClasses = syncClassTokens(measure, appliedMeasureClasses, [])
     unsubscribe()
     measure.remove()
     clearContentStyle()
-    delete options.content.dataset.stickyAside
+    delete options.content.dataset[DATASET.aside]
   }
 
   return {

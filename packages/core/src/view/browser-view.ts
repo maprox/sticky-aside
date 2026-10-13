@@ -1,6 +1,4 @@
-import type { Box } from '#core/model/types.ts'
 import type {
-  ScrollMetrics,
   StickyAsideClasses,
   StickyAsideHandlers,
   StickyAsideOptions,
@@ -9,6 +7,7 @@ import type {
   StickyReading,
 } from '#core/types.ts'
 import { ASIDE_STATE, DATASET, MEASURE_STYLE, OFFSET_CLASS, WRAPPER_STYLE } from '#core/view/constants.ts'
+import { getBox, getClassTokens, getMetrics, syncClassTokens } from '#core/view/utils.ts'
 
 export function createBrowserView(options: StickyAsideOptions): StickyAsideView {
   const measure = document.createElement('div')
@@ -23,59 +22,14 @@ export function createBrowserView(options: StickyAsideOptions): StickyAsideView 
   let topClass = options.topClass ?? OFFSET_CLASS.top
   let bottomClass = options.bottomClass ?? OFFSET_CLASS.bottom
   let contentClass = options.contentClass ?? ''
-  let appliedMeasure: string[] = []
-  let appliedContent: string[] = []
-
-  function getClassTokens(value: string): string[] {
-    return value.split(/\s+/).filter((token) => token.length > 0)
-  }
-
-  function syncClassTokens(element: HTMLElement, previous: string[], next: string[]): string[] {
-    for (const token of previous) {
-      if (!next.includes(token)) {
-        element.classList.remove(token)
-      }
-    }
-
-    for (const token of next) {
-      element.classList.add(token)
-    }
-
-    return next
-  }
+  let appliedMeasureClasses: string[] = []
+  let appliedContentClasses: string[] = []
 
   function clearContentStyle() {
     options.content.style.position = ''
     options.content.style.top = ''
     options.content.style.bottom = ''
     options.content.style.width = ''
-  }
-
-  function getBox(element: HTMLElement): Box {
-    if (options.readRect) {
-      return options.readRect(element)
-    }
-
-    const rect = element.getBoundingClientRect()
-
-    return {
-      top: rect.top,
-      bottom: rect.bottom,
-      width: rect.width,
-      height: rect.height,
-    }
-  }
-
-  function getMetrics(): ScrollMetrics {
-    if (options.getScrollMetrics) {
-      return options.getScrollMetrics()
-    }
-
-    return {
-      scrollY: window.scrollY,
-      viewportHeight: window.innerHeight,
-      documentHeight: document.body.clientHeight,
-    }
   }
 
   function read(): StickyReading {
@@ -106,7 +60,7 @@ export function createBrowserView(options: StickyAsideOptions): StickyAsideView 
     measure.style.top = ''
     measure.style.bottom = ''
     measure.style.maxHeight = `${contentBox.height}px`
-    appliedMeasure = syncClassTokens(measure, appliedMeasure, [
+    appliedMeasureClasses = syncClassTokens(measure, appliedMeasureClasses, [
       ...getClassTokens(topClass),
       ...getClassTokens(bottomClass),
     ])
@@ -135,7 +89,7 @@ export function createBrowserView(options: StickyAsideOptions): StickyAsideView 
       nextTokens.push(...getClassTokens(topClass))
     }
 
-    appliedContent = syncClassTokens(options.content, appliedContent, nextTokens)
+    appliedContentClasses = syncClassTokens(options.content, appliedContentClasses, nextTokens)
   }
 
   function unsubscribe() {
@@ -170,8 +124,8 @@ export function createBrowserView(options: StickyAsideOptions): StickyAsideView 
   }
 
   function destroy() {
-    appliedContent = syncClassTokens(options.content, appliedContent, [])
-    appliedMeasure = syncClassTokens(measure, appliedMeasure, [])
+    appliedContentClasses = syncClassTokens(options.content, appliedContentClasses, [])
+    appliedMeasureClasses = syncClassTokens(measure, appliedMeasureClasses, [])
     measure.remove()
     clearContentStyle()
   }
