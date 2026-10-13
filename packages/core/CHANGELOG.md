@@ -1,5 +1,11 @@
 # @sticky-aside/core
 
+## 1.1.2
+
+### Patch Changes
+
+- 3a97d12: Remove the undocumented `readRect` and `getScrollMetrics` options from `createStickyAside`. Measurement uses `getBoundingClientRect` and the window scroll position.
+
 ## 1.1.1
 
 ### Patch Changes

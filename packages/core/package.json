@@ -1,6 +1,6 @@
 {
   "name": "@sticky-aside/core",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A panel that follows page scroll and pins to the edge you are scrolling toward.",
   "keywords": [
     "sticky",
