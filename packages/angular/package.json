@@ -16,7 +16,7 @@
     "url": "git+https://github.com/maprox/sticky-aside.git",
     "directory": "packages/angular"
   },
-  "homepage": "https://github.com/maprox/sticky-aside#readme",
+  "homepage": "https://maprox.github.io/sticky-aside/",
   "bugs": "https://github.com/maprox/sticky-aside/issues",
   "type": "module",
   "sideEffects": false,

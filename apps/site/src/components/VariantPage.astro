@@ -4,6 +4,7 @@ import FrameworkTabs from './FrameworkTabs.astro'
 import MiniWindow from './MiniWindow.astro'
 import { initialSnippetText } from '../demo/initial-shell'
 import { t } from '../demo/i18n'
+import { seoCopy } from '../demo/seo'
 import type { DemoFramework, DemoLocale } from '../demo/settings'
 
 interface Props {
@@ -13,10 +14,15 @@ interface Props {
 
 const { locale, framework = 'vanilla' } = Astro.props
 const snippet = initialSnippetText(locale, framework)
+const { h1, description } = seoCopy(locale, framework)
 ---
 
 <Base locale={locale} framework={framework} bodyClass="cf">
   <main class="wrap" data-stage data-locale={locale} data-framework={framework} data-tone="light">
+    <header class="page-intro">
+      <h1>{h1}</h1>
+      <p>{description}</p>
+    </header>
     <div class="cf-split">
       <div class="cf-stage">
         <MiniWindow locale={locale} framework={framework} />
@@ -58,6 +64,27 @@ const snippet = initialSnippetText(locale, framework)
     width: min(1600px, calc(100% - 40px));
     margin: 0 auto;
     padding-bottom: 80px;
+  }
+
+  .page-intro {
+    margin-top: 20px;
+    max-width: 42rem;
+  }
+
+  .page-intro h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+  }
+
+  .page-intro p {
+    margin: 8px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    opacity: 0.78;
   }
 
   .cf-split {

@@ -4,6 +4,7 @@ export default [
   {
     ignores: [
       'e2e/**',
+      '.worktrees/**',
       '**/.svelte-kit/**',
       'packages/solid/jest-dom-stub.ts',
       'packages/angular/dist/**',
