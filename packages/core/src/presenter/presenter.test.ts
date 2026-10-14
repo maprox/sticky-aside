@@ -1,4 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest'
 
 import { createStickyAsidePresenter } from '#core/headless.ts'
 import type { Box, StickyAsideView, StickyPaint, StickyReading } from '#core/headless.ts'
@@ -26,57 +33,94 @@ function reading(scrollY: number, content: Box, measure: Box, wrapper = box(0, 2
   }
 }
 
-function createHarness(current: StickyReading) {
-  const calls: string[] = []
-  const paints: StickyPaint[] = []
-  const classes: StickyAsideClasses[] = []
-  let handlers: {
-    scroll(): void
-    resize(): void
-  } | undefined
-
-  const view: StickyAsideView = {
-    read() {
-      calls.push('read')
-
-      return current
-    },
-    setClasses(next) {
-      classes.push(next)
-    },
-    paintMeasure() {
-      calls.push('paintMeasure')
-    },
-    paint(paint) {
-      calls.push('paint')
-      paints.push(paint)
-    },
-    subscribe(next) {
-      calls.push('subscribe')
-      handlers = next
-
-      return () => {
-        calls.push('unsubscribe')
-        handlers = undefined
-      }
-    },
-    destroy() {
-      calls.push('destroy')
-    },
-  }
-
-  return {
-    view,
-    calls,
-    paints,
-    classes,
-    scroll() {
-      handlers?.scroll()
-    },
-  }
-}
-
 describe('createStickyAsidePresenter', () => {
+  let rafQueue: FrameRequestCallback[]
+
+  beforeEach(() => {
+    rafQueue = []
+    vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+      rafQueue.push(callback)
+
+      return rafQueue.length
+    })
+    vi.stubGlobal('cancelAnimationFrame', (id: number) => {
+      rafQueue[id - 1] = () => {}
+    })
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
+  function flushFrame() {
+    const batch = rafQueue.splice(0, rafQueue.length)
+    for (const callback of batch) {
+      callback(0)
+    }
+  }
+
+  function createHarness(current: StickyReading) {
+    const calls: string[] = []
+    const paints: StickyPaint[] = []
+    const classes: StickyAsideClasses[] = []
+    let handlers: {
+      scroll(): void
+      resize(): void
+    } | undefined
+
+    const view: StickyAsideView = {
+      read() {
+        calls.push('read')
+
+        return current
+      },
+      setClasses(next) {
+        classes.push(next)
+      },
+      paintMeasure() {
+        calls.push('paintMeasure')
+      },
+      paint(paint) {
+        calls.push('paint')
+        paints.push(paint)
+      },
+      subscribe(next) {
+        calls.push('subscribe')
+        handlers = next
+
+        return () => {
+          calls.push('unsubscribe')
+          handlers = undefined
+        }
+      },
+      destroy() {
+        calls.push('destroy')
+      },
+    }
+
+    return {
+      view,
+      calls,
+      paints,
+      classes,
+      scroll() {
+        handlers?.scroll()
+        flushFrame()
+      },
+      scrollQueued() {
+        handlers?.scroll()
+      },
+      resize() {
+        handlers?.resize()
+        flushFrame()
+      },
+      resizeQueued() {
+        handlers?.resize()
+      },
+      flushFrame,
+    }
+  }
+
   it('reads the scroll position before subscribe and paints one frame', () => {
     const harness = createHarness(reading(400, box(80, 120), box(16, 700)))
 
@@ -98,11 +142,69 @@ describe('createStickyAsidePresenter', () => {
     sample.metrics.scrollY = 300
     harness.scroll()
 
-    expect(harness.calls.slice(-4)).toEqual(['read', 'paintMeasure', 'read', 'paint'])
+    expect(harness.calls.slice(-3)).toEqual(['paintMeasure', 'read', 'paint'])
     expect(harness.paints.at(-1)).toEqual({
       state: 'top',
       width: 240,
     })
+    aside.destroy()
+  })
+
+  it('does not paint again when StickyPaint is unchanged after scroll', () => {
+    const sample = reading(400, box(80, 120), box(16, 700))
+    const harness = createHarness(sample)
+    const aside = createStickyAsidePresenter(harness.view, {})
+    expect(harness.paints.at(-1)).toEqual({
+      state: 'top',
+      width: 240,
+    })
+    const paintCount = harness.paints.length
+
+    sample.metrics.scrollY = 450
+    harness.scroll()
+
+    expect(harness.paints).toHaveLength(paintCount)
+    expect(harness.calls.slice(-2)).toEqual(['paintMeasure', 'read'])
+    aside.destroy()
+  })
+
+  it('coalesces multiple scroll events into one frame', () => {
+    const sample = reading(400, box(140, 900), box(16, 500))
+    const harness = createHarness(sample)
+    const aside = createStickyAsidePresenter(harness.view, {})
+    const paintCount = harness.paints.length
+    const callCount = harness.calls.length
+
+    sample.metrics.scrollY = 350
+    harness.scrollQueued()
+    sample.metrics.scrollY = 300
+    harness.scrollQueued()
+    expect(harness.paints).toHaveLength(paintCount)
+    expect(harness.calls).toHaveLength(callCount)
+
+    harness.flushFrame()
+
+    expect(harness.paints.at(-1)).toEqual({
+      state: 'top',
+      width: 240,
+    })
+    expect(harness.calls.slice(callCount)).toEqual(['paintMeasure', 'read', 'paint'])
+    aside.destroy()
+  })
+
+  it('prefers a pending resize over scroll in the same frame', () => {
+    const sample = reading(400, box(80, 120), box(16, 700))
+    const harness = createHarness(sample)
+    const aside = createStickyAsidePresenter(harness.view, {})
+    const paintCount = harness.paints.length
+
+    sample.metrics.scrollY = 450
+    harness.scrollQueued()
+    harness.resizeQueued()
+    harness.flushFrame()
+
+    expect(harness.paints).toHaveLength(paintCount)
+    expect(harness.calls.slice(-2)).toEqual(['paintMeasure', 'read'])
     aside.destroy()
   })
 
