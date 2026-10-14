@@ -2,6 +2,8 @@
 
 A short panel stays pinned to the top. A tall panel scrolls with the page, pins to the bottom while you scroll down, and pins to the top while you scroll up.
 
+**Docs / demo:** [maprox.github.io/sticky-aside](https://maprox.github.io/sticky-aside/)
+
 [![npm](https://img.shields.io/npm/v/@sticky-aside/core)](https://www.npmjs.com/package/@sticky-aside/core)
 [![gzip](https://img.shields.io/badge/gzip-2.14%20kB-blue)](https://github.com/maprox/sticky-aside)
 [![CI](https://img.shields.io/github/actions/workflow/status/maprox/sticky-aside/ci.yml?branch=main)](https://github.com/maprox/sticky-aside/actions)
