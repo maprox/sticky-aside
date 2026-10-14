@@ -192,19 +192,44 @@ describe('createStickyAsidePresenter', () => {
     aside.destroy()
   })
 
-  it('prefers a pending resize over scroll in the same frame', () => {
-    const sample = reading(400, box(80, 120), box(16, 700))
+  it('applies scroll after resize when both are pending in the same frame', () => {
+    const sample = reading(400, box(140, 900), box(16, 500))
     const harness = createHarness(sample)
     const aside = createStickyAsidePresenter(harness.view, {})
-    const paintCount = harness.paints.length
+    expect(harness.paints.at(-1)?.state).toBe('flow')
 
-    sample.metrics.scrollY = 450
+    sample.metrics.scrollY = 300
     harness.scrollQueued()
     harness.resizeQueued()
     harness.flushFrame()
 
+    expect(harness.paints.at(-1)).toEqual({
+      state: 'top',
+      width: 240,
+    })
+    expect(harness.calls.slice(-5)).toEqual([
+      'paintMeasure',
+      'read',
+      'paintMeasure',
+      'read',
+      'paint',
+    ])
+    aside.destroy()
+  })
+
+  it('keeps a bottom pin when resize follows the scroll frame', () => {
+    const sample = reading(200, box(-430, 900), box(80, 400))
+    const harness = createHarness(sample)
+    const aside = createStickyAsidePresenter(harness.view, {})
+
+    sample.metrics.scrollY = 500
+    harness.scroll()
+    expect(harness.paints.at(-1)?.state).toBe('bottom')
+
+    const paintCount = harness.paints.length
+    harness.resize()
+    expect(harness.paints.at(-1)?.state).toBe('bottom')
     expect(harness.paints).toHaveLength(paintCount)
-    expect(harness.calls.slice(-2)).toEqual(['paintMeasure', 'read'])
     aside.destroy()
   })
 

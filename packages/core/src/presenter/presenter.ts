@@ -24,7 +24,8 @@ export function createStickyAsidePresenter(
   let shouldForcePaint = false
   let lastScrollY = view.read().metrics.scrollY
   let frameId: number | undefined
-  let pendingReason: typeof REASON.scroll | typeof REASON.resize | undefined
+  let isScrollPending = false
+  let isResizePending = false
 
   function report(state: StickyAsideState) {
     if (isStopped || state === painted) {
@@ -69,17 +70,24 @@ export function createStickyAsidePresenter(
 
   function flushPending() {
     frameId = undefined
-    const reason = pendingReason
-    pendingReason = undefined
-    if (reason !== undefined) {
-      apply(reason, reason === REASON.scroll)
+    const shouldResize = isResizePending
+    const shouldScroll = isScrollPending
+    isResizePending = false
+    isScrollPending = false
+    if (shouldResize) {
+      apply(REASON.resize)
+    }
+    if (shouldScroll) {
+      apply(REASON.scroll, true)
     }
   }
 
   function schedule(reason: typeof REASON.scroll | typeof REASON.resize) {
-    pendingReason = reason === REASON.resize || pendingReason === REASON.resize
-      ? REASON.resize
-      : REASON.scroll
+    if (reason === REASON.resize) {
+      isResizePending = true
+    } else {
+      isScrollPending = true
+    }
     frameId ??= requestAnimationFrame(flushPending)
   }
 
@@ -146,8 +154,10 @@ export function createStickyAsidePresenter(
     isStopped = true
     if (frameId !== undefined) {
       cancelAnimationFrame(frameId)
+      frameId = undefined
     }
-    pendingReason = undefined
+    isScrollPending = false
+    isResizePending = false
     unsubscribe()
     view.destroy()
   }
