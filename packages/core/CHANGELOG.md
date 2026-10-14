@@ -1,5 +1,11 @@
 # @sticky-aside/core
 
+## 1.1.3
+
+### Patch Changes
+
+- 33b6470: Skip unchanged sticky paints and coalesce window scroll/resize into one animation frame. Tree-shaken `createStickyAside` grows from 2.14 kB to 2.30 kB gzip.
+
 ## 1.1.2
 
 ### Patch Changes
