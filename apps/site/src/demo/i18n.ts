@@ -72,7 +72,7 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'variant.5.title': 'Код',
     'variant.5.lead': 'Крутите числа в сниппете или ручки в интерфейсе.',
     'seo.vanilla.title': 'JavaScript sticky sidebar — библиотека sticky-aside',
-    'seo.vanilla.h1': 'JavaScript sticky sidebar для длинных страниц',
+    'seo.vanilla.h1': 'JavaScript sticky sidebar для страниц со скроллом',
     'seo.vanilla.description': 'Современный sticky sidebar для актуальных браузеров: пины к краю, к которому скроллите. Компактный ESM-core без legacy. Vanilla JS, плюс Vue, React, Svelte, Solid и Astro.',
     'seo.vue.title': 'Vue sticky sidebar для Vue 3 — sticky-aside',
     'seo.vue.h1': 'Vue sticky sidebar для Vue 3',
