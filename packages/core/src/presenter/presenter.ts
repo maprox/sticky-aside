@@ -11,8 +11,6 @@ import type {
   StickyPaint,
 } from '#core/types.ts'
 
-type ListenerReason = typeof REASON.scroll | typeof REASON.resize
-
 export function createStickyAsidePresenter(
   view: StickyAsideView,
   options: StickyAsidePresenterOptions,
@@ -23,9 +21,10 @@ export function createStickyAsidePresenter(
   let isStopped = false
   let painted: StickyAsideState | undefined
   let lastPaint: StickyPaint | undefined
+  let shouldForcePaint = false
   let lastScrollY = view.read().metrics.scrollY
   let frameId: number | undefined
-  let pendingReason: ListenerReason | undefined
+  let pendingReason: typeof REASON.scroll | typeof REASON.resize | undefined
 
   function report(state: StickyAsideState) {
     if (isStopped || state === painted) {
@@ -51,7 +50,8 @@ export function createStickyAsidePresenter(
 
     model = getNewStickyModel(model, getStickyFrame(session, reading, isScrollingUp, reason))
     const paint = getStickyPaint(model, session, reading.wrapper.width)
-    if (!isSameStickyPaint(lastPaint, paint)) {
+    if (shouldForcePaint || !isSameStickyPaint(lastPaint, paint)) {
+      shouldForcePaint = false
       lastPaint = paint
       view.paint(paint)
     }
@@ -71,33 +71,16 @@ export function createStickyAsidePresenter(
     frameId = undefined
     const reason = pendingReason
     pendingReason = undefined
-    if (reason === undefined) {
-      return
+    if (reason !== undefined) {
+      apply(reason, reason === REASON.scroll)
     }
-
-    apply(reason, reason === REASON.scroll)
   }
 
-  function schedule(reason: ListenerReason) {
-    if (reason === REASON.resize) {
-      pendingReason = REASON.resize
-    } else if (pendingReason !== REASON.resize) {
-      pendingReason = REASON.scroll
-    }
-
-    if (frameId !== undefined) {
-      return
-    }
-
-    frameId = requestAnimationFrame(flushPending)
-  }
-
-  function onScroll() {
-    schedule(REASON.scroll)
-  }
-
-  function onResize() {
-    schedule(REASON.resize)
+  function schedule(reason: typeof REASON.scroll | typeof REASON.resize) {
+    pendingReason = reason === REASON.resize || pendingReason === REASON.resize
+      ? REASON.resize
+      : REASON.scroll
+    frameId ??= requestAnimationFrame(flushPending)
   }
 
   function update(reason: Extract<StickyReason, 'scroll' | 'resize'> = REASON.resize) {
@@ -128,7 +111,7 @@ export function createStickyAsidePresenter(
     }
 
     view.setClasses(next)
-    lastPaint = undefined
+    shouldForcePaint = true
     apply(REASON.resize)
   }
 
@@ -151,8 +134,8 @@ export function createStickyAsidePresenter(
   }
 
   const unsubscribe = view.subscribe({
-    scroll: onScroll,
-    resize: onResize,
+    scroll: () => schedule(REASON.scroll),
+    resize: () => schedule(REASON.resize),
   })
 
   function destroy() {
@@ -163,7 +146,6 @@ export function createStickyAsidePresenter(
     isStopped = true
     if (frameId !== undefined) {
       cancelAnimationFrame(frameId)
-      frameId = undefined
     }
     pendingReason = undefined
     unsubscribe()

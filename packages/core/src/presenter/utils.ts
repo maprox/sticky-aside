@@ -71,25 +71,17 @@ export function getStickyPaint(model: StickyModel, session: Session, wrapperWidt
 }
 
 export function isSameStickyPaint(left: StickyPaint | undefined, right: StickyPaint): boolean {
-  if (left === undefined || left.state !== right.state) {
+  if (!left || left.state !== right.state) {
     return false
   }
 
-  if (right.state === 'off') {
-    return true
+  if ('top' in right && (!('top' in left) || left.top !== right.top)) {
+    return false
   }
 
-  if (right.state === 'flow') {
-    return left.state === 'flow' && left.top === right.top
+  if ('width' in right && (!('width' in left) || left.width !== right.width)) {
+    return false
   }
 
-  if (right.state === 'locked') {
-    return left.state === 'locked' && left.top === right.top && left.width === right.width
-  }
-
-  if (right.state === 'top') {
-    return left.state === 'top' && left.width === right.width
-  }
-
-  return left.state === 'bottom' && left.width === right.width
+  return true
 }
