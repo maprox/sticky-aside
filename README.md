@@ -3,7 +3,7 @@
 A short panel stays pinned to the top. A tall panel scrolls with the page, pins to the bottom while you scroll down, and pins to the top while you scroll up.
 
 [![npm](https://img.shields.io/npm/v/@sticky-aside/core)](https://www.npmjs.com/package/@sticky-aside/core)
-[![gzip](https://img.shields.io/badge/gzip-2.14%20kB-blue)](https://github.com/maprox/sticky-aside)
+[![gzip](https://img.shields.io/badge/gzip-2.31%20kB-blue)](https://github.com/maprox/sticky-aside)
 [![CI](https://img.shields.io/github/actions/workflow/status/maprox/sticky-aside/ci.yml?branch=main)](https://github.com/maprox/sticky-aside/actions)
 [![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
@@ -409,7 +409,7 @@ The wrapper is `height: 100%`. Once the inner element is `fixed`, a percentage h
 
 ## Compared with other libraries
 
-`createStickyAside` is 2.14 kB gzip. The headless presenter is 1.31 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B, Angular 1.44 kB. `@sticky-aside/astro` re-exports core (same API as vanilla).
+`createStickyAside` is 2.31 kB gzip. The headless presenter is 1.48 kB gzip. The adapters leave the core external: React 505 B, Vue 630 B, Svelte 518 B, Solid 638 B, Angular 1.44 kB. `@sticky-aside/astro` re-exports core (same API as vanilla).
 
 [react-sticky-box](https://github.com/codecks-io/react-sticky-box) is the same behavior at 3.6 kB gzip, React only, with no lock. [sticky-sidebar](https://github.com/abouolia/sticky-sidebar) is 2.8 kB gzip and has not published since 2017. The numbers and the rest of the table are in [docs/analogs.md](docs/analogs.md). Coming from sticky-sidebar (including the jQuery build): [docs/migrate-from-sticky-sidebar.md](docs/migrate-from-sticky-sidebar.md).
 
