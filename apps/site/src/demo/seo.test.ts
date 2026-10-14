@@ -47,7 +47,7 @@ describe('seoCopy', () => {
 
   it('mirrors Russian titles and keeps English head terms', () => {
     expect(seoCopy('ru', 'vanilla').title).toBe('JavaScript sticky sidebar — библиотека sticky-aside')
-    expect(seoCopy('ru', 'vanilla').h1).toBe('JavaScript sticky sidebar для scroll-раскладок')
+    expect(seoCopy('ru', 'vanilla').h1).toBe('JavaScript sticky sidebar для длинных страниц')
     expect(seoCopy('ru', 'vue').title).toBe('Vue sticky sidebar для Vue 3 — sticky-aside')
     expect(seoCopy('ru', 'react').title).toBe('React sticky sidebar — sticky-aside')
     expect(seoCopy('ru', 'svelte').title).toBe('Svelte sticky sidebar — sticky-aside')
