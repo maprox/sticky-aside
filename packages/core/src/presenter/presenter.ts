@@ -82,7 +82,7 @@ export function createStickyAsidePresenter(
     }
   }
 
-  function schedule(reason: typeof REASON.scroll | typeof REASON.resize) {
+  function schedule(reason: Extract<StickyReason, 'scroll' | 'resize'>) {
     if (reason === REASON.resize) {
       isResizePending = true
     } else {
