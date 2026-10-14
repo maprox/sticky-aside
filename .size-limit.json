@@ -11,7 +11,7 @@
     "path": "packages/core/dist/headless.js",
     "import": "{ createStickyAsidePresenter }",
     "gzip": true,
-    "limit": "1.4 kB"
+    "limit": "1.5 kB"
   },
   {
     "name": "solid",

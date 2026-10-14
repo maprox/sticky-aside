@@ -1,13 +1,14 @@
 import { REASON } from '#core/model/constants.ts'
 import { getInitialStickyModel, getNewStickyModel } from '#core/model/step.ts'
 import type { StickyReason } from '#core/model/types.ts'
-import { getSession, getStickyFrame, getStickyPaint } from '#core/presenter/utils.ts'
+import { getSession, getStickyFrame, getStickyPaint, isSameStickyPaint } from '#core/presenter/utils.ts'
 import type {
   StickyAsideClasses,
   StickyAsideController,
   StickyAsidePresenterOptions,
   StickyAsideState,
   StickyAsideView,
+  StickyPaint,
 } from '#core/types.ts'
 
 export function createStickyAsidePresenter(
@@ -19,7 +20,12 @@ export function createStickyAsidePresenter(
   let isScrollingUp = false
   let isStopped = false
   let painted: StickyAsideState | undefined
+  let lastPaint: StickyPaint | undefined
+  let shouldForcePaint = false
   let lastScrollY = view.read().metrics.scrollY
+  let frameId: number | undefined
+  let isScrollPending = false
+  let isResizePending = false
 
   function report(state: StickyAsideState) {
     if (isStopped || state === painted) {
@@ -30,7 +36,7 @@ export function createStickyAsidePresenter(
     options.onStateChange?.(state)
   }
 
-  function apply(reason: StickyReason) {
+  function apply(reason: StickyReason, shouldTrackScrollDirection = false) {
     if (isStopped) {
       return
     }
@@ -38,9 +44,18 @@ export function createStickyAsidePresenter(
     const previousState = painted
     view.paintMeasure()
     const reading = view.read()
+    if (shouldTrackScrollDirection) {
+      isScrollingUp = reading.metrics.scrollY < lastScrollY
+      lastScrollY = reading.metrics.scrollY
+    }
+
     model = getNewStickyModel(model, getStickyFrame(session, reading, isScrollingUp, reason))
     const paint = getStickyPaint(model, session, reading.wrapper.width)
-    view.paint(paint)
+    if (shouldForcePaint || !isSameStickyPaint(lastPaint, paint)) {
+      shouldForcePaint = false
+      lastPaint = paint
+      view.paint(paint)
+    }
     report(paint.state)
 
     const didReleaseToFlow = reason === REASON.scroll &&
@@ -53,19 +68,31 @@ export function createStickyAsidePresenter(
     }
   }
 
-  function onScroll() {
-    const scrollY = view.read().metrics.scrollY
-    isScrollingUp = scrollY < lastScrollY
-    lastScrollY = scrollY
-    apply(REASON.scroll)
+  function flushPending() {
+    frameId = undefined
+    const shouldResize = isResizePending
+    const shouldScroll = isScrollPending
+    isResizePending = false
+    isScrollPending = false
+    if (shouldResize) {
+      apply(REASON.resize)
+    }
+    if (shouldScroll) {
+      apply(REASON.scroll, true)
+    }
   }
 
-  function onResize() {
-    apply(REASON.resize)
+  function schedule(reason: Extract<StickyReason, 'scroll' | 'resize'>) {
+    if (reason === REASON.resize) {
+      isResizePending = true
+    } else {
+      isScrollPending = true
+    }
+    frameId ??= requestAnimationFrame(flushPending)
   }
 
   function update(reason: Extract<StickyReason, 'scroll' | 'resize'> = REASON.resize) {
-    apply(reason)
+    apply(reason, reason === REASON.scroll)
   }
 
   function setLocked(isLocked: boolean) {
@@ -92,6 +119,7 @@ export function createStickyAsidePresenter(
     }
 
     view.setClasses(next)
+    shouldForcePaint = true
     apply(REASON.resize)
   }
 
@@ -114,8 +142,8 @@ export function createStickyAsidePresenter(
   }
 
   const unsubscribe = view.subscribe({
-    scroll: onScroll,
-    resize: onResize,
+    scroll: () => schedule(REASON.scroll),
+    resize: () => schedule(REASON.resize),
   })
 
   function destroy() {
@@ -124,6 +152,12 @@ export function createStickyAsidePresenter(
     }
 
     isStopped = true
+    if (frameId !== undefined) {
+      cancelAnimationFrame(frameId)
+      frameId = undefined
+    }
+    isScrollPending = false
+    isResizePending = false
     unsubscribe()
     view.destroy()
   }
