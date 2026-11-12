@@ -14,7 +14,7 @@ const { locale, framework, bodyClass } = Astro.props
 const path = sitePath(Astro.url.pathname)
 const other = withBase(switchLocalePath(locale, path))
 const { title, description } = seoCopy(locale, framework)
-const origin = Astro.site?.origin ?? 'https://sticky-aside.primne.com'
+const origin = Astro.site?.origin ?? 'https://maprox.github.io'
 const canonical = pageHref(origin, locale, framework)
 const alternates = hreflangLinks(origin, framework)
 ---
