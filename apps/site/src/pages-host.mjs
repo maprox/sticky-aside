@@ -1,13 +1,18 @@
 const PROJECT_SITE = 'https://maprox.github.io'
 const PROJECT_BASE = '/sticky-aside'
 
-export async function resolvePagesHost(env = process.env, fetchImpl = globalThis.fetch) {
+export async function resolvePagesHost(env = process.env, fetchImpl = globalThis.fetch, cnameText = '') {
   if (env.SITE_ORIGIN) {
     return {
       site: env.SITE_ORIGIN,
       base: env.SITE_BASE || '/',
       cname: null,
     }
+  }
+
+  const fromFile = typeof cnameText === 'string' ? cnameText.trim() : ''
+  if (fromFile !== '') {
+    return { site: `https://${fromFile}`, base: '/', cname: fromFile }
   }
 
   const token = env.GITHUB_TOKEN
