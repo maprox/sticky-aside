@@ -4,8 +4,8 @@ import vue from '@astrojs/vue'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
-  site: 'https://maprox.github.io',
-  base: '/sticky-aside',
+  site: 'https://sticky-aside.primne.com',
+  base: '/',
   integrations: [vue(), react(), svelte()],
   i18n: {
     defaultLocale: 'en',
