@@ -30,6 +30,7 @@
     "./offsets.css": "./src/offsets.css"
   },
   "publishConfig": {
+    "types": "./dist/index.d.ts",
     "exports": {
       ".": {
         "types": "./dist/index.d.ts",

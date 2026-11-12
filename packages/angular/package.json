@@ -20,6 +20,7 @@
   "bugs": "https://github.com/maprox/sticky-aside/issues",
   "type": "module",
   "sideEffects": false,
+  "types": "./dist/sticky-aside.d.ts",
   "exports": {
     ".": {
       "types": "./dist/sticky-aside.d.ts",

@@ -24,6 +24,7 @@
     ".": "./src/StickyAside.tsx"
   },
   "publishConfig": {
+    "types": "./dist/StickyAside.d.ts",
     "exports": {
       ".": {
         "types": "./dist/StickyAside.d.ts",
