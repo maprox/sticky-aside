@@ -1,5 +1,13 @@
 # @sticky-aside/solid
 
+## 1.1.4
+
+### Patch Changes
+
+- b08da05: Publish a root `types` field so package indexes can see the bundled declarations.
+- Updated dependencies [b08da05]
+  - @sticky-aside/core@1.1.4
+
 ## 1.1.3
 
 ### Patch Changes
