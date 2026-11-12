@@ -9,7 +9,7 @@ import {
   sitemapUrls,
 } from '#site/demo/seo.ts'
 
-const origin = 'https://sticky-aside.primne.com'
+const origin = 'https://docs.example'
 const base = '/'
 
 describe('seoCopy', () => {
@@ -65,29 +65,30 @@ describe('seoCopy', () => {
 
 describe('pageHref', () => {
   it('builds absolute site URLs with a trailing slash', () => {
-    expect(pageHref(origin, 'en', 'vanilla', base)).toBe('https://sticky-aside.primne.com/')
-    expect(pageHref(origin, 'en', 'react', base)).toBe('https://sticky-aside.primne.com/react/')
-    expect(pageHref(origin, 'en', 'solid', base)).toBe('https://sticky-aside.primne.com/solid/')
-    expect(pageHref(origin, 'en', 'astro', base)).toBe('https://sticky-aside.primne.com/astro/')
-    expect(pageHref(origin, 'en', 'angular', base)).toBe('https://sticky-aside.primne.com/angular/')
-    expect(pageHref(origin, 'ru', 'vue', base)).toBe('https://sticky-aside.primne.com/ru/vue/')
-    expect(pageHref(origin, 'ru', 'angular', base)).toBe('https://sticky-aside.primne.com/ru/angular/')
-    expect(pageHref(origin, 'ru', 'solid', base)).toBe('https://sticky-aside.primne.com/ru/solid/')
-    expect(pageHref(origin, 'ru', 'vanilla', base)).toBe('https://sticky-aside.primne.com/ru/')
+    expect(pageHref(origin, 'en', 'vanilla', base)).toBe('https://docs.example/')
+    expect(pageHref(origin, 'en', 'react', base)).toBe('https://docs.example/react/')
+    expect(pageHref(origin, 'en', 'solid', base)).toBe('https://docs.example/solid/')
+    expect(pageHref(origin, 'en', 'astro', base)).toBe('https://docs.example/astro/')
+    expect(pageHref(origin, 'en', 'angular', base)).toBe('https://docs.example/angular/')
+    expect(pageHref(origin, 'ru', 'vue', base)).toBe('https://docs.example/ru/vue/')
+    expect(pageHref(origin, 'ru', 'angular', base)).toBe('https://docs.example/ru/angular/')
+    expect(pageHref(origin, 'ru', 'solid', base)).toBe('https://docs.example/ru/solid/')
+    expect(pageHref(origin, 'ru', 'vanilla', base)).toBe('https://docs.example/ru/')
+    expect(pageHref(origin, 'en', 'react', '/sticky-aside/')).toBe('https://docs.example/sticky-aside/react/')
   })
 })
 
 describe('hreflangLinks', () => {
   it('emits en, ru, and x-default for the same framework', () => {
     expect(hreflangLinks(origin, 'react', base)).toEqual([
-      { hreflang: 'en', href: 'https://sticky-aside.primne.com/react/' },
-      { hreflang: 'ru', href: 'https://sticky-aside.primne.com/ru/react/' },
-      { hreflang: 'x-default', href: 'https://sticky-aside.primne.com/react/' },
+      { hreflang: 'en', href: 'https://docs.example/react/' },
+      { hreflang: 'ru', href: 'https://docs.example/ru/react/' },
+      { hreflang: 'x-default', href: 'https://docs.example/react/' },
     ])
     expect(hreflangLinks(origin, 'astro', base)).toEqual([
-      { hreflang: 'en', href: 'https://sticky-aside.primne.com/astro/' },
-      { hreflang: 'ru', href: 'https://sticky-aside.primne.com/ru/astro/' },
-      { hreflang: 'x-default', href: 'https://sticky-aside.primne.com/astro/' },
+      { hreflang: 'en', href: 'https://docs.example/astro/' },
+      { hreflang: 'ru', href: 'https://docs.example/ru/astro/' },
+      { hreflang: 'x-default', href: 'https://docs.example/astro/' },
     ])
   })
 })
@@ -96,26 +97,26 @@ describe('sitemapUrls', () => {
   it('lists every locale × framework demo URL', () => {
     const urls = sitemapUrls(origin, base)
     expect(urls).toHaveLength(14)
-    expect(urls[0]).toBe('https://sticky-aside.primne.com/')
-    expect(urls).toContain('https://sticky-aside.primne.com/react/')
-    expect(urls).toContain('https://sticky-aside.primne.com/ru/')
-    expect(urls).toContain('https://sticky-aside.primne.com/ru/angular/')
+    expect(urls[0]).toBe('https://docs.example/')
+    expect(urls).toContain('https://docs.example/react/')
+    expect(urls).toContain('https://docs.example/ru/')
+    expect(urls).toContain('https://docs.example/ru/angular/')
   })
 })
 
 describe('renderSitemapXml', () => {
   it('wraps locs in a urlset', () => {
-    const xml = renderSitemapXml(['https://sticky-aside.primne.com/'])
+    const xml = renderSitemapXml(['https://docs.example/'])
     expect(xml).toContain('<?xml version="1.0" encoding="UTF-8"?>')
-    expect(xml).toContain('<loc>https://sticky-aside.primne.com/</loc>')
+    expect(xml).toContain('<loc>https://docs.example/</loc>')
     expect(xml).toContain('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"')
   })
 })
 
 describe('renderRobotsTxt', () => {
   it('points crawlers at the sitemap', () => {
-    expect(renderRobotsTxt('https://sticky-aside.primne.com/sitemap.xml')).toBe(
-      'User-agent: *\nAllow: /\n\nSitemap: https://sticky-aside.primne.com/sitemap.xml\n',
+    expect(renderRobotsTxt('https://docs.example/sitemap.xml')).toBe(
+      'User-agent: *\nAllow: /\n\nSitemap: https://docs.example/sitemap.xml\n',
     )
   })
 })
