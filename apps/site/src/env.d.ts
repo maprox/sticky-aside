@@ -7,6 +7,7 @@ declare module '#site/pages-host.mjs' {
   export function resolvePagesHost(
     env?: Record<string, string | undefined>,
     fetchImpl?: (input: string, init?: RequestInit) => Promise<PagesResponse>,
+    cnameText?: string,
   ): Promise<{ site: string, base: string, cname: string | null }>
 }
 

@@ -32,6 +32,22 @@ describe('resolvePagesHost', () => {
     expect(host).toEqual({ site: 'https://docs.example', base: '/docs', cname: null })
   })
 
+  it('uses the CNAME file without calling Pages', async () => {
+    const fetchImpl = () => {
+      throw new Error('should not fetch')
+    }
+    const host = await resolvePagesHost(
+      { GITHUB_ACTIONS: 'true', GITHUB_TOKEN: 'token', GITHUB_REPOSITORY: 'maprox/sticky-aside' },
+      fetchImpl,
+      'sticky-aside.maprox.net\n',
+    )
+    expect(host).toEqual({
+      site: 'https://sticky-aside.maprox.net',
+      base: '/',
+      cname: 'sticky-aside.maprox.net',
+    })
+  })
+
   it('reads a custom domain from the Pages API', async () => {
     const host = await resolvePagesHost(
       { GITHUB_ACTIONS: 'true', GITHUB_TOKEN: 'token', GITHUB_REPOSITORY: 'maprox/sticky-aside' },
