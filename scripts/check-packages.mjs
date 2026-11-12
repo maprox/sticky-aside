@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { mkdtempSync, readdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -53,11 +53,26 @@ try {
       throw new Error(`pnpm pack did not write a tarball for ${pkg.name}`)
     }
 
-    run('pnpm', ['exec', 'attw', join(destination, tarball), '--profile', 'esm-only', ...pkg.attwArgs])
+    const tarballPath = join(destination, tarball)
+    assertPublishedTypes(pkg.name, tarballPath)
+    run('pnpm', ['exec', 'attw', tarballPath, '--profile', 'esm-only', ...pkg.attwArgs])
 
   }
 } finally {
   rmSync(destination, { recursive: true, force: true })
+}
+
+function assertPublishedTypes(name, tarball) {
+  const manifest = JSON.parse(execFileSync('tar', ['-xOzf', tarball, 'package/package.json'], { encoding: 'utf8' }))
+  const types = manifest.types
+  if (typeof types !== 'string' || !types.endsWith('.d.ts')) {
+    throw new Error(`${name} published package.json has no root types field pointing at a .d.ts file`)
+  }
+  const packed = execFileSync('tar', ['-tzf', tarball], { encoding: 'utf8' })
+  const entry = `package/${types.replace(/^\.\//, '')}`
+  if (!packed.split('\n').includes(entry)) {
+    throw new Error(`${name} types field ${types} is not in the tarball`)
+  }
 }
 
 function run(command, args) {
