@@ -14,8 +14,27 @@ describe('site assets', () => {
     const base = readFileSync(join(siteRoot, 'src/layouts/Base.astro'), 'utf8')
     expect(base).toMatch(/rel=["']icon["']/)
     expect(base).toMatch(/favicon\.svg/)
+    expect(base).toMatch(/favicon-48\.png/)
+    expect(base).toMatch(/sizes=["']48x48["']/)
+    expect(base).toMatch(/favicon\.ico/)
     expect(base).not.toMatch(/fonts\.googleapis\.com/)
     expect(base).not.toMatch(/fonts\.gstatic\.com/)
+  })
+
+  it('ships a 48px PNG and an ICO whose shapes do not depend on CSS', () => {
+    const png = readFileSync(join(siteRoot, 'public/favicon-48.png'))
+    expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
+    expect(png.readUInt32BE(16)).toBe(48)
+    expect(png.readUInt32BE(20)).toBe(48)
+
+    const ico = readFileSync(join(siteRoot, 'public/favicon.ico'))
+    expect(ico.readUInt16LE(0)).toBe(0)
+    expect(ico.readUInt16LE(2)).toBe(1)
+    expect(ico.readUInt16LE(4)).toBeGreaterThan(0)
+
+    const svg = readFileSync(join(siteRoot, 'public/favicon.svg'), 'utf8')
+    expect(svg).toMatch(/fill="#d5e2e8"/)
+    expect(svg).toMatch(/fill="#142229"/)
   })
 
   it('emits SEO description, canonical, hreflang, and Open Graph tags', () => {
