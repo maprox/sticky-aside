@@ -3,7 +3,7 @@ import { createStickyAsidePresenter } from '@sticky-aside/core/headless'
 
 import { createFrameView } from '#site/demo/frame-view.ts'
 import { generateDemoCode } from '#site/demo/generate-code.ts'
-import { articleLines, t } from '#site/demo/i18n.ts'
+import { articleLines, panelDemoLines, t } from '#site/demo/i18n.ts'
 import { clampDemoSettings, DEFAULT_DEMO_SETTINGS } from '#site/demo/settings.ts'
 import type { DemoLocale, DemoSettings } from '#site/demo/settings.ts'
 
@@ -33,7 +33,7 @@ export function mountMiniDemo(options: {
   page.className = 'mini-page'
   const article = document.createElement('article')
   article.className = 'mini-article'
-  for (const line of [...articleLines(options.locale), ...articleLines(options.locale)]) {
+  for (const line of articleLines(options.locale)) {
     const p = document.createElement('p')
     p.textContent = line
     article.append(p)
@@ -142,7 +142,7 @@ export function panelBody(settings: DemoSettings, locale: DemoLocale): HTMLEleme
   body.append(copy)
   if (settings.tall) {
     const list = document.createElement('ol')
-    for (const line of articleLines(locale)) {
+    for (const line of panelDemoLines(locale)) {
       const item = document.createElement('li')
       item.textContent = line
       list.append(item)

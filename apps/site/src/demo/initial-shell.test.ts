@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { generateDemoCode } from '#site/demo/generate-code.ts'
-import { articleLines, t } from '#site/demo/i18n.ts'
+import { t } from '#site/demo/i18n.ts'
 import {
   initialDemoSettings,
   initialSnippetText,
@@ -32,9 +32,18 @@ describe('initial demo shell (SSG)', () => {
 
   it('describes the tall panel viewport markup for SSR', () => {
     const model = initialViewportModel('en', 'vanilla')
-    expect(model.articleLines).toEqual([...articleLines('en'), ...articleLines('en')])
+    expect(model.articleLines).toHaveLength(8)
+    expect(model.articleLines[0]).toBe(
+      'A short panel stays at the top of the window. A tall one rides with the page until the edge you scroll toward meets the screen.',
+    )
     expect(model.panelCopy).toBe(t('en', 'panel.tall'))
-    expect(model.panelItems).toEqual(articleLines('en'))
+    expect(model.panelItems).toEqual([
+      'Drag the lower edge to resize the window.',
+      'Toggle the tall panel to compare both modes.',
+      'Lock the panel and keep scrolling.',
+      'Disable sticky behavior to see the original layout.',
+    ])
+    expect(new Set([...model.articleLines, ...model.panelItems]).size).toBe(12)
     expect(model.style).toBe('--sticky-aside-top: 16px; --sticky-aside-bottom: 16px')
   })
 })

@@ -53,6 +53,10 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'state.off': 'Sticky is off',
     'panel.short': 'Shorter than the window. It stays at the top.',
     'panel.tall': 'Taller than the window. Scroll both ways.',
+    'panel.demo.1': 'Drag the lower edge to resize the window.',
+    'panel.demo.2': 'Toggle the tall panel to compare both modes.',
+    'panel.demo.3': 'Lock the panel and keep scrolling.',
+    'panel.demo.4': 'Disable sticky behavior to see the original layout.',
     'article.p1': 'A short panel stays at the top of the window. A tall one rides with the page until the edge you scroll toward meets the screen.',
     'article.p2': 'Scrolling down pins the bottom of the panel to the bottom of the window. Scrolling up releases it and pins the top. Between those moments the panel just sits in its column.',
     'article.p3': 'Offsets come from CSS. Here the numbers write --sticky-aside-top and --sticky-aside-bottom. With Tailwind you pass top-16 md:top-24 instead.',
@@ -110,6 +114,10 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'state.off': 'Прилипание выключено',
     'panel.short': 'Панель короче окна и остаётся сверху.',
     'panel.tall': 'Панель выше окна. Крутите страницу в обе стороны.',
+    'panel.demo.1': 'Потяните нижний край, чтобы изменить высоту окна.',
+    'panel.demo.2': 'Переключите длинную панель, чтобы сравнить режимы.',
+    'panel.demo.3': 'Зафиксируйте панель и продолжите прокрутку.',
+    'panel.demo.4': 'Отключите прилипание, чтобы увидеть исходную раскладку.',
     'article.p1': 'Короткая панель остаётся у верхнего края окна. Длинная едет вместе со страницей, пока край, к которому вы скроллите, не упрётся в экран.',
     'article.p2': 'Скролл вниз прижимает низ панели к низу окна. Скролл вверх отпускает её и прижимает верх. Между этими моментами панель просто стоит в колонке.',
     'article.p3': 'Отступ задаёт CSS. Здесь числа пишут переменные --sticky-aside-top и --sticky-aside-bottom. С Tailwind вместо них передают top-16 md:top-24.',
@@ -140,6 +148,10 @@ export function stateReadout(
 
 export function articleLines(locale: DemoLocale): string[] {
   return [1, 2, 3, 4, 5, 6, 7, 8].map((index) => t(locale, `article.p${index}`))
+}
+
+export function panelDemoLines(locale: DemoLocale): string[] {
+  return [1, 2, 3, 4].map((index) => t(locale, `panel.demo.${index}`))
 }
 
 export function frameworkPath(framework: DemoFramework): string {
