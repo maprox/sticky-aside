@@ -22,6 +22,28 @@ export function seoCopy(locale: DemoLocale, framework: DemoFramework): SeoCopy {
   }
 }
 
+export function softwareSourceCode(
+  origin: string,
+  locale: DemoLocale,
+  framework: DemoFramework,
+  base?: string,
+): Record<string, unknown> {
+  const { description } = seoCopy(locale, framework)
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: framework === 'vanilla' ? 'sticky-aside' : `sticky-aside for ${framework}`,
+    description,
+    url: pageHref(origin, locale, framework, base),
+    codeRepository: 'https://github.com/maprox/sticky-aside',
+    programmingLanguage: ['JavaScript', 'TypeScript'],
+    runtimePlatform: 'Modern web browsers',
+    license: 'https://opensource.org/license/mit',
+    author: { '@type': 'Organization', name: 'maprox' },
+  }
+}
+
 function withTrailingSlash(path: string): string {
   return path.endsWith('/') ? path : `${path}/`
 }

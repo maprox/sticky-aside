@@ -1,7 +1,7 @@
 ---
 import '../styles/site.css'
 import type { DemoFramework, DemoLocale } from '../demo/settings'
-import { hreflangLinks, pageHref, seoCopy } from '../demo/seo'
+import { hreflangLinks, pageHref, seoCopy, softwareSourceCode } from '../demo/seo'
 import { localePath, sitePath, switchLocalePath, t, withBase } from '../demo/i18n'
 
 interface Props {
@@ -16,6 +16,7 @@ const other = withBase(switchLocalePath(locale, path))
 const { title, description } = seoCopy(locale, framework)
 const origin = Astro.site?.origin ?? 'https://maprox.github.io'
 const canonical = pageHref(origin, locale, framework)
+const structuredData = softwareSourceCode(origin, locale, framework)
 const alternates = hreflangLinks(origin, framework)
 const ogImage = new URL(withBase('/og-image.png'), `${origin}/`).toString()
 const ogLocale = locale === 'ru' ? 'ru_RU' : 'en_US'
@@ -50,6 +51,7 @@ const ogImageAlt = locale === 'ru'
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <link rel="icon" href={withBase('/favicon-48.png')} type="image/png" sizes="48x48" />
     <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />

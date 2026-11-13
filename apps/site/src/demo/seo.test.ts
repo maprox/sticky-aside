@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
+import * as seo from '#site/demo/seo.ts'
 import {
   hreflangLinks,
   pageHref,
@@ -48,6 +49,36 @@ describe('seoCopy', () => {
       expect(copy.description).toMatch(/sticky/i)
     }
     expect(seoCopy('ru', 'vanilla').h1).toContain('прилипающая боковая панель')
+  })
+})
+
+describe('softwareSourceCode', () => {
+  it('describes the adapter with its canonical URL and repository metadata', () => {
+    expect(seo.softwareSourceCode).toBeTypeOf('function')
+
+    const data = seo.softwareSourceCode(origin, 'en', 'react', base)
+
+    expect(data).toMatchObject({
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareSourceCode',
+      name: 'sticky-aside for react',
+      url: 'https://docs.example/react/',
+      codeRepository: 'https://github.com/maprox/sticky-aside',
+      programmingLanguage: ['JavaScript', 'TypeScript'],
+      runtimePlatform: 'Modern web browsers',
+      license: 'https://opensource.org/license/mit',
+      author: { '@type': 'Organization', name: 'maprox' },
+    })
+    expect(JSON.stringify(data)).not.toMatch(/aggregateRating|review|FAQPage|HowTo/)
+  })
+
+  it('uses the core name and preserves the site base path', () => {
+    const data = seo.softwareSourceCode(origin, 'ru', 'vanilla', '/sticky-aside/')
+
+    expect(data).toMatchObject({
+      name: 'sticky-aside',
+      url: 'https://docs.example/sticky-aside/ru/',
+    })
   })
 })
 
