@@ -8,58 +8,46 @@ import {
   seoCopy,
   sitemapUrls,
 } from '#site/demo/seo.ts'
+import { DEMO_FRAMEWORKS } from '#site/demo/settings.ts'
 
 const origin = 'https://docs.example'
 const base = '/'
 
 describe('seoCopy', () => {
-  it('keeps framework-specific English titles and descriptions', () => {
-    expect(seoCopy('en', 'vanilla').title).toBe('JavaScript sticky sidebar library — sticky-aside')
-    expect(seoCopy('en', 'vue').title).toBe('Vue sticky sidebar for Vue 3 — sticky-aside')
-    expect(seoCopy('en', 'react').title).toBe('React sticky sidebar — sticky-aside')
-    expect(seoCopy('en', 'svelte').title).toBe('Svelte sticky sidebar — sticky-aside')
-    expect(seoCopy('en', 'solid').title).toBe('Solid sticky sidebar — sticky-aside')
-    expect(seoCopy('en', 'astro').title).toBe('Astro sticky sidebar — sticky-aside')
-    expect(seoCopy('en', 'angular').title).toBe('Angular sticky sidebar — sticky-aside')
+  it.each(['en', 'ru'] as const)('writes concise, framework-specific snippets in %s', (locale) => {
+    const headings: string[] = []
+    const descriptions: string[] = []
 
-    expect(seoCopy('en', 'vanilla').h1).toBe('JavaScript sticky sidebar for scroll layouts')
-    expect(seoCopy('en', 'vue').h1).toBe('Vue sticky sidebar for Vue 3')
-    expect(seoCopy('en', 'react').h1).toBe('React sticky sidebar')
-    expect(seoCopy('en', 'svelte').h1).toBe('Svelte sticky sidebar')
-    expect(seoCopy('en', 'solid').h1).toBe('Solid sticky sidebar')
-    expect(seoCopy('en', 'astro').h1).toBe('Astro sticky sidebar')
-    expect(seoCopy('en', 'angular').h1).toBe('Angular sticky sidebar')
+    for (const framework of DEMO_FRAMEWORKS) {
+      const copy = seoCopy(locale, framework)
+      headings.push(copy.h1)
+      descriptions.push(copy.description)
 
-    expect(seoCopy('en', 'vue').description).toMatch(/Modern browsers only/)
-    expect(seoCopy('en', 'vanilla').description).toMatch(/no legacy path/)
-    expect(seoCopy('en', 'react').description).toMatch(/no legacy polyfills/)
-    expect(seoCopy('en', 'svelte').description).toMatch(/no legacy support tax/)
-    expect(seoCopy('en', 'solid').description).toBe(
-      'Solid sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
-    )
-    expect(seoCopy('en', 'astro').description).toBe(
-      'Sticky sidebar for Astro with the same createStickyAside API as vanilla. Both-edge pin, lock, CSS offsets. Small ESM core for modern browsers.',
-    )
-    expect(seoCopy('en', 'angular').description).toBe(
-      'Angular sticky sidebar adapter over a tiny modern core. Both-edge pin, lock, CSS offsets. Current browsers only.',
-    )
+      expect(copy.title.length).toBeLessThanOrEqual(65)
+      expect(copy.description.length).toBeGreaterThanOrEqual(120)
+      expect(copy.description.length).toBeLessThanOrEqual(160)
+      expect(copy.description).toMatch(/sticky/i)
+    }
+
+    expect(new Set(headings).size).toBe(DEMO_FRAMEWORKS.length)
+    expect(new Set(descriptions).size).toBe(DEMO_FRAMEWORKS.length)
   })
 
-  it('mirrors Russian titles and keeps English head terms', () => {
-    expect(seoCopy('ru', 'vanilla').title).toBe('JavaScript sticky sidebar — библиотека sticky-aside')
-    expect(seoCopy('ru', 'vanilla').h1).toBe('JavaScript sticky sidebar для страниц со скроллом')
-    expect(seoCopy('ru', 'vue').title).toBe('Vue sticky sidebar для Vue 3 — sticky-aside')
-    expect(seoCopy('ru', 'react').title).toBe('React sticky sidebar — sticky-aside')
-    expect(seoCopy('ru', 'svelte').title).toBe('Svelte sticky sidebar — sticky-aside')
-    expect(seoCopy('ru', 'solid').title).toBe('Solid sticky sidebar — sticky-aside')
-    expect(seoCopy('ru', 'astro').title).toBe('Astro sticky sidebar — sticky-aside')
-    expect(seoCopy('ru', 'angular').title).toBe('Angular sticky sidebar — sticky-aside')
+  it('includes every adapter on the English homepage', () => {
+    const description = seoCopy('en', 'vanilla').description
 
-    expect(seoCopy('ru', 'vue').description).toMatch(/современные браузеры/i)
-    expect(seoCopy('ru', 'angular').description).toBe(
-      'Адаптер Angular sticky sidebar над компактным современным ядром. Пин к обоим краям, lock, CSS-отступы. Только актуальные браузеры.',
-    )
-    expect(seoCopy('ru', 'vanilla').description).toMatch(/без legacy/)
+    expect(description).toContain('Angular')
+    expect(description).toContain('Astro')
+  })
+
+  it('uses natural Russian terminology without untranslated UI jargon', () => {
+    for (const framework of DEMO_FRAMEWORKS) {
+      const copy = seoCopy('ru', framework)
+
+      expect(copy.description).not.toMatch(/пин|legacy|\block\b/i)
+      expect(copy.description).toMatch(/sticky/i)
+    }
+    expect(seoCopy('ru', 'vanilla').h1).toContain('прилипающая боковая панель')
   })
 })
 
