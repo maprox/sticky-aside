@@ -155,7 +155,7 @@ export function panelDemoLines(locale: DemoLocale): string[] {
 }
 
 export function frameworkPath(framework: DemoFramework): string {
-  return framework === 'vanilla' ? '/' : `/${framework}`
+  return framework === 'vanilla' ? '/' : `/${framework}/`
 }
 
 function normalizeBase(base: string): string {

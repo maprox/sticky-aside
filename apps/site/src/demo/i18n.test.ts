@@ -37,8 +37,9 @@ describe('i18n', () => {
 
   it('maps framework tabs to paths', () => {
     expect(frameworkPath('vanilla')).toBe('/')
-    expect(frameworkPath('vue')).toBe('/vue')
-    expect(localePath('ru', frameworkPath('svelte'))).toBe('/ru/svelte')
+    expect(frameworkPath('vue')).toBe('/vue/')
+    expect(localePath('ru', frameworkPath('svelte'))).toBe('/ru/svelte/')
+    expect(withBase(frameworkPath('react'), '/sticky-aside/')).toBe('/sticky-aside/react/')
     expect(frameworkFromPath('/vue')).toBe('vue')
     expect(frameworkFromPath('/ru/react/')).toBe('react')
     expect(frameworkFromPath('/solid')).toBe('solid')
