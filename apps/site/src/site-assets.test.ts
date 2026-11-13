@@ -37,6 +37,17 @@ describe('site assets', () => {
     expect(svg).toMatch(/fill="#142229"/)
   })
 
+  it('ships a lightweight 1200 by 630 social sharing card', () => {
+    const imagePath = join(siteRoot, 'public/og-image.png')
+    expect(existsSync(imagePath)).toBe(true)
+
+    const png = readFileSync(imagePath)
+    expect(png.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a')
+    expect(png.readUInt32BE(16)).toBe(1200)
+    expect(png.readUInt32BE(20)).toBe(630)
+    expect(png.byteLength).toBeLessThan(200 * 1024)
+  })
+
   it('emits SEO description, canonical, hreflang, and Open Graph tags', () => {
     const base = readFileSync(join(siteRoot, 'src/layouts/Base.astro'), 'utf8')
     expect(base).toMatch(/seoCopy/)

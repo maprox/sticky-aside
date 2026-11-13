@@ -17,6 +17,12 @@ const { title, description } = seoCopy(locale, framework)
 const origin = Astro.site?.origin ?? 'https://maprox.github.io'
 const canonical = pageHref(origin, locale, framework)
 const alternates = hreflangLinks(origin, framework)
+const ogImage = new URL(withBase('/og-image.png'), `${origin}/`).toString()
+const ogLocale = locale === 'ru' ? 'ru_RU' : 'en_US'
+const ogLocaleAlternate = locale === 'ru' ? 'en_US' : 'ru_RU'
+const ogImageAlt = locale === 'ru'
+  ? 'sticky-aside — прилипающая боковая панель с прокруткой в обе стороны'
+  : 'sticky-aside — a sticky sidebar that follows your scroll'
 ---
 
 <html lang={locale}>
@@ -33,9 +39,17 @@ const alternates = hreflangLinks(origin, framework)
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <link rel="icon" href={withBase('/favicon-48.png')} type="image/png" sizes="48x48" />
     <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
