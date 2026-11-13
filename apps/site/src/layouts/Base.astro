@@ -40,6 +40,21 @@ const alternates = hreflangLinks(origin, framework)
     <link rel="icon" href={withBase('/favicon.ico')} sizes="32x32" />
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
     <script is:inline>
+      (function (m, e, t, r, i, k, a) {
+        m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) }
+        m[i].l = 1 * new Date()
+        for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return } }
+        k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+      })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym')
+
+      ym(114238242, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true,
+      })
+    </script>
+    <script is:inline>
       (function () {
         var stored = null
         try { stored = localStorage.getItem('sticky-aside-theme') } catch (e) {}
@@ -52,6 +67,7 @@ const alternates = hreflangLinks(origin, framework)
     </script>
   </head>
   <body class={bodyClass}>
+    <noscript><div><img src="https://mc.yandex.ru/watch/114238242" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <nav class="site-nav">
       <a class="brand" href={withBase(localePath(locale, '/'))}>{t(locale, 'nav.home')}</a>
       <a href="https://github.com/maprox/sticky-aside">{t(locale, 'nav.github')}</a>

@@ -48,6 +48,15 @@ describe('site assets', () => {
     expect(base).toMatch(/property="og:url"/)
   })
 
+  it('loads Yandex Metrica once on every page through the shared layout', () => {
+    const base = readFileSync(join(siteRoot, 'src/layouts/Base.astro'), 'utf8')
+    expect(base.match(/https:\/\/mc\.yandex\.ru\/metrika\/tag\.js/g)).toHaveLength(1)
+    expect(base).toMatch(/ym\(114238242,\s*['"]init['"]/)
+    expect(base).toMatch(/webvisor:\s*true/)
+    expect(base).toMatch(/<noscript>/)
+    expect(base).toMatch(/https:\/\/mc\.yandex\.ru\/watch\/114238242/)
+  })
+
   it('uses system font stacks instead of webfonts', () => {
     const css = readFileSync(join(siteRoot, 'src/styles/site.css'), 'utf8')
     expect(css).toMatch(/--font-body:\s*system-ui/)
