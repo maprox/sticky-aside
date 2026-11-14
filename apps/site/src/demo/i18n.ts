@@ -53,10 +53,12 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'state.off': 'Sticky is off',
     'panel.short': 'Shorter than the window. It stays at the top.',
     'panel.tall': 'Taller than the window. Scroll both ways.',
-    'panel.demo.1': 'Drag the lower edge to resize the window.',
-    'panel.demo.2': 'Toggle the tall panel to compare both modes.',
-    'panel.demo.3': 'Lock the panel and keep scrolling.',
-    'panel.demo.4': 'Disable sticky behavior to see the original layout.',
+    'panel.demo.1': 'Scroll down: the panel pins its bottom edge to the window.',
+    'panel.demo.2': 'Scroll up: it releases and pins its top edge instead.',
+    'panel.demo.3': 'Between those moments the panel just rides with the page.',
+    'panel.demo.4': 'Drag the lower edge of the window to change its height.',
+    'panel.demo.5': 'Turn off the tall switch to compare with a short panel.',
+    'panel.demo.6': 'Lock holds the panel at the height where you turned it on.',
     'article.p1': 'A short panel stays at the top of the window. A tall one rides with the page until the edge you scroll toward meets the screen.',
     'article.p2': 'Scrolling down pins the bottom of the panel to the bottom of the window. Scrolling up releases it and pins the top. Between those moments the panel just sits in its column.',
     'article.p3': 'Offsets come from CSS. Here the numbers write --sticky-aside-top and --sticky-aside-bottom. With Tailwind you pass top-16 md:top-24 instead.',
@@ -65,6 +67,10 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p6': 'Measurement is an invisible rail glued to the window between the top and bottom offsets, never taller than the panel. That is how the core knows whether the panel fits.',
     'article.p7': 'The listener hangs on window. Nested container scroll is out of scope for this version.',
     'article.p8': 'A fixed panel takes its width from the column. Otherwise it jumps the grid and stretches across the screen.',
+    'article.p9': 'It fits documentation layouts, article pages with a tall table of contents, and dashboards where a sidebar must stay reachable in both scroll directions.',
+    'article.p10': 'The package is a small ESM module with TypeScript types. The core has no framework code; the adapters only map props to it.',
+    'article.p11': 'If you come from sticky-sidebar, the mental model changes: the wrapper stays in the layout and the panel, not the whole aside, is what moves.',
+    'article.p12': 'Skip it when the page barely scrolls, when the scrollable area is a nested container, or when plain position: sticky already covers a short panel.',
   },
   ru: {
     'nav.home': 'sticky-aside',
@@ -114,10 +120,12 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'state.off': 'Прилипание выключено',
     'panel.short': 'Панель короче окна и остаётся сверху.',
     'panel.tall': 'Панель выше окна. Крутите страницу в обе стороны.',
-    'panel.demo.1': 'Потяните нижний край, чтобы изменить высоту окна.',
-    'panel.demo.2': 'Переключите длинную панель, чтобы сравнить режимы.',
-    'panel.demo.3': 'Зафиксируйте панель и продолжите прокрутку.',
-    'panel.demo.4': 'Отключите прилипание, чтобы увидеть исходную раскладку.',
+    'panel.demo.1': 'Скролл вниз: панель фиксирует нижний край у окна.',
+    'panel.demo.2': 'Скролл вверх: она отпускается и фиксирует верхний.',
+    'panel.demo.3': 'Между этими моментами панель просто едет со страницей.',
+    'panel.demo.4': 'Потяните нижний край окна, чтобы изменить его высоту.',
+    'panel.demo.5': 'Выключите «Длинная панель», чтобы сравнить с короткой.',
+    'panel.demo.6': 'Замок удерживает панель на высоте, где его включили.',
     'article.p1': 'Короткая панель остаётся у верхнего края окна. Длинная едет вместе со страницей, пока край, к которому вы скроллите, не упрётся в экран.',
     'article.p2': 'Скролл вниз прижимает низ панели к низу окна. Скролл вверх отпускает её и прижимает верх. Между этими моментами панель просто стоит в колонке.',
     'article.p3': 'Отступ задаёт CSS. Здесь числа пишут переменные --sticky-aside-top и --sticky-aside-bottom. С Tailwind вместо них передают top-16 md:top-24.',
@@ -126,6 +134,10 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'article.p6': 'Измерение делает невидимая планка. Она приклеена к окну между верхним и нижним отступом, а её высота не больше высоты панели.',
     'article.p7': 'Слушатель висит на window. Вложенный скролл контейнера эта версия не обрабатывает.',
     'article.p8': 'Ширина зафиксированной панели берётся у колонки. Иначе fixed выскочит из сетки и растянется на весь экран.',
+    'article.p9': 'Подходит для документации, статей с длинным оглавлением и дашбордов, где боковая панель должна оставаться доступной при прокрутке в обе стороны.',
+    'article.p10': 'Пакет — компактный ESM-модуль с типами TypeScript. Ядро не знает про фреймворки, адаптеры лишь связывают его с пропсами.',
+    'article.p11': 'Если вы переходите со sticky-sidebar, поменяется модель: обертка остаётся в раскладке, а двигается только панель, не весь aside.',
+    'article.p12': 'Не нужен на страницах с коротким скроллом, во вложенных прокручиваемых контейнерах и когда обычного position: sticky хватает для короткой панели.',
   },
 }
 
@@ -147,11 +159,11 @@ export function stateReadout(
 }
 
 export function articleLines(locale: DemoLocale): string[] {
-  return [1, 2, 3, 4, 5, 6, 7, 8].map((index) => t(locale, `article.p${index}`))
+  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((index) => t(locale, `article.p${index}`))
 }
 
 export function panelDemoLines(locale: DemoLocale): string[] {
-  return [1, 2, 3, 4].map((index) => t(locale, `panel.demo.${index}`))
+  return [1, 2, 3, 4, 5, 6].map((index) => t(locale, `panel.demo.${index}`))
 }
 
 export function frameworkPath(framework: DemoFramework): string {

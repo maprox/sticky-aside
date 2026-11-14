@@ -32,18 +32,20 @@ describe('initial demo shell (SSG)', () => {
 
   it('describes the tall panel viewport markup for SSR', () => {
     const model = initialViewportModel('en', 'vanilla')
-    expect(model.articleLines).toHaveLength(8)
+    expect(model.articleLines).toHaveLength(12)
     expect(model.articleLines[0]).toBe(
       'A short panel stays at the top of the window. A tall one rides with the page until the edge you scroll toward meets the screen.',
     )
     expect(model.panelCopy).toBe(t('en', 'panel.tall'))
     expect(model.panelItems).toEqual([
-      'Drag the lower edge to resize the window.',
-      'Toggle the tall panel to compare both modes.',
-      'Lock the panel and keep scrolling.',
-      'Disable sticky behavior to see the original layout.',
+      'Scroll down: the panel pins its bottom edge to the window.',
+      'Scroll up: it releases and pins its top edge instead.',
+      'Between those moments the panel just rides with the page.',
+      'Drag the lower edge of the window to change its height.',
+      'Turn off the tall switch to compare with a short panel.',
+      'Lock holds the panel at the height where you turned it on.',
     ])
-    expect(new Set([...model.articleLines, ...model.panelItems]).size).toBe(12)
+    expect(new Set([...model.articleLines, ...model.panelItems]).size).toBe(18)
     expect(model.style).toBe('--sticky-aside-top: 16px; --sticky-aside-bottom: 16px')
   })
 })

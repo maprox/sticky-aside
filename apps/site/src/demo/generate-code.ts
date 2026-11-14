@@ -1,4 +1,4 @@
-import { t } from '#site/demo/i18n.ts'
+import { panelDemoLines, t } from '#site/demo/i18n.ts'
 import type { DemoLocale, DemoSettings } from '#site/demo/settings.ts'
 
 function bool(isOn: boolean): string {
@@ -12,22 +12,13 @@ function styleVars(settings: DemoSettings): { top: string, bottom: string } {
   }
 }
 
-function firstSentence(text: string): string {
-  const end = text.indexOf('. ')
-  if (end === -1) {
-    return text
-  }
-
-  return text.slice(0, end + 1)
-}
-
 function vanillaMarkup(settings: DemoSettings, locale: DemoLocale): string {
   const copy = t(locale, settings.tall ? 'panel.tall' : 'panel.short')
   const list = settings.tall
     ? `
     <ol>
-      <li>${firstSentence(t(locale, 'article.p1'))}</li>
-      <li>${firstSentence(t(locale, 'article.p2'))}</li>
+      <li>${panelDemoLines(locale)[0]}</li>
+      <li>${panelDemoLines(locale)[1]}</li>
       <li>…</li>
     </ol>`
     : ''
