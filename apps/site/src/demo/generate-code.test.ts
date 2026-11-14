@@ -33,6 +33,8 @@ describe('generateDemoCode', () => {
     const code = generateDemoCode({ ...base, tall: true }, 'ru')
     expect(code).toContain('Панель выше окна. Крутите страницу в обе стороны.')
     expect(code).toContain('<ol>')
+    expect(code).toContain('<li>Скролл вниз: панель фиксирует нижний край у окна.</li>')
+    expect(code).toContain('<li>Скролл вверх: она отпускается и фиксирует верхний.</li>')
     expect(code).toContain('<li>…</li>')
   })
 

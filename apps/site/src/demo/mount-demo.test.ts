@@ -46,14 +46,32 @@ describe('mountMiniDemo scroll readout', () => {
     const texts = [...viewport.querySelectorAll('.mini-article p, .panel li')]
       .map((node) => node.textContent)
 
-    expect(texts).toHaveLength(12)
-    expect(new Set(texts).size).toBe(12)
-    expect(texts.slice(8)).toEqual([
-      'Drag the lower edge to resize the window.',
-      'Toggle the tall panel to compare both modes.',
-      'Lock the panel and keep scrolling.',
-      'Disable sticky behavior to see the original layout.',
+    expect(texts).toHaveLength(18)
+    expect(new Set(texts).size).toBe(18)
+    expect(texts.slice(12)).toEqual([
+      'Scroll down: the panel pins its bottom edge to the window.',
+      'Scroll up: it releases and pins its top edge instead.',
+      'Between those moments the panel just rides with the page.',
+      'Drag the lower edge of the window to change its height.',
+      'Turn off the tall switch to compare with a short panel.',
+      'Lock holds the panel at the height where you turned it on.',
     ])
+    demo.destroy()
+  })
+
+  it('sizes the tall panel and demo page from the window height', () => {
+    const viewport = document.createElement('div')
+    Object.defineProperty(viewport, 'clientHeight', { configurable: true, value: 1300 })
+    document.body.append(viewport)
+    const demo = mountMiniDemo({ viewport, locale: 'en' })
+
+    expect(viewport.querySelector('.panel')?.getAttribute('style')).toContain('min-height: 1460px')
+    expect(viewport.querySelector('.mini-page')?.getAttribute('style')).toContain('min-height: 1860px')
+
+    demo.setSettings({ tall: false })
+
+    expect(viewport.querySelector('.panel')?.getAttribute('style') ?? '').not.toContain('min-height')
+    expect(viewport.querySelector('.mini-page')?.getAttribute('style')).toContain('min-height: 1600px')
     demo.destroy()
   })
 })
