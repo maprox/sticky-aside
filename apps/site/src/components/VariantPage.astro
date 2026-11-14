@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro'
+import ContentSections from './ContentSections.astro'
 import FrameworkTabs from './FrameworkTabs.astro'
 import MiniWindow from './MiniWindow.astro'
 import { initialSnippetText } from '../demo/initial-shell'
@@ -50,6 +51,7 @@ const { h1, description } = seoCopy(locale, framework)
         </div>
       </aside>
     </div>
+    <ContentSections locale={locale} framework={framework} />
   </main>
 </Base>
 

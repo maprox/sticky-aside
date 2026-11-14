@@ -45,7 +45,7 @@ describe('bootStage', () => {
 
     vue?.click()
 
-    expect(location.pathname).toBe('/vue')
+    expect(location.pathname).toBe('/vue/')
     expect(vanilla?.getAttribute('aria-selected')).toBe('false')
     expect(vue?.getAttribute('aria-selected')).toBe('true')
     expect(vanilla?.hasAttribute('aria-pressed')).toBe(false)

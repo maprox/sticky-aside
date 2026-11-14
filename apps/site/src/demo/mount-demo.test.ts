@@ -37,4 +37,23 @@ describe('mountMiniDemo scroll readout', () => {
     expect(demo.getReadout().scrolling).toBe(false)
     demo.destroy()
   })
+
+  it('renders article and panel copy without repeated text', () => {
+    const viewport = document.createElement('div')
+    document.body.append(viewport)
+    const demo = mountMiniDemo({ viewport, locale: 'en' })
+
+    const texts = [...viewport.querySelectorAll('.mini-article p, .panel li')]
+      .map((node) => node.textContent)
+
+    expect(texts).toHaveLength(12)
+    expect(new Set(texts).size).toBe(12)
+    expect(texts.slice(8)).toEqual([
+      'Drag the lower edge to resize the window.',
+      'Toggle the tall panel to compare both modes.',
+      'Lock the panel and keep scrolling.',
+      'Disable sticky behavior to see the original layout.',
+    ])
+    demo.destroy()
+  })
 })
