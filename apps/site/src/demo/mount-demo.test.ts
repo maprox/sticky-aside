@@ -74,4 +74,23 @@ describe('mountMiniDemo scroll readout', () => {
     expect(viewport.querySelector('.mini-page')?.getAttribute('style')).toContain('min-height: 1600px')
     demo.destroy()
   })
+
+  it('keeps the initial tall panel height when the window is resized', () => {
+    const viewport = document.createElement('div')
+    let viewportHeight = 1300
+    Object.defineProperty(viewport, 'clientHeight', {
+      configurable: true,
+      get: () => viewportHeight,
+    })
+    document.body.append(viewport)
+    const demo = mountMiniDemo({ viewport, locale: 'en' })
+
+    expect(viewport.querySelector<HTMLElement>('.panel')?.style.minHeight).toBe('1460px')
+
+    viewportHeight = 900
+    demo.setSettings({ viewportHeight })
+
+    expect(viewport.querySelector<HTMLElement>('.panel')?.style.minHeight).toBe('1460px')
+    demo.destroy()
+  })
 })
