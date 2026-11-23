@@ -50,7 +50,6 @@ export function mountMiniDemo(options: {
 
   const scrollIdleMs = 200
   let settings = clampDemoSettings({ ...DEFAULT_DEMO_SETTINGS, ...options.settings })
-  const panelMin = viewport.clientHeight + 160
   let state: StickyAsideState = 'off'
   let isScrollingUp = false
   let isScrolling = false
@@ -74,27 +73,7 @@ export function mountMiniDemo(options: {
     content.replaceChildren(panelBody(settings, options.locale))
   }
 
-  function syncPanelSize() {
-    const page = viewport.querySelector<HTMLElement>(':scope > .mini-page')
-    const panel = content.querySelector<HTMLElement>('.panel')
-    if (!settings.tall) {
-      if (page) {
-        page.style.minHeight = '1600px'
-      }
-
-      return
-    }
-
-    if (panel) {
-      panel.style.minHeight = `${panelMin}px`
-    }
-    if (page) {
-      page.style.minHeight = `${Math.max(1600, panelMin + 400)}px`
-    }
-  }
-
   function apply() {
-    syncPanelSize()
     wrapper.style.setProperty('--sticky-aside-top', `${settings.top}px`)
     wrapper.style.setProperty('--sticky-aside-bottom', `${settings.bottom}px`)
     aside.setLocked(settings.locked)
