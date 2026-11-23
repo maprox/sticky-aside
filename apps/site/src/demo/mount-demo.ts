@@ -50,6 +50,7 @@ export function mountMiniDemo(options: {
 
   const scrollIdleMs = 200
   let settings = clampDemoSettings({ ...DEFAULT_DEMO_SETTINGS, ...options.settings })
+  const panelMin = viewport.clientHeight + 160
   let state: StickyAsideState = 'off'
   let isScrollingUp = false
   let isScrolling = false
@@ -84,7 +85,6 @@ export function mountMiniDemo(options: {
       return
     }
 
-    const panelMin = viewport.clientHeight + 160
     if (panel) {
       panel.style.minHeight = `${panelMin}px`
     }
