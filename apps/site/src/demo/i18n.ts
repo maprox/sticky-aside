@@ -59,6 +59,12 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'panel.demo.4': 'Drag the lower edge of the window to change its height.',
     'panel.demo.5': 'Turn off the tall switch to compare with a short panel.',
     'panel.demo.6': 'Lock holds the panel at the height where you turned it on.',
+    'panel.demo.7': 'Keep scrolling after the bottom edge lands: the article moves while the panel stays put.',
+    'panel.demo.8': 'Reverse direction near the bottom to watch the panel travel before its top edge catches.',
+    'panel.demo.9': 'The top and bottom offsets leave breathing room around the panel while it is pinned.',
+    'panel.demo.10': 'A locked panel ignores the usual edge rules until you release the lock.',
+    'panel.demo.11': 'Disabling sticky returns the panel to its ordinary place in the column.',
+    'panel.demo.12': 'Resizing the window changes only its frame; the panel keeps its natural content height.',
     'article.p1': 'A short panel stays at the top of the window. A tall one rides with the page until the edge you scroll toward meets the screen.',
     'article.p2': 'Scrolling down pins the bottom of the panel to the bottom of the window. Scrolling up releases it and pins the top. Between those moments the panel just sits in its column.',
     'article.p3': 'Offsets come from CSS. Here the numbers write --sticky-aside-top and --sticky-aside-bottom. With Tailwind you pass top-16 md:top-24 instead.',
@@ -126,6 +132,12 @@ export const messages: Record<DemoLocale, MessageMap> = {
     'panel.demo.4': 'Потяните нижний край окна, чтобы изменить его высоту.',
     'panel.demo.5': 'Выключите «Длинная панель», чтобы сравнить с короткой.',
     'panel.demo.6': 'Замок удерживает панель на высоте, где его включили.',
+    'panel.demo.7': 'Продолжайте скроллить после фиксации нижнего края: статья движется, а панель остаётся на месте.',
+    'panel.demo.8': 'Поменяйте направление у нижнего края: панель поедет со страницей, пока не зафиксируется верх.',
+    'panel.demo.9': 'Верхний и нижний отступы оставляют свободное место вокруг закреплённой панели.',
+    'panel.demo.10': 'Заблокированная панель не следует обычным правилам краёв, пока вы не снимете замок.',
+    'panel.demo.11': 'Отключение прилипания возвращает панель на её обычное место в колонке.',
+    'panel.demo.12': 'При изменении окна меняется только его рамка: панель сохраняет естественную высоту контента.',
     'article.p1': 'Короткая панель остаётся у верхнего края окна. Длинная едет вместе со страницей, пока край, к которому вы скроллите, не упрётся в экран.',
     'article.p2': 'Скролл вниз прижимает низ панели к низу окна. Скролл вверх отпускает её и прижимает верх. Между этими моментами панель просто стоит в колонке.',
     'article.p3': 'Отступ задаёт CSS. Здесь числа пишут переменные --sticky-aside-top и --sticky-aside-bottom. С Tailwind вместо них передают top-16 md:top-24.',
@@ -163,7 +175,7 @@ export function articleLines(locale: DemoLocale): string[] {
 }
 
 export function panelDemoLines(locale: DemoLocale): string[] {
-  return [1, 2, 3, 4, 5, 6].map((index) => t(locale, `panel.demo.${index}`))
+  return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((index) => t(locale, `panel.demo.${index}`))
 }
 
 export function frameworkPath(framework: DemoFramework): string {

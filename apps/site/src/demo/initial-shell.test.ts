@@ -44,8 +44,14 @@ describe('initial demo shell (SSG)', () => {
       'Drag the lower edge of the window to change its height.',
       'Turn off the tall switch to compare with a short panel.',
       'Lock holds the panel at the height where you turned it on.',
+      'Keep scrolling after the bottom edge lands: the article moves while the panel stays put.',
+      'Reverse direction near the bottom to watch the panel travel before its top edge catches.',
+      'The top and bottom offsets leave breathing room around the panel while it is pinned.',
+      'A locked panel ignores the usual edge rules until you release the lock.',
+      'Disabling sticky returns the panel to its ordinary place in the column.',
+      'Resizing the window changes only its frame; the panel keeps its natural content height.',
     ])
-    expect(new Set([...model.articleLines, ...model.panelItems]).size).toBe(18)
+    expect(new Set([...model.articleLines, ...model.panelItems]).size).toBe(24)
     expect(model.style).toBe('--sticky-aside-top: 16px; --sticky-aside-bottom: 16px')
   })
 })
